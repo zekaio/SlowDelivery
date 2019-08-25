@@ -1,9 +1,7 @@
-from flask import jsonify, request, session
-from flask_restful import Resource, abort
-import json
-import requests
-from common.database import database
-from common.utils import checkTel
+from flask import jsonify, request
+from flask_restful import Resource
+from api.common.database import database
+from api.common.utils import checkTel
 
 
 class sendOfflineCapsule(Resource):

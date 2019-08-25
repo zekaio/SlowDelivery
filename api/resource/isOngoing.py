@@ -2,7 +2,7 @@ from flask_restful import Resource
 from flask import jsonify
 import datetime
 import time
-from config.config import cfg
+from api.config.config import cfg
 
 
 class isOngoing(Resource):

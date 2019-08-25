@@ -1,4 +1,4 @@
-from config.config import cfg
+from api.config.config import cfg
 from sqlalchemy import create_engine, Column, Integer, String, Table, MetaData, Text
 from sqlalchemy.ext.declarative import declarative_base
 
