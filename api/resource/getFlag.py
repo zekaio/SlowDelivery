@@ -3,7 +3,7 @@ from flask_restful import Resource, abort
 import json
 import requests
 import pickle
-from api.common.database import database
+from common.database import database
 
 
 class getFlag(Resource):

@@ -2,7 +2,7 @@ from flask import jsonify, request, session
 from flask_restful import Resource, abort
 import json
 import requests
-from api.common.database import database
+from common.database import database
 
 
 class getInfo(Resource):

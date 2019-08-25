@@ -1,4 +1,4 @@
-from api.config.config import cfg
+from config.config import cfg
 from sqlalchemy import create_engine, Column, Integer, String, Text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker

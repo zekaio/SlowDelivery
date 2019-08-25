@@ -4,7 +4,7 @@ import json
 import requests
 import hashlib
 import base64
-from api.common.database import database
+from common.database import database
 
 
 class sendTimeCapsule(Resource):

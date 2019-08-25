@@ -1,15 +1,15 @@
 import flask
 import flask_restful
 from flask_cors import CORS
-from api.config.config import cfg
-from api.resource.getDefaultFlag import getDefaultFlag
-from api.resource.getInfo import getInfo
-from api.resource.getFlag import getFlag
-from api.resource.isOngoing import isOngoing
-from api.resource.sendOfflineCapsule import sendOfflineCapsule
-from api.resource.sendTimeCapsule import sendTimeCapsule
-from api.resource.sendFlag import sendFlag
-from api.resource.updateInfo import updateInfo
+from config.config import cfg
+from resource.getDefaultFlag import getDefaultFlag
+from resource.getInfo import getInfo
+from resource.getFlag import getFlag
+from resource.isOngoing import isOngoing
+from resource.sendOfflineCapsule import sendOfflineCapsule
+from resource.sendTimeCapsule import sendTimeCapsule
+from resource.sendFlag import sendFlag
+from resource.updateInfo import updateInfo
 
 app = flask.Flask(__name__)
 CORS(app, resources=r'/api/*', supports_credentials=True)
