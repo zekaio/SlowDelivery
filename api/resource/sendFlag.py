@@ -28,8 +28,10 @@ class sendFlag(Resource):
         else:
             data = request.get_json(force=True)
             _flag = pickle.dumps(data['flag'])
-            obj.sendFlag(session["open_id"], _flag)
-            return jsonify({
-                "errcode": 0,
-                "errmsg": ""
-            })
+            if obj.sendFlag(session["open_id"], _flag):
+                return jsonify({
+                    "errcode": 0,
+                    "errmsg": ""
+                })
+            else:
+                abort(404, message="No information for user.")

@@ -13,13 +13,15 @@ class Users(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     open_id = Column(Text, nullable=False)
     name = Column(String(16), nullable=False)
-    tel = Column(String(11), nullable=False)
+    tel = Column(String(16), nullable=False)
 
 
 class Flags(Base):
     __tablename__ = 'flags'
     id = Column(Integer, primary_key=True, autoincrement=True)
     open_id = Column(Text, nullable=False)
+    # name = Column(String(16), nullable=False)
+    # tel = Column(String(16), nullable=False)
     flag = Column(Text, nullable=False)
 
 
@@ -27,6 +29,9 @@ class TimeCapsule(Base):
     __tablename__ = 'timeCapsule'
     id = Column(Integer, primary_key=True, autoincrement=True)
     open_id = Column(Text, nullable=False)
+    # name = Column(String(16), nullable=False)
+    # tel = Column(String(16), nullable=False)
+    type = Column(String(8), nullable=False)
     message = Column(Text, nullable=True)
     file_id = Column(Text, nullable=True)
     time = Column(Integer, nullable=False)
@@ -36,9 +41,9 @@ class OfflineCapsule(Base):
     __tablename__ = 'offlineCapsule'
     id = Column(Integer, primary_key=True, autoincrement=True)
     sender_name = Column(Text, nullable=False)
-    sender_tel = Column(String(11), nullable=False)
+    sender_tel = Column(String(16), nullable=False)
     receiver_name = Column(Text, nullable=False)
-    receiver_tel = Column(String(11), nullable=False)
+    receiver_tel = Column(String(16), nullable=False)
     receiver_addr = Column(Text, nullable=False)
     capsule_tag = Column(Text, nullable=False)
     time = Column(Integer, nullable=False)
@@ -76,10 +81,16 @@ class database(object):
 
     # 保存flag
     def sendFlag(self, open_id, flag):
-        self.session.add(Flags(open_id=open_id, flag=flag))
-        self.session.commit()
-        self.session.close()
-        return True
+        data = self.getInfo(open_id)
+        if not data:
+            return False
+        else:
+            # name = data[0]
+            # tel = data[1]
+            self.session.add(Flags(open_id=open_id, flag=flag))
+            self.session.commit()
+            self.session.close()
+            return True
 
     # 获取flag
     def getFlag(self, open_id):
@@ -92,16 +103,35 @@ class database(object):
             return False
         else:
             return query.flag
-    # # 保存信件
-    # def sendTimeCapsule(self):
-    #
-    # # 线下寄信
-    # def sendOfflineCapsule(self):
-    #
-    # # 判断活动是否结束
-    # def isOngoing(self):
-    #
-    # # 获取默认flag
-    # def getDefaultFlag(self):
+
+    # 保存信件
+    def sendTimeCapsule(self, open_id, msgtype, message, time):
+        data = self.getInfo(open_id)
+        if not data:
+            return False
+        else:
+            if msgtype == "voice":
+                self.session.add(TimeCapsule(open_id=open_id, type=msgtype, file_id=message, time=time))
+            else:
+                self.session.add(TimeCapsule(open_id=open_id, type=msgtype, message=message, time=time))
+            self.session.commit()
+            self.session.close()
+            return True
+
+    # 线下寄信
+    def sendOfflineCapsule(self, sender_name, sender_tel, receiver_name, receiver_tel, receiver_addr, capsule_tag,
+                           time):
+        self.session.add(OfflineCapsule(sender_name=sender_name, sender_tel=sender_tel, receiver_addr=receiver_addr,
+                                        receiver_name=receiver_name, receiver_tel=receiver_tel, capsule_tag=capsule_tag,
+                                        time=time))
+        self.session.commit()
+        self.session.close()
+        return True
+
+# 判断活动是否结束
+# def isOngoing(self):
+
+# 获取默认flag
+# def getDefaultFlag(self):
 
 # database.getInfo("222")
