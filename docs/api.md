@@ -22,6 +22,10 @@ const prefix = "https://hemc.100steps.net/folder_name/api/method_name"
 | name   | String  | 姓名/昵称              |
 | tel    | String  | 手机号                 |
 
+#### 错误信息
+
+`401`：未绑定微信账号
+
 ### updateInfo
 
 #### 保存用户信息
@@ -42,6 +46,14 @@ const prefix = "https://hemc.100steps.net/folder_name/api/method_name"
 | errcode | Int    | 返回0则成功，1则失败 |
 | errmsg  | String | 失败时返回错误信息   |
 
+#### 错误信息
+
+`401`：用户未绑定微信
+
+`409`：用户已填写过信息
+
+`400`：手机号不合法
+
 ### sendFlag
 
 #### 保存flag
@@ -56,10 +68,17 @@ const prefix = "https://hemc.100steps.net/folder_name/api/method_name"
 
 #### 返回参数
 
-| 名称    | 类型   | 说明                 |
-| ------- | ------ | -------------------- |
-| errcode | Int    | 返回0则成功，1则失败 |
-| errmsg  | String | 失败时返回错误信息   |
+| 名称    | 类型 | 说明              |
+| ------- | ---- | ----------------- |
+| errcode | Int  | 返回值为0（成功） |
+
+#### 错误信息
+
+`401`：未绑定微信账号
+
+`409`：已经填写过flag
+
+`404`：用户还未填写姓名和手机号
 
 ### getFlag
 
@@ -69,11 +88,15 @@ const prefix = "https://hemc.100steps.net/folder_name/api/method_name"
 
 #### 返回参数
 
-| 名称    | 类型   | 说明                 |
-| ------- | ------ | -------------------- |
-| errcode | Int    | 返回0则成功，1则失败 |
-| errmsg  | String | 失败时返回错误信息   |
-| flag    | Array  | 返回数组             |
+| 名称 | 类型  | 说明     |
+| ---- | ----- | -------- |
+| flag | Array | 返回数组 |
+
+#### 错误信息
+
+`401`：未绑定微信账号
+
+`404`：没有填写flag
 
 ### sendTimeCapsule
 
@@ -97,6 +120,18 @@ const prefix = "https://hemc.100steps.net/folder_name/api/method_name"
 | errcode | Int    | 返回0则成功，1则失败 |
 | errmsg  | String | 失败时返回错误信息   |
 
+#### 错误信息
+
+`401`没有绑定微信账号
+
+`400`没有获取到file_id或者message
+
+`404`服务器上未找到录音文件
+
+`405`用户没有填写姓名手机号
+
+
+
 ### sendOfflineCapsule
 
 #### 线下寄信
@@ -117,10 +152,13 @@ const prefix = "https://hemc.100steps.net/folder_name/api/method_name"
 
 #### 返回参数
 
-| 名称    | 类型   | 说明                 |
-| ------- | ------ | -------------------- |
-| errcode | Int    | 返回0则成功，1则失败 |
-| errmsg  | String | 失败时返回错误信息   |
+| 名称    | 类型 | 说明              |
+| ------- | ---- | ----------------- |
+| errcode | Int  | 返回值为0（成功） |
+
+#### 错误信息
+
+无
 
 ### isOngoing
 
@@ -134,6 +172,10 @@ const prefix = "https://hemc.100steps.net/folder_name/api/method_name"
 | ------ | ---- | ---------------------------------------------------- |
 | status | Int  | 0表示活动正在进行，1表示活动结束，-1表示活动还未开始 |
 
+#### 错误信息
+
+无
+
 ### getDefaultFlag
 
 #### 获取默认flag
@@ -142,9 +184,10 @@ const prefix = "https://hemc.100steps.net/folder_name/api/method_name"
 
 #### 返回参数
 
-| 名称    | 类型   | 说明                 |
-| ------- | ------ | -------------------- |
-| errcode | Int    | 返回0则成功，1则失败 |
-| errmsg  | String | 失败返回错误信息     |
-| flags   | Array  | 返回数组             |
+| 名称  | 类型  | 说明     |
+| ----- | ----- | -------- |
+| flags | Array | 返回数组 |
 
+#### 错误信息
+
+无
