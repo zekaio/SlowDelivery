@@ -5,8 +5,8 @@ import requests
 from common.database import database
 
 
-class getInfo(Resource):
-    def get(self):
+class updateInfo(Resource):
+    def post(self):
         if "open_id" not in session:
             sess_id = request.cookies.get("PHPSESSID")
             if sess_id is not None:
@@ -24,11 +24,13 @@ class getInfo(Resource):
         info = obj.getInfo(session["open_id"])
         if info:
             return jsonify({
-                "record": True,
-                "name": info[0],
-                "tel": info[1]
+                "errcode": 1,
+                "errmsg": "信息已存在"
             })
         else:
+            data = request.get_json(force=True)
+            obj.updateInfo(session["open_id"], data['name'], data['tel'])
             return jsonify({
-                "record": False
+                "errcode": 0,
+                "errmsg": ""
             })

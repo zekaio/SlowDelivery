@@ -55,13 +55,41 @@ class database(object):
         self.__Session_class = sessionmaker(bind=engine)
         self.session = self.__Session_class()
 
+    # 获取用户信息
     def getInfo(self, open_id):
         query = (self.session
                  .query(Users)
-                 .filter_by(Users.open_id == open_id)
+                 .filter(Users.open_id == open_id)
                  .first()
                  )
         if not query:
             return False
         else:
             return [query.name, query.tel]
+
+    # 保存用户信息
+    def updateInfo(self, open_id, name, tel):
+        self.session.add(Users(open_id=open_id, name=name, tel=tel))
+        self.session.commit()
+        self.session.close()
+        return True;
+
+    # 保存flag
+    def sendFlag(self):
+
+    # # 获取flag
+    # def getFlag(self):
+    #
+    # # 保存信件
+    # def sendTimeCapsule(self):
+    #
+    # # 线下寄信
+    # def sendOfflineCapsule(self):
+    #
+    # # 判断活动是否结束
+    # def isOngoing(self):
+    #
+    # # 获取默认flag
+    # def getDefaultFlag(self):
+
+# database.getInfo("222")

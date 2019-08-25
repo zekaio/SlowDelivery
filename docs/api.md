@@ -35,7 +35,7 @@ const prefix = "https://hemc.100steps.net/folder_name/api/method_name"
 | name | String | 是   | 姓名/昵称 |
 | tel  | String | 是   | 手机号    |
 
-#### 返回参数：
+#### 返回参数
 
 | 名称    | 类型   | 说明                 |
 | ------- | ------ | -------------------- |
