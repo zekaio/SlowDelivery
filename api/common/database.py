@@ -1,6 +1,7 @@
 from config.config import cfg
 from sqlalchemy import create_engine, Column, Integer, String, Text
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
 
 engine = create_engine("mysql+pymysql://" + cfg["username"] + ":" + cfg["password"] + "@" + cfg["host"] + "/" + cfg[
     "database"] + "?charset=utf8mb4")
@@ -50,4 +51,17 @@ class DefaultFlag(Base):
 
 
 class database(object):
-    def
+    def __init__(self):
+        self.__Session_class = sessionmaker(bind=engine)
+        self.session = self.__Session_class()
+
+    def getInfo(self, open_id):
+        query = (self.session
+                 .query(Users)
+                 .filter_by(Users.open_id == open_id)
+                 .first()
+                 )
+        if not query:
+            return False
+        else:
+            return [query.name, query.tel]
