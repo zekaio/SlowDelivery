@@ -6,7 +6,7 @@
 | name    | text | 姓名/昵称 |
 | tel     | text | 手机号    |
 
-### flag
+### flags
 
 | id      | int  |      |
 | ------- | ---- | ---- |
