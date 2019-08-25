@@ -14,6 +14,5 @@ class sendOfflineCapsule(Resource):
             obj.sendOfflineCapsule(data['sender_name'], data['sender_tel'], data['receiver_name'], data['receiver_tel'],
                                    data['receiver_addr'], data['capsule_tag'], data['time'])
             return jsonify({
-                "errcode": 0,
-                "errmsg": ""
+                "errcode": 0
             })

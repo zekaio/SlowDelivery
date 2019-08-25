@@ -54,4 +54,4 @@ class sendTimeCapsule(Resource):
                 "errmsg": ""
             })
         else:
-            abort(404, message="No information for user.")
+            abort(405, message="No information for user.")

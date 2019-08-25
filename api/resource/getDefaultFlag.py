@@ -10,7 +10,5 @@ class getDefaultFlag(Resource):
         obj = database()
         arr = obj.getDefaultFlag()
         return jsonify({
-            "errcode": 0,
-            "errmsg": "",
             "flags": arr
         })
