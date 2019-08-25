@@ -1,5 +1,5 @@
 from config.config import cfg
-from sqlalchemy import create_engine, Column, Integer, String, Table, MetaData, Text
+from sqlalchemy import create_engine, Column, Integer, String, Text, LargeBinary
 from sqlalchemy.ext.declarative import declarative_base
 
 engine = create_engine("mysql+pymysql://" + cfg["username"] + ":" + cfg["password"] + "@" + cfg["host"] + "/" + cfg[
@@ -21,7 +21,7 @@ class Flags(Base):
     open_id = Column(Text, nullable=False)
     # name = Column(String(16), nullable=False)
     # tel = Column(String(16), nullable=False)
-    flag = Column(Text, nullable=False)
+    flag = Column(LargeBinary, nullable=False)
 
 
 class TimeCapsule(Base):

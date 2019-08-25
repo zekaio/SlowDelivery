@@ -2,12 +2,12 @@ from flask import jsonify, request, session
 from flask_restful import Resource, abort
 import json
 import requests
+import pickle
 from common.database import database
-from common.utils import checkTel
 
 
-class updateInfo(Resource):
-    def post(self):
+class getFlag(Resource):
+    def get(self):
         if "open_id" not in session:
             sess_id = request.cookies.get("PHPSESSID")
             if sess_id is not None:
@@ -22,16 +22,11 @@ class updateInfo(Resource):
         if "open_id" not in session:
             abort(401, message="Please bind Wechat account first.")
         obj = database()
-        info = obj.getInfo(session["open_id"])
-        if info:
-            abort(409, message="User already exists.")
+        flag = obj.getFlag(session["open_id"])
+        if flag:
+            _flag = pickle.loads(flag)
+            return jsonify({
+                "flag": _flag
+            })
         else:
-            data = request.get_json(force=True)
-            if checkTel(data['tel']):
-                obj.updateInfo(session["open_id"], data['name'], data['tel'])
-                return jsonify({
-                    "errcode": 0,
-                    "errmsg": ""
-                })
-            else:
-                abort(400, message="Invalid telephone number.")
+            abort(404, message="Flag does not exist.")

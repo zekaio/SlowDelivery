@@ -1,7 +1,5 @@
-from flask import jsonify, request, session
-from flask_restful import Resource, abort
-import json
-import requests
+from flask import jsonify, request
+from flask_restful import Resource
 from common.database import database
 from common.utils import checkTel
 
