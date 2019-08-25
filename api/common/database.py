@@ -72,14 +72,26 @@ class database(object):
         self.session.add(Users(open_id=open_id, name=name, tel=tel))
         self.session.commit()
         self.session.close()
-        return True;
+        return True
 
     # 保存flag
-    def sendFlag(self):
+    def sendFlag(self, open_id, flag):
+        self.session.add(Flags(open_id=open_id, flag=flag))
+        self.session.commit()
+        self.session.close()
+        return True
 
-    # # 获取flag
-    # def getFlag(self):
-    #
+    # 获取flag
+    def getFlag(self, open_id):
+        query = (self.session
+                 .query(Flags)
+                 .filter(Flags.open_id == open_id)
+                 .first()
+                 )
+        if not query:
+            return False
+        else:
+            return query.flag
     # # 保存信件
     # def sendTimeCapsule(self):
     #
