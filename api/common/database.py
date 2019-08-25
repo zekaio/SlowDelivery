@@ -128,10 +128,13 @@ class database(object):
         self.session.close()
         return True
 
-# 判断活动是否结束
-# def isOngoing(self):
-
-# 获取默认flag
-# def getDefaultFlag(self):
-
-# database.getInfo("222")
+    # 获取默认flag
+    def getDefaultFlag(self):
+        query = (self.session
+                 .query(DefaultFlag)
+                 .all()
+                 )
+        arr = []
+        for flag in query:
+            arr.append(flag.flag)
+        return arr

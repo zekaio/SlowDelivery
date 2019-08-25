@@ -1,8 +1,11 @@
 from config.config import cfg
 from sqlalchemy import create_engine, Column, Integer, String, Table, MetaData, Text
 from sqlalchemy.ext.declarative import declarative_base
-print("mysql+pymysql://" + cfg["username"] + ":" + cfg["password"] + "@" + cfg["host"] + "/" + cfg["database"] + "?charset=utf8mb4")
-engine = create_engine("mysql+pymysql://" + cfg["username"] + ":" + cfg["password"] + "@" + cfg["host"] + "/" + cfg["database"] + "?charset=utf8mb4")
+
+print("mysql+pymysql://" + cfg["username"] + ":" + cfg["password"] + "@" + cfg["host"] + "/" + cfg[
+    "database"] + "?charset=utf8mb4")
+engine = create_engine("mysql+pymysql://" + cfg["username"] + ":" + cfg["password"] + "@" + cfg["host"] + "/" + cfg[
+    "database"] + "?charset=utf8mb4")
 Base = declarative_base()
 
 
