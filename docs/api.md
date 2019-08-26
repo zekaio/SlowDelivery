@@ -3,7 +3,7 @@
 ### 调用方式
 
 ```
-const prefix = "https://hemc.100steps.net/folder_name/api/method_name"
+url:"https://hemc.100steps.net/folder_name/api/method_name"
 ```
 
 ### getInfo
