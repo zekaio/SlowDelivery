@@ -66,14 +66,17 @@ num = 1000  # 要插入的取信码的数量
 length = 4  # 取信码位数
 conn = mysql.connector.connect(user=cfg['username'], password=cfg['password'], database=cfg['database'])
 cursor = conn.cursor()
+file = open("capsule_tag.txt", "a")
 while num:
     randomTag = ''.join(random.sample(chars, length))
     try:
         cursor.execute('insert into `offlineCapsule` (`capsule_tag`) values (%s)', [randomTag])
         conn.commit()
         num -= 1
+        file.writelines([randomTag, "\n"])
     except:
         continue
 cursor.close()
 conn.close()
+file.close()
 print("done.")
