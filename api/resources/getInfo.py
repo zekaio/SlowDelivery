@@ -1,27 +1,15 @@
-from flask import jsonify, request, session
-from flask_restful import Resource, abort
-import json
-import requests
+from flask import jsonify
+from flask_restful import Resource
 from common.database import database
+from common.utils import checkSubscribe,checkLogin
 
 
 class getInfo(Resource):
     def get(self):
-        if "open_id" not in session:
-            sess_id = request.cookies.get("PHPSESSID")
-            if sess_id is not None:
-                r = requests.get("https://hemc.100steps.net/2017/wechat/Home/Index/getUserInfo", timeout=5,
-                                 cookies=dict(PHPSESSID=sess_id))
-                try:
-                    t = json.loads(r.text)
-                    if "openid" in t:
-                        session["open_id"] = t["openid"]
-                except:
-                    pass
-        if "open_id" not in session:
-            abort(401, message="Please bind Wechat account first.")
+        openId = checkLogin()
+        checkSubscribe(openId)
         obj = database()
-        info = obj.getInfo(session["open_id"])
+        info = obj.getInfo(openId)
         if info:
             return jsonify({
                 "record": True,

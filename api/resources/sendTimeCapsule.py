@@ -5,23 +5,13 @@ import requests
 import hashlib
 import base64
 from common.database import database
+from common.utils import checkSubscribe, checkLogin
 
 
 class sendTimeCapsule(Resource):
     def post(self):
-        if "open_id" not in session:
-            sess_id = request.cookies.get("PHPSESSID")
-            if sess_id is not None:
-                r = requests.get("https://hemc.100steps.net/2017/wechat/Home/Index/getUserInfo", timeout=5,
-                                 cookies=dict(PHPSESSID=sess_id))
-                try:
-                    t = json.loads(r.text)
-                    if "openid" in t:
-                        session["open_id"] = t["openid"]
-                except:
-                    pass
-        if "open_id" not in session:
-            abort(401, message="Please bind Wechat account first.")
+        openId = checkLogin()
+        checkSubscribe(openId)
         obj = database()
         data = request.get_json(force=True)
         if data['type'] == "voice":

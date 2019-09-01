@@ -1,2 +1,5 @@
 api/config/config.py
 api/test.py
+*.pyc
+*.pyc
+api/common/__pycache__/database.cpython-37.pyc

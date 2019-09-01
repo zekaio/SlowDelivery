@@ -6,6 +6,8 @@
 url:"https://hemc.100steps.net/folder_name/api/method_name"
 ```
 
+
+
 ### getInfo
 
 #### 获取用户信息
@@ -23,6 +25,10 @@ url:"https://hemc.100steps.net/folder_name/api/method_name"
 #### 错误信息
 
 `401`：未绑定微信账号
+
+`407`：用户未关注公众号
+
+
 
 ### updateInfo
 
@@ -46,11 +52,15 @@ url:"https://hemc.100steps.net/folder_name/api/method_name"
 
 #### 错误信息
 
-`401`：用户未绑定微信
+`400`：手机号不合法
+
+`401`：未绑定微信账号
+
+`407`：用户未关注公众号
 
 `409`：用户已填写过信息
 
-`400`：手机号不合法
+
 
 ### sendFlag
 
@@ -60,9 +70,10 @@ url:"https://hemc.100steps.net/folder_name/api/method_name"
 
 #### 请求参数
 
-| 名称 | 类型  | 必填 | 说明                         |
-| ---- | ----- | ---- | ---------------------------- |
-| flag | Array | 是   | 只有一个flag也以数组形式发送 |
+| 名称 | 类型   | 必填 | 说明                         |
+| ---- | ------ | ---- | ---------------------------- |
+| name | String | 是   | 用户姓名                     |
+| flag | Array  | 是   | 只有一个flag也以数组形式发送 |
 
 #### 返回参数
 
@@ -74,9 +85,13 @@ url:"https://hemc.100steps.net/folder_name/api/method_name"
 
 `401`：未绑定微信账号
 
+`404`：用户还未填写姓名和手机号
+
+`407`：用户未关注公众号
+
 `409`：已经填写过flag
 
-`404`：用户还未填写姓名和手机号
+
 
 ### getFlag
 
@@ -94,7 +109,11 @@ url:"https://hemc.100steps.net/folder_name/api/method_name"
 
 `401`：未绑定微信账号
 
+`407`：用户未关注公众号
+
 `404`：没有填写flag
+
+
 
 ### sendTimeCapsule
 
@@ -104,12 +123,14 @@ url:"https://hemc.100steps.net/folder_name/api/method_name"
 
 #### 请求参数
 
-| 名称    | 类型   | 必填 | 说明              |
-| ------- | ------ | ---- | ----------------- |
-| type    | String | 是   | `text`或是`voice` |
-| message | String | 否   | 文字信件          |
-| file_id | String | 否   | 录音id            |
-| time    | String | 是   | 毕业时间          |
+| 名称         | 类型    | 必填 | 说明              |
+| ------------ | ------- | ---- | ----------------- |
+| type         | String  | 是   | `text`或是`voice` |
+| message      | String  | 否   | 文字信件          |
+| file_id      | String  | 否   | 录音id            |
+| time         | String  | 是   | 毕业时间          |
+| send_offline | Boolean | 是   | 是否选择线下寄信  |
+| address      | String  | 是   | 线下寄信地址      |
 
 #### 返回参数
 
@@ -120,13 +141,15 @@ url:"https://hemc.100steps.net/folder_name/api/method_name"
 
 #### 错误信息
 
-`401`没有绑定微信账号
+`400`：没有获取到file_id或者message
 
-`400`没有获取到file_id或者message
+`401`：未绑定微信账号
 
-`404`服务器上未找到录音文件
+`404`：服务器上没有找到录音文件
 
-`405`用户没有填写姓名手机号
+`405`：用户没有填写姓名手机号
+
+`407`：用户未关注公众号
 
 
 
@@ -156,7 +179,17 @@ url:"https://hemc.100steps.net/folder_name/api/method_name"
 
 #### 错误信息
 
-无
+`400`：手机号错误
+
+`401`：未绑定微信账号
+
+`404`：取信码不存在或是已使用
+
+`407`：用户未关注公众号
+
+`409`：取信码已被使用
+
+
 
 ### isOngoing
 
@@ -174,6 +207,8 @@ url:"https://hemc.100steps.net/folder_name/api/method_name"
 
 无
 
+
+
 ### getDefaultFlag
 
 #### 获取默认flag
@@ -188,5 +223,7 @@ url:"https://hemc.100steps.net/folder_name/api/method_name"
 
 #### 错误信息
 
-无
+`401`：未绑定微信账号
+
+`407`：用户未关注公众号
 

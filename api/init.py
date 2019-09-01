@@ -1,7 +1,11 @@
 from config.config import cfg
 from sqlalchemy import create_engine, Column, Integer, String, Text, LargeBinary
 from sqlalchemy.ext.declarative import declarative_base
+import string
+import random
+import mysql.connector
 
+# 创建数据库
 engine = create_engine("mysql+pymysql://" + cfg["username"] + ":" + cfg["password"] + "@" + cfg["host"] + "/" + cfg[
     "database"] + "?charset=utf8mb4")
 Base = declarative_base()
@@ -19,7 +23,7 @@ class Flags(Base):
     __tablename__ = 'flags'
     id = Column(Integer, primary_key=True, autoincrement=True)
     open_id = Column(Text, nullable=False)
-    # name = Column(String(16), nullable=False)
+    name = Column(String(16), nullable=False)
     # tel = Column(String(16), nullable=False)
     flag = Column(LargeBinary, nullable=False)
 
@@ -39,13 +43,13 @@ class TimeCapsule(Base):
 class OfflineCapsule(Base):
     __tablename__ = 'offlineCapsule'
     id = Column(Integer, primary_key=True, autoincrement=True)
-    sender_name = Column(Text, nullable=False)
-    sender_tel = Column(String(16), nullable=False)
-    receiver_name = Column(Text, nullable=False)
-    receiver_tel = Column(String(16), nullable=False)
-    receiver_addr = Column(Text, nullable=False)
-    capsule_tag = Column(Text, nullable=False)
-    time = Column(Integer, nullable=False)
+    sender_name = Column(Text, nullable=True)
+    sender_tel = Column(String(16), nullable=True)
+    receiver_name = Column(Text, nullable=True)
+    receiver_tel = Column(String(16), nullable=True)
+    receiver_addr = Column(Text, nullable=True)
+    capsule_tag = Column(Text, nullable=False, unique=True)
+    time = Column(Integer, nullable=True)
 
 
 class DefaultFlag(Base):
@@ -55,3 +59,21 @@ class DefaultFlag(Base):
 
 
 Base.metadata.create_all(engine)
+
+# 插入取信码
+chars = string.ascii_lowercase + string.digits
+num = 1000  # 要插入的取信码的数量
+length = 4  # 取信码位数
+conn = mysql.connector.connect(user=cfg['username'], password=cfg['password'], database=cfg['database'])
+cursor = conn.cursor()
+while num:
+    randomTag = ''.join(random.sample(chars, length))
+    try:
+        cursor.execute('insert into `offlineCapsule` (`capsule_tag`) values (%s)', [randomTag])
+        conn.commit()
+        num -= 1
+    except:
+        continue
+cursor.close()
+conn.close()
+print("done.")
