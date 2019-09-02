@@ -1,5 +1,5 @@
 from config.config import cfg
-from sqlalchemy import create_engine, Column, Integer, String, Text, LargeBinary
+from sqlalchemy import create_engine, Column, Integer, String, Text, LargeBinary,Boolean
 from sqlalchemy.ext.declarative import declarative_base
 import string
 import random
@@ -15,16 +15,17 @@ class Users(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True, autoincrement=True)
     open_id = Column(Text, nullable=False)
-    name = Column(String(16), nullable=False)
-    tel = Column(String(16), nullable=False)
-
+    name = Column(Text, nullable=False)
+    tel = Column(String(11), nullable=False)
+    check_text = Column(Boolean, default=False)
+    check_voice = Column(Boolean, default=False)
+    check_flag = Column(Boolean, default=False)
 
 class Flags(Base):
     __tablename__ = 'flags'
     id = Column(Integer, primary_key=True, autoincrement=True)
     open_id = Column(Text, nullable=False)
-    name = Column(String(16), nullable=False)
-    # tel = Column(String(16), nullable=False)
+    name = Column(Text, nullable=False)
     flag = Column(LargeBinary, nullable=False)
 
 
@@ -32,8 +33,6 @@ class TimeCapsule(Base):
     __tablename__ = 'timeCapsule'
     id = Column(Integer, primary_key=True, autoincrement=True)
     open_id = Column(Text, nullable=False)
-    # name = Column(String(16), nullable=False)
-    # tel = Column(String(16), nullable=False)
     type = Column(String(8), nullable=False)
     message = Column(Text, nullable=True)
     file_id = Column(Text, nullable=True)
@@ -44,9 +43,9 @@ class OfflineCapsule(Base):
     __tablename__ = 'offlineCapsule'
     id = Column(Integer, primary_key=True, autoincrement=True)
     sender_name = Column(Text, nullable=True)
-    sender_tel = Column(String(16), nullable=True)
+    sender_tel = Column(String(11), nullable=True)
     receiver_name = Column(Text, nullable=True)
-    receiver_tel = Column(String(16), nullable=True)
+    receiver_tel = Column(String(11), nullable=True)
     receiver_addr = Column(Text, nullable=True)
     capsule_tag = Column(Text, nullable=False, unique=True)
     time = Column(Integer, nullable=True)
@@ -76,6 +75,7 @@ while num:
         file.writelines([randomTag, "\n"])
     except:
         continue
+
 cursor.close()
 conn.close()
 file.close()

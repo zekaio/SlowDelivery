@@ -1,4 +1,4 @@
-from flask import jsonify, request, session
+from flask import jsonify, request
 from flask_restful import Resource, abort
 import pickle
 from common.database import database
@@ -10,8 +10,7 @@ class sendFlag(Resource):
         openId = checkLogin()
         checkSubscribe(openId)
         obj = database()
-        flag = obj.getFlag(openId)
-        if flag:
+        if obj.checkFlag(openId):
             abort(409, message="Flag already exists.")
         else:
             data = request.get_json(force=True)

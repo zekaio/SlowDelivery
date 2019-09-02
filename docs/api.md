@@ -8,6 +8,47 @@ url:"https://hemc.100steps.net/folder_name/api/method_name"
 
 
 
+### checkTimeCapsule
+
+#### 判断用户是否保存文字和语音
+
+调用方式：**GET**
+
+#### 返回参数
+
+| 名称        | 类型    | 说明                   |
+| ----------- | ------- | ---------------------- |
+| check_text  | Boolean | 用户已提交文字就返回真 |
+| check_voice | Boolean | 用户已提交语音就返回真 |
+
+#### 错误信息
+
+`401`：未绑定微信账号
+
+`407`：用户未关注公众号
+
+
+
+### checkFlag
+
+#### 判断用户是否提交flag
+
+调用方式：**GET**
+
+#### 返回参数
+
+| 名称       | 类型    | 说明                   |
+| ---------- | ------- | ---------------------- |
+| check_flag | Boolean | 用户已提交flag就返回真 |
+
+#### 错误信息
+
+`401`：未绑定微信账号
+
+`407`：用户未关注公众号
+
+
+
 ### getInfo
 
 #### 获取用户信息
@@ -151,6 +192,8 @@ url:"https://hemc.100steps.net/folder_name/api/method_name"
 
 `407`：用户未关注公众号
 
+`409`：用户已填写过录音或文字（看当时提交的是哪个，防止有人直接输网址进入页面再写一次）
+
 
 
 ### sendOfflineCapsule
@@ -183,7 +226,7 @@ url:"https://hemc.100steps.net/folder_name/api/method_name"
 
 `401`：未绑定微信账号
 
-`404`：取信码不存在或是已使用
+`404`：取信码不存在
 
 `407`：用户未关注公众号
 

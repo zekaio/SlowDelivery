@@ -1,4 +1,4 @@
-from flask import jsonify, session
+from flask import jsonify
 from flask_restful import Resource, abort
 import pickle
 from common.database import database
@@ -10,7 +10,7 @@ class getFlag(Resource):
         openId = checkLogin()
         checkSubscribe(openId)
         obj = database()
-        flag = obj.getFlag(session["open_id"])
+        flag = obj.getFlag(openId)
         if flag:
             _flag = pickle.loads(flag)
             return jsonify({

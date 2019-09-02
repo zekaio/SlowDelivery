@@ -1,5 +1,5 @@
 from config.config import cfg
-from sqlalchemy import create_engine, Column, Integer, String, Text, LargeBinary
+from sqlalchemy import create_engine, Column, Integer, String, Text, LargeBinary, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from flask_restful import abort
@@ -13,16 +13,18 @@ class Users(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True, autoincrement=True)
     open_id = Column(Text, nullable=False)
-    name = Column(String(16), nullable=False)
-    tel = Column(String(16), nullable=False)
+    name = Column(Text, nullable=False)
+    tel = Column(String(11), nullable=False)
+    check_text = Column(Boolean, default=False)
+    check_voice = Column(Boolean, default=False)
+    check_flag = Column(Boolean, default=False)
 
 
 class Flags(Base):
     __tablename__ = 'flags'
     id = Column(Integer, primary_key=True, autoincrement=True)
     open_id = Column(Text, nullable=False)
-    name = Column(String(16), nullable=False)
-    # tel = Column(String(16), nullable=False)
+    name = Column(Text, nullable=False)
     flag = Column(LargeBinary, nullable=False)
 
 
@@ -30,8 +32,6 @@ class TimeCapsule(Base):
     __tablename__ = 'timeCapsule'
     id = Column(Integer, primary_key=True, autoincrement=True)
     open_id = Column(Text, nullable=False)
-    # name = Column(String(16), nullable=False)
-    # tel = Column(String(16), nullable=False)
     type = Column(String(8), nullable=False)
     message = Column(Text, nullable=True)
     file_id = Column(Text, nullable=True)
@@ -42,9 +42,9 @@ class OfflineCapsule(Base):
     __tablename__ = 'offlineCapsule'
     id = Column(Integer, primary_key=True, autoincrement=True)
     sender_name = Column(Text, nullable=True)
-    sender_tel = Column(String(16), nullable=True)
+    sender_tel = Column(String(11), nullable=True)
     receiver_name = Column(Text, nullable=True)
-    receiver_tel = Column(String(16), nullable=True)
+    receiver_tel = Column(String(11), nullable=True)
     receiver_addr = Column(Text, nullable=True)
     capsule_tag = Column(Text, nullable=False, unique=True)
     time = Column(Integer, nullable=True)
@@ -65,7 +65,6 @@ class database(object):
         session = self.__Session_class()
         query = (session
                  .query(Users)
-                 # .filter_by(open_id=open_id)
                  .filter(Users.open_id == open_id)
                  .first()
                  )
@@ -73,7 +72,7 @@ class database(object):
         if not query:
             return False
         else:
-            return [query.name, query.tel]
+            return {"name": query.name, "tel": query.tel}
 
     # 保存用户信息
     def updateInfo(self, open_id, name, tel):
@@ -89,7 +88,14 @@ class database(object):
         if not data:
             return False
         else:
+
             session = self.__Session_class()
+            query = (session
+                     .query(Users)
+                     .filter(Users.open_id == open_id)
+                     .first()
+                     )
+            query.check_flag = True
             session.add(Flags(open_id=open_id, name=name, flag=flag))
             session.commit()
             session.close()
@@ -113,13 +119,21 @@ class database(object):
     def sendTimeCapsule(self, open_id, msgtype, message, time):
         data = self.getInfo(open_id)
         if not data:
+            abort(405, message="No information for user.")
             return False
         else:
             session = self.__Session_class()
+            query = (session
+                     .query(Users)
+                     .filter(Users.open_id == open_id)
+                     .first()
+                     )
             if msgtype == "voice":
                 session.add(TimeCapsule(open_id=open_id, type=msgtype, file_id=message, time=time))
+                query.check_voice = True
             else:
                 session.add(TimeCapsule(open_id=open_id, type=msgtype, message=message, time=time))
+                query.check_text = True
             session.commit()
             session.close()
             return True
@@ -162,3 +176,23 @@ class database(object):
             arr.append(flag.flag)
         session.close()
         return arr
+
+    # 判断是否填写时光胶囊
+    def checkTimeCapsule(self, open_id):
+        session = self.__Session_class()
+        query = (session
+                 .query(Users)
+                 .filter(Users.open_id == open_id)
+                 .first()
+                 )
+        return {"check_text": query.check_text, "check_voice": query.check_voice}
+
+    # 判断是否填写flag
+    def checkFlag(self, open_id):
+        session = self.__Session_class()
+        query = (session
+                 .query(Users)
+                 .filter(Users.open_id == open_id)
+                 .first()
+                 )
+        return query.check_flag

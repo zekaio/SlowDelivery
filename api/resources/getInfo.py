@@ -13,8 +13,8 @@ class getInfo(Resource):
         if info:
             return jsonify({
                 "record": True,
-                "name": info[0],
-                "tel": info[1]
+                "name": info['name'],
+                "tel": info['tel']
             })
         else:
             return jsonify({
