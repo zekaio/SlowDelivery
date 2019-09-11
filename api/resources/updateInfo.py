@@ -12,7 +12,7 @@ class updateInfo(Resource):
         obj = database()
         info = obj.getInfo(openId)
         if info:
-            abort(409, message="User already exists.")
+            abort(409, message="已经填写过信息了。")
         else:
             data = request.get_json(force=True)
             if checkTel(data['tel']):
@@ -22,4 +22,4 @@ class updateInfo(Resource):
                     "errmsg": ""
                 })
             else:
-                abort(400, message="Invalid telephone number.")
+                abort(400, message="手机号无效。")

@@ -50,8 +50,3 @@ def checkSubscribe(open_id):
         else:
             abort(407, message="Please subscribe first.")
             return False
-
-    """
-    for test
-    """
-    # return True

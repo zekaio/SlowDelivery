@@ -18,4 +18,4 @@ class sendOfflineCapsule(Resource):
                     "errcode": 0
                 })
         else:
-            abort(400, message="Invalid telephone number.")
+            abort(400, message="手机号错误。")

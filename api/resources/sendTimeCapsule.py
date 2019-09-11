@@ -14,16 +14,18 @@ class sendTimeCapsule(Resource):
         checkSubscribe(openId)
         obj = database()
         data = request.get_json(force=True)
+        if not obj.getInfo(openId):
+            abort(404, message="请先填写信息")
         check = obj.checkTimeCapsule(openId)
         msg = None
         if data['type'] == "voice":
             if check['check_voice']:
-                abort(409, message="recording already exists")
+                abort(409, message="已经填写过语音信件了。")
             else:
                 try:
                     msg = data['file_id']
                 except:
-                    abort(400, message="Missing parameter: file_id.")
+                    abort(400, message="参数错误。")
                 r = requests.get(
                     "https://hemc.100steps.net/2017/wechat/Home/Public/getMedia?media_id=%s" % msg,
                     timeout=20)
@@ -35,17 +37,17 @@ class sendTimeCapsule(Resource):
                         f.write(base64.b64decode(t["data"]))
                         f.close()
                     else:
-                        abort(404, message="Media not found.")
+                        abort(404, message="录音文件不存在。")
                 except:
-                    abort(404, message="Media not found.")
+                    abort(404, message="录音文件不存在。")
         else:
             if check['check_text']:
-                abort(409, message="text already exists")
+                abort(409, message="已经填写过文字信件了。")
             else:
                 try:
                     msg = data['message']
                 except:
-                    abort(400, message="Missing parameter: message.")
+                    abort(400, message="参数错误。")
             obj.sendTimeCapsule(openId, data['type'], msg, data['time'])
         return jsonify({
             "errcode": 0,

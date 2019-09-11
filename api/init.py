@@ -1,10 +1,11 @@
 from config.config import cfg
-from sqlalchemy import create_engine, Column, Integer, String, Text, LargeBinary,Boolean
+from sqlalchemy import create_engine, Column, Integer, String, Text, LargeBinary, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 import string
 import random
 import mysql.connector
 
+print("initializing")
 # 创建数据库
 engine = create_engine("mysql+pymysql://" + cfg["username"] + ":" + cfg["password"] + "@" + cfg["host"] + "/" + cfg[
     "database"] + "?charset=utf8mb4")
@@ -20,6 +21,7 @@ class Users(Base):
     check_text = Column(Boolean, default=False)
     check_voice = Column(Boolean, default=False)
     check_flag = Column(Boolean, default=False)
+
 
 class Flags(Base):
     __tablename__ = 'flags'
@@ -47,7 +49,7 @@ class OfflineCapsule(Base):
     receiver_name = Column(Text, nullable=True)
     receiver_tel = Column(String(11), nullable=True)
     receiver_addr = Column(Text, nullable=True)
-    capsule_tag = Column(Text, nullable=False, unique=True)
+    capsule_tag = Column(String(cfg["length"]), nullable=False, unique=True)
     time = Column(Integer, nullable=True)
 
 
@@ -61,8 +63,8 @@ Base.metadata.create_all(engine)
 
 # 插入取信码
 chars = string.ascii_lowercase + string.digits
-num = 1000  # 要插入的取信码的数量
-length = 4  # 取信码位数
+num = cfg["num"]  # 要插入的取信码的数量
+length = cfg["length"]  # 取信码位数
 conn = mysql.connector.connect(user=cfg['username'], password=cfg['password'], database=cfg['database'])
 cursor = conn.cursor()
 file = open("capsule_tag.txt", "a")
@@ -75,7 +77,6 @@ while num:
         file.writelines([randomTag, "\n"])
     except:
         continue
-
 cursor.close()
 conn.close()
 file.close()

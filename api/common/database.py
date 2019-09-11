@@ -3,6 +3,9 @@ from sqlalchemy import create_engine, Column, Integer, String, Text, LargeBinary
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from flask_restful import abort
+from flask import session
+import random
+import time
 
 engine = create_engine("mysql+pymysql://" + cfg["username"] + ":" + cfg["password"] + "@" + cfg["host"] + "/" + cfg[
     "database"] + "?charset=utf8mb4")
@@ -46,7 +49,7 @@ class OfflineCapsule(Base):
     receiver_name = Column(Text, nullable=True)
     receiver_tel = Column(String(11), nullable=True)
     receiver_addr = Column(Text, nullable=True)
-    capsule_tag = Column(Text, nullable=False, unique=True)
+    capsule_tag = Column(String(cfg["length"]), nullable=False, unique=True)
     time = Column(Integer, nullable=True)
 
 
@@ -62,13 +65,13 @@ class database(object):
 
     # 获取用户信息
     def getInfo(self, open_id):
-        session = self.__Session_class()
-        query = (session
+        Session = self.__Session_class()
+        query = (Session
                  .query(Users)
                  .filter(Users.open_id == open_id)
                  .first()
                  )
-        session.close()
+        Session.close()
         if not query:
             return False
         else:
@@ -76,10 +79,10 @@ class database(object):
 
     # 保存用户信息
     def updateInfo(self, open_id, name, tel):
-        session = self.__Session_class()
-        session.add(Users(open_id=open_id, name=name, tel=tel))
-        session.commit()
-        session.close()
+        Session = self.__Session_class()
+        Session.add(Users(open_id=open_id, name=name, tel=tel))
+        Session.commit()
+        Session.close()
         return True
 
     # 保存flag
@@ -88,70 +91,69 @@ class database(object):
         if not data:
             return False
         else:
-
-            session = self.__Session_class()
-            query = (session
+            Session = self.__Session_class()
+            query = (Session
                      .query(Users)
                      .filter(Users.open_id == open_id)
                      .first()
                      )
             query.check_flag = True
-            session.add(Flags(open_id=open_id, name=name, flag=flag))
-            session.commit()
-            session.close()
+            Session.add(Flags(open_id=open_id, name=name, flag=flag))
+            Session.commit()
+            Session.close()
             return True
 
     # 获取flag
     def getFlag(self, open_id):
-        session = self.__Session_class()
-        query = (session
+        Session = self.__Session_class()
+        query = (Session
                  .query(Flags)
                  .filter(Flags.open_id == open_id)
                  .first()
                  )
-        session.close()
+        Session.close()
         if not query:
             return False
         else:
             return query.flag
 
     # 保存信件
-    def sendTimeCapsule(self, open_id, msgtype, message, time):
+    def sendTimeCapsule(self, open_id, msgtype, message, Time):
         data = self.getInfo(open_id)
         if not data:
-            abort(405, message="No information for user.")
+            abort(405, message="请先填写信息。")
             return False
         else:
-            session = self.__Session_class()
-            query = (session
+            Session = self.__Session_class()
+            query = (Session
                      .query(Users)
                      .filter(Users.open_id == open_id)
                      .first()
                      )
             if msgtype == "voice":
-                session.add(TimeCapsule(open_id=open_id, type=msgtype, file_id=message, time=time))
+                Session.add(TimeCapsule(open_id=open_id, type=msgtype, file_id=message, time=Time))
                 query.check_voice = True
             else:
-                session.add(TimeCapsule(open_id=open_id, type=msgtype, message=message, time=time))
+                Session.add(TimeCapsule(open_id=open_id, type=msgtype, message=message, time=Time))
                 query.check_text = True
-            session.commit()
-            session.close()
+            Session.commit()
+            Session.close()
             return True
 
     # 线下寄信
     def sendOfflineCapsule(self, sender_name, sender_tel, receiver_name, receiver_tel, receiver_addr, capsule_tag,
                            time):
-        session = self.__Session_class()
-        query = (session
+        Session = self.__Session_class()
+        query = (Session
                  .query(OfflineCapsule)
                  .filter(OfflineCapsule.capsule_tag == capsule_tag.lower())
                  .first()
                  )
         if query is None:
-            abort(404, message="Invaild capsule tag")
+            abort(404, message="取信码无效")
             return False
         elif query.sender_name is not None:
-            abort(409, message="Capsule tag has been used")
+            abort(409, message="取信码已被使用")
             return False
         else:
             query.sender_name = sender_name
@@ -160,27 +162,30 @@ class database(object):
             query.receiver_tel = receiver_tel
             query.receiver_addr = receiver_addr
             query.time = time
-            session.commit()
-            session.close()
+            Session.commit()
+            Session.close()
             return True
 
     # 获取默认flag
     def getDefaultFlag(self):
-        session = self.__Session_class()
-        query = (session
-                 .query(DefaultFlag)
-                 .all()
-                 )
-        arr = []
-        for flag in query:
-            arr.append(flag.flag)
-        session.close()
-        return arr
+        if "defaultFlag" not in session:
+            Session = self.__Session_class()
+            query = (Session
+                     .query(DefaultFlag)
+                     .all()
+                     )
+            arr = []
+            for flag in query:
+                arr.append(flag.flag)
+            Session.close()
+            session['defaultFlag'] = arr
+        random.seed(time.time())
+        return random.sample(session['defaultFlag'], 6)
 
     # 判断是否填写时光胶囊
     def checkTimeCapsule(self, open_id):
-        session = self.__Session_class()
-        query = (session
+        Session = self.__Session_class()
+        query = (Session
                  .query(Users)
                  .filter(Users.open_id == open_id)
                  .first()
@@ -189,8 +194,8 @@ class database(object):
 
     # 判断是否填写flag
     def checkFlag(self, open_id):
-        session = self.__Session_class()
-        query = (session
+        Session = self.__Session_class()
+        query = (Session
                  .query(Users)
                  .filter(Users.open_id == open_id)
                  .first()

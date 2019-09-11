@@ -10,8 +10,10 @@ class sendFlag(Resource):
         openId = checkLogin()
         checkSubscribe(openId)
         obj = database()
+        if not obj.getInfo(openId):
+            abort(404, message="请先填写信息")
         if obj.checkFlag(openId):
-            abort(409, message="Flag already exists.")
+            abort(409, message="已经填写过flag")
         else:
             data = request.get_json(force=True)
             _flag = pickle.dumps(data['flag'])
@@ -20,4 +22,4 @@ class sendFlag(Resource):
                     "errcode": 0
                 })
             else:
-                abort(404, message="No information for user.")
+                abort(404, message="请先填写信息。")

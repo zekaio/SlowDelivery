@@ -17,4 +17,4 @@ class getFlag(Resource):
                 "flag": _flag
             })
         else:
-            abort(404, message="Flag does not exist.")
+            abort(404, message="请先填写flag。")
