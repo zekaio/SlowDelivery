@@ -36,6 +36,8 @@ class sendTimeCapsule(Resource):
                                  "wb")
                         f.write(base64.b64decode(t["data"]))
                         f.close()
+                        obj.sendTimeCapsule(openId, data['type'], msg, data['time'])
+
                     else:
                         abort(404, message="录音文件不存在。")
                 except:
@@ -48,7 +50,7 @@ class sendTimeCapsule(Resource):
                     msg = data['message']
                 except:
                     abort(400, message="参数错误。")
-            obj.sendTimeCapsule(openId, data['type'], msg, data['time'])
+            obj.sendTimeCapsule(openId, data['type'], msg, data['time'],data['send_offline'],data['address'])
         return jsonify({
             "errcode": 0,
             "errmsg": ""

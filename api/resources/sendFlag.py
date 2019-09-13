@@ -17,9 +17,7 @@ class sendFlag(Resource):
         else:
             data = request.get_json(force=True)
             _flag = pickle.dumps(data['flag'])
-            if obj.sendFlag(openId, data['name'], _flag):
-                return jsonify({
-                    "errcode": 0
-                })
-            else:
-                abort(404, message="请先填写信息。")
+            obj.sendFlag(openId, _flag)
+            return jsonify({
+                "errcode": 0
+            })

@@ -142,9 +142,10 @@ url:"https://hemc.100steps.net/folder_name/api/method_name"
 
 #### 返回参数
 
-| 名称 | 类型  | 说明     |
-| ---- | ----- | -------- |
-| flag | Array | 返回数组 |
+| 名称 | 类型   | 说明     |
+| ---- | ------ | -------- |
+| name | String | 姓名     |
+| flag | Array  | 返回数组 |
 
 #### 错误信息
 
@@ -164,14 +165,14 @@ url:"https://hemc.100steps.net/folder_name/api/method_name"
 
 #### 请求参数
 
-| 名称         | 类型    | 必填 | 说明              |
-| ------------ | ------- | ---- | ----------------- |
-| type         | String  | 是   | `text`或是`voice` |
-| message      | String  | 否   | 文字信件          |
-| file_id      | String  | 否   | 录音id            |
-| time         | String  | 是   | 毕业时间          |
-| send_offline | Boolean | 是   | 是否选择线下寄信  |
-| address      | String  | 是   | 线下寄信地址      |
+| 名称         | 类型    | 必填                             | 说明              |
+| ------------ | ------- | -------------------------------- | ----------------- |
+| type         | String  | 是                               | `text`或是`voice` |
+| message      | String  | 否                               | 文字信件          |
+| file_id      | String  | 否                               | 录音id            |
+| time         | String  | 是                               | 毕业时间          |
+| send_offline | Boolean | 是（文字寄信时）                 | 是否选择线下寄信  |
+| address      | String  | 是（文字寄信时且选择线下寄信时） | 线下寄信地址      |
 
 #### 返回参数
 
@@ -267,6 +268,8 @@ url:"https://hemc.100steps.net/folder_name/api/method_name"
 #### 错误信息
 
 `401`：未绑定微信账号
+
+`405`：未填写信息
 
 `407`：用户未关注公众号
 

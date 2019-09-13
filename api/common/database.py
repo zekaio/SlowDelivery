@@ -39,6 +39,9 @@ class TimeCapsule(Base):
     message = Column(Text, nullable=True)
     file_id = Column(Text, nullable=True)
     time = Column(Integer, nullable=False)
+    send_offline = Column(Boolean, nullable=True, default=False)
+    address = Column(Text, nullable=True)
+    tel = Column(String(11), nullable=True)
 
 
 class OfflineCapsule(Base):
@@ -86,7 +89,7 @@ class database(object):
         return True
 
     # 保存flag
-    def sendFlag(self, open_id, name, flag):
+    def sendFlag(self, open_id,  flag):
         data = self.getInfo(open_id)
         if not data:
             return False
@@ -98,7 +101,7 @@ class database(object):
                      .first()
                      )
             query.check_flag = True
-            Session.add(Flags(open_id=open_id, name=name, flag=flag))
+            Session.add(Flags(open_id=open_id, name=data['name'], flag=flag))
             Session.commit()
             Session.close()
             return True
@@ -118,12 +121,13 @@ class database(object):
             return query.flag
 
     # 保存信件
-    def sendTimeCapsule(self, open_id, msgtype, message, Time):
+    def sendTimeCapsule(self, open_id, msgtype, message, Time, send_offline=False, address=None):
         data = self.getInfo(open_id)
         if not data:
             abort(405, message="请先填写信息。")
             return False
         else:
+            tel = data['tel']
             Session = self.__Session_class()
             query = (Session
                      .query(Users)
@@ -131,10 +135,14 @@ class database(object):
                      .first()
                      )
             if msgtype == "voice":
-                Session.add(TimeCapsule(open_id=open_id, type=msgtype, file_id=message, time=Time))
+                Session.add(
+                    TimeCapsule(open_id=open_id, type=msgtype, file_id=message, time=Time, send_offline=send_offline,
+                                address=address, tel=tel))
                 query.check_voice = True
             else:
-                Session.add(TimeCapsule(open_id=open_id, type=msgtype, message=message, time=Time))
+                Session.add(
+                    TimeCapsule(open_id=open_id, type=msgtype, message=message, time=Time, send_offline=send_offline,
+                                address=address, tel=tel))
                 query.check_text = True
             Session.commit()
             Session.close()
@@ -142,7 +150,7 @@ class database(object):
 
     # 线下寄信
     def sendOfflineCapsule(self, sender_name, sender_tel, receiver_name, receiver_tel, receiver_addr, capsule_tag,
-                           time):
+                           Time):
         Session = self.__Session_class()
         query = (Session
                  .query(OfflineCapsule)
@@ -161,13 +169,17 @@ class database(object):
             query.receiver_name = receiver_name
             query.receiver_tel = receiver_tel
             query.receiver_addr = receiver_addr
-            query.time = time
+            query.time = Time
             Session.commit()
             Session.close()
             return True
 
     # 获取默认flag
-    def getDefaultFlag(self):
+    def getDefaultFlag(self, open_id):
+        data = self.getInfo(open_id)
+        if not data:
+            abort(405, message="请先填写信息。")
+            return False
         if "defaultFlag" not in session:
             Session = self.__Session_class()
             query = (Session

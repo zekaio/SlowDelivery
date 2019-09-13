@@ -39,7 +39,9 @@ class TimeCapsule(Base):
     message = Column(Text, nullable=True)
     file_id = Column(Text, nullable=True)
     time = Column(Integer, nullable=False)
-
+    send_offline = Column(Boolean, nullable=True, default=False)
+    address = Column(Text, nullable=True)
+    tel = Column(String(11),nullable=True)
 
 class OfflineCapsule(Base):
     __tablename__ = 'offlineCapsule'

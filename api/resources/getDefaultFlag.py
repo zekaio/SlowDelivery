@@ -9,7 +9,7 @@ class getDefaultFlag(Resource):
         openId = checkLogin()
         checkSubscribe(openId)
         obj = database()
-        arr = obj.getDefaultFlag()
+        arr = obj.getDefaultFlag(openId)
         return jsonify({
             "flags": arr
         })
