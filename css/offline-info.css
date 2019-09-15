@@ -1,0 +1,108 @@
+*{
+    margin:0;
+    padding:0;
+    font-family: "黑体";
+}
+body{
+    background-image: url(../img/bg3.jpg);
+    background-repeat:no-repeat;
+    background-size:100vw 100vh;
+    background-attachment: fixed;
+    overflow-x: hidden;
+}
+.box{
+    position:relative;
+    width:80vw;height:100vh;
+    margin-left:10vw;margin-top:7%;margin-bottom:7%;
+    padding-top:10vh;
+    border-radius:7.5px;
+    background-color:#ffffff;
+    opacity:0.9;
+    box-shadow: 5px 5px 10px rgb(118,116,113,0.6);
+}
+.d1{
+    width:5vw;
+    position: absolute;
+    top:2vw;left:1vw; 
+}
+.d2{
+    width:5vw;
+    position: absolute;
+    bottom:2vw;right:1vw;
+}
+.item1{
+    width:100%;
+    margin-bottom:0.2vh;
+    height:6vw;
+    padding-left:20%;
+}
+.item2{
+    width:100%;
+    margin-bottom:0.4vh;
+    height:8vw;
+    padding-left:20%;
+}
+textarea{
+    width:60%; 
+    position:relative;
+    left:20%;
+    margin-bottom:1vh;
+    height:18vw;
+    padding-left:20%;
+    font-size:3vw;
+    border-radius: 3px;
+    border:solid #b5a7c5 2px;
+    padding-left:2px;
+    resize:none;
+}
+.tips{
+    font-size:4vw;
+    float:left;
+    vertical-align: middle;
+}
+select {
+    border-radius: 4px;
+    border:solid #b5a7c5 2px;
+    font-size:3vw;
+    height:5vw;
+    line-height:5vw;
+    padding-left:2px;
+    appearance:none;
+    -moz-appearance:none;
+    -webkit-appearance:none;
+}
+.icon{
+    width:63%;
+    height:8vw;
+    background: url("../img/select.png") no-repeat;
+    background-position:99% 50%;
+    background-size:5vw 5vw;
+}
+input{
+    font-size:3vw;
+    border-radius: 3px;
+    border:solid #b5a7c5 2px;
+    height:7vw;
+    line-height:7vw;
+    width:60%;
+    padding-left:2px;
+}
+.hidden{
+    visibility:hidden;
+}
+.err{
+    color:red;
+    font-size:3vw;
+}
+.btn{
+    margin-left:6.5vw;
+    width:35vw; height:11vw;
+    background:#b5a7c5;
+    color:#ffffff;
+    border-radius:5px;
+    font-size:5vw;
+    line-height:11vw;
+    text-align:center;
+    vertical-align: middle;
+    margin-top:6vh;
+}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/index.css">
+    <script src="swiper/dist/js/swiper.min.js"></script>
+    <script src="js/jquery.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <div class="swiper-lazy bg" data-background="img/bg1.jpg">
+                        <img class="swiper-lazy title" data-src="img/title1.png">   
+                        <img class="swiper-lazy arrow" data-src="img/arrow1.png">
+                        <img class="swiper-lazy logo" data-src="img/logo1.png">
+                        <div class="swiper-lazy-preloader"></div> 
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="swiper-lazy bg" data-background="img/bg2.jpg">
+                        <div class="box under">
+                            <img class="swiper-lazy npc" data-src="img/npc.png">  
+                        </div>
+                        <div class="box front" onclick="change()">
+                            <p id="w1"></p>
+                            <p id="w2"></p>
+                            <p id="w3"></p>
+                            <img class="swiper-lazy next" data-src="img/arrow2.png">
+                        </div>
+                        <div class="swiper-lazy-preloader"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/vue.js"></script>
+    <script src="js/vue-router.js"></script>
+    <script src="js/conf.js"></script>
+    <script src="js/offline-index.js"></script>
+</body>
+</html>
