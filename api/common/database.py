@@ -108,17 +108,21 @@ class database(object):
 
     # 获取flag
     def getFlag(self, open_id):
-        Session = self.__Session_class()
-        query = (Session
-                 .query(Flags)
-                 .filter(Flags.open_id == open_id)
-                 .first()
-                 )
-        Session.close()
-        if not query:
-            return False
+        data = self.getInfo(open_id)
+        if not data:
+            abort(404,message="请先填写姓名和手机号")
         else:
-            return query.flag
+            Session = self.__Session_class()
+            query = (Session
+                     .query(Flags)
+                     .filter(Flags.open_id == open_id)
+                     .first()
+                     )
+            Session.close()
+            if not query:
+                return False
+            else:
+                return query.flag
 
     # 保存信件
     def sendTimeCapsule(self, open_id, msgtype, message, Time, send_offline=False, address=None):
