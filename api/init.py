@@ -41,7 +41,8 @@ class TimeCapsule(Base):
     time = Column(Integer, nullable=False)
     send_offline = Column(Boolean, nullable=True, default=False)
     address = Column(Text, nullable=True)
-    tel = Column(String(11),nullable=True)
+    tel = Column(String(11), nullable=True)
+
 
 class OfflineCapsule(Base):
     __tablename__ = 'offlineCapsule'
@@ -79,7 +80,15 @@ while num:
         file.writelines([randomTag, "\n"])
     except:
         continue
+file.close()
+
+# 插入flag
+f = open("flags.txt", "r",encoding="utf-8")
+line = f.readline().strip('\n')
+while line:
+    cursor.execute('insert into `defaultFlag` (`flag`) values (%s)', [line])
+    conn.commit()
+    line = f.readline().strip('\n')
 cursor.close()
 conn.close()
-file.close()
 print("done.")
