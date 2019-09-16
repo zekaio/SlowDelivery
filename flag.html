@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/flag.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.19.0/dist/axios.min.js"></script>
+    <script src="js/jquery.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-ui-dist@1.12.1/jquery-ui.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery-ui-dist@1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-ui-touch-punch@0.2.3/jquery.ui.touch-punch.min.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/vue-router.js"></script>
+    <script src="js/conf.js"></script>
+    <script>
+        $(function () {
+            $("#sortable").sortable();
+            $("#sortable").disableSelection();
+        });
+    </script>
+</head>
+
+<body>
+    <img class="jump" src="img/btn1.png" onclick="next()">
+    <div id="app">
+        <div class="box" id="box">
+            <img class="icon" id="icon1" src="img/icon2.png"><span id="num">{{count}}/8</span>
+            <div class="all">
+                <div class="col">
+                    <flag v-for="(item,index) of flagList" v-if="index==0" :content="item" :index="index"
+                        :is-choose="imgShow[index].show" @choose="handleChoose" @delete="handleDelete"></flag>
+                    <img class="tips" id="tips" src="img/tips1.png">
+
+
+
+                    <flag v-for="(item,index) of flagList" v-if="index==1" :content="item" :index="index"
+                        :is-choose="imgShow[index].show" @choose="handleChoose" @delete="handleDelete"></flag>
+                    <flag v-for="(item,index) of flagList" v-if="index==2" :content="item" :index="index"
+                        :is-choose="imgShow[index].show" @choose="handleChoose" @delete="handleDelete">"</flag>
+                </div>
+                <div class="col">
+                    <flag v-for="(item,index) of flagList" v-if="index==3" :content="item" :index="index"
+                        :is-choose="imgShow[index].show" @choose="handleChoose" @delete="handleDelete"></flag>
+                    <flag v-for="(item,index) of flagList" v-if="index==4" :content="item" :index="index"
+                        :is-choose="imgShow[index].show" @choose="handleChoose" @delete="handleDelete"></flag>
+                    <flag v-for="(item,index) of flagList" v-if="index==5" :content="item" :index="index"
+                        :is-choose="imgShow[index].show" @choose="handleChoose" @delete="handleDelete"></flag>
+                </div>
+            </div>
+            <div class="btn" @click="changeAchange">换一换</div>
+            <div class="free" id="free">
+                <input v-model="inputValue" id="myself" class="myself" type="text" maxlength="12"
+                    placeholder="也能在这里写下你的flag哦~">
+                <div class="enter" @click="handleSubmit"></div>
+            </div>
+        </div>
+        <div class="box box2" id="box2">
+            <img class="icon sortIcon" id="icon2" src="img/icon2.png"><span id="num">{{count}}/8</span>
+            <div class="text sortText">长按拖动 调整位置</div>
+            <div style="clear: both;"></div>
+            <ul id="sortable">
+                <todo-item v-for="(item,index) of list" :key="index" :content="item" :index="index"
+                    @delete="handleDelete"></todo-item>
+            </ul>
+            <div class="btn2" onclick="sendData()">生成flag清单</div>
+            <div class="text tipText" id="tipText">只能立一次flag哦~</div>
+        </div>
+    </div>
+    <script>
+        //固定元素高度
+        var winHeight = $(window).height();
+        document.body.style.backgroundSize = "100vw " + winHeight + "px";
+        document.getElementById("box").style.height = 0.7 * winHeight + "px";
+        document.getElementById("box").style.marginTop = 0.1 * winHeight + "px";
+        document.getElementById("box2").style.height = 0.6 * winHeight + "px";
+        document.getElementById("box2").style.marginTop = 0.02 * winHeight + "px";
+        document.getElementById("tips").style.marginTop = -0.04 * winHeight + 'px';
+        document.getElementById("tips").style.marginBottom = 0.018 * winHeight + 'px';
+        document.getElementById("free").style.height = 0.08 * winHeight + 'px';
+        document.getElementById("myself").style.backgroundSize = "12vw " + 0.045 * winHeight + "px";
+        document.getElementById("myself").style.top = 0.03 * winHeight + "px";
+        document.getElementById("icon1").style.top = 0.01 * winHeight + "px";
+        document.getElementById("icon2").style.top = 0.01 * winHeight + "px";
+        document.oncontextmenu = function (e) {
+            e.preventDefault();
+        };
+        $(function () {
+            $("#sortable").sortable();
+            $("#sortable").disableSelection();
+        });
+
+        axios.get(prefix + 'getDefaultFlag')
+            .then(function (res) {
+                main.$data.flagList = res.data.flags;
+            })
+            .catch(function (err) {
+                if (err.response) {
+                    switch (err.response.status) {
+                        case 401:
+                            Bindwx();
+                            break;
+                        case 405:
+                            window.location.href="info.html";
+                            break;
+                        case 407:
+                            Subscribe();
+                            break;
+                    }
+                }
+            });
+        var touchValue = {
+            x: 5,
+            y: 5,
+            sx: 0,
+            sy: 0,
+            ex: 0,
+            ey: 0
+        };
+        window.addEventListener("touchstart", function () {
+            var event = event || window.event;
+            touchValue.sx = event.targetTouches[0].pageX;
+            touchValue.sy = event.targetTouches[0].pageY;
+            touchValue.ex = touchValue.sx;
+            touchValue.ey = touchValue.sy;
+        });
+        window.addEventListener("touchmove", function (event) {
+            var event = event || window.event;
+            event.preventDefault();
+            touchValue.ex = event.targetTouches[0].pageX;
+            touchValue.ey = event.targetTouches[0].pageY;
+        });
+        window.addEventListener("touchend", function (event) {
+            var event = event || window.event;
+            var changeX = touchValue.ex - touchValue.sx;
+            var changeY = touchValue.ey - touchValue.sy;
+            window.getSelection ? window.getSelection().removeAllRanges() : document.selection.empty();
+        });
+
+        function next() {
+            window.location.href = "capsule.html";
+        }
+        Vue.component("flag", {
+            props: ['content', 'index', 'isChoose'],
+            data() {
+                return {
+                    id: null,
+                }
+            },
+            template: `
+                <div class="back">
+                    <div class="block" @click="tick">
+                        <img class="tick" v-if="isChoose" src="img/yes1.png">
+                        {{content}}
+                    </div>
+                </div>
+                `,
+            methods: {
+                tick: function () {
+                    if (!this.isChoose) {
+                        this.$emit('choose', this.content);
+                    } else {
+                        this.$emit('delete', this.content)
+                    }
+                }
+            }
+        })
+        Vue.component('todo-item', {
+            props: ['content', 'index'],
+            template: `
+                <li>
+                    <div class="content">
+                        <span class="word">{{content}}</span><img @click="handleClick" class="no" src="img/no.png">
+                    </div>
+                </li>
+                `,
+            methods: {
+                handleClick: function () {
+                    this.$emit('delete', this.content);
+                }
+            }
+        })
+        var main = new Vue({
+            el: "#app",
+            data() {
+                return {
+                    inputValue: '',
+                    list: [],
+                    flagList: ["", "", "", "", "", ""],
+                    count: 0,
+                    imgShow: [{
+                        show: false
+                    }, {
+                        show: false
+                    }, {
+                        show: false
+                    }, {
+                        show: false
+                    }, {
+                        show: false
+                    }, {
+                        show: false
+                    }]
+                };
+            },
+            methods: {
+                handleSubmit: function () {
+                    if ((!this.inputValue == '') && (this.count <= 7)) {
+                        this.list.push(this.inputValue);
+                        this.inputValue = '';
+                        judgeImg();
+                        this.count++;
+                    }
+                },
+                handleDelete: function (content) {
+                    this.list.splice(this.list.indexOf(content), 1);
+                    judgeImg();
+                    this.count--;
+                },
+                handleChoose: function (content) {
+                    if (this.count <= 7) {
+                        this.list.push(content);
+                        judgeImg();
+                        this.count++;
+                    }
+                },
+                changeAchange: function () {
+                    let that = this;
+                    axios.get(prefix + 'getDefaultFlag').then(function (
+                        res) {
+                        that.flagList = res.data.flags;
+                    }).then(function () {
+                        judgeImg();
+                    }).catch(function (err) {
+                        console.log(err);
+                    });
+                }
+            }
+        })
+
+        function judgeImg() {
+            for (let i = 0; i < main.$data.flagList.length; i++) {
+                if (main.$data.list.indexOf(main.$data.flagList[i]) != -1) {
+                    main.$data.imgShow[i].show = true;
+                } else {
+                    main.$data.imgShow[i].show = false;
+                }
+            }
+        }
+        var clicked = false;
+
+        function sendData() {
+            let flags = document.getElementsByClassName("word");
+            let flagarr = new Array;
+            for (let a = 0; a < flags.length; a++) {
+                flagarr.push(flags[a].innerText);
+            }
+            console.log(flagarr);
+            if (!clicked) {
+                clicked = true;
+                axios.post(prefix + 'sendFlag', {
+                        name: JSON.stringify(sessionStorage.getItem('name')),
+                        flag: JSON.stringify(flagarr)
+                    })
+                    .then(function (res) {
+                        window.location.href="flaglist.html"
+                        console.log(res);
+                    })
+                    .catch(function (err) {
+                        if (err.response) {
+                            switch (err.response.status) {
+                                case 401:
+                                    Bindwx();
+                                    break;
+                                case 404: 
+                                    window.location.href="info.html"
+                                    break;
+                                case 407:
+                                    Subscribe();
+                                    break;
+                                case 409:
+                                    console.log("已填写过flag")
+                                    break;
+                            }
+                        } else {
+                            alert("请求发送失败，请稍后再试");
+                        }
+                        clicked = false;
+                    })
+            }
+        }
+    </script>
+</body>
+
+</html>

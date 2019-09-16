@@ -1,21 +1,6 @@
 const prefix = "/2019/future-mail/api/";
 const bbt ="https://hemc.100steps.net/2017/wechat/Home/Index/index?state=";
 const bbtPublic="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MjM5NDA4NzM4MA==&scene=124#wechat_redirect";
-// function getNowFormatDate(){
-//     var date = new Date();
-//     var seperator1 = "-";
-//     var year = date.getFullYear();
-//     var month = date.getMonth() + 1;
-//     var strDate = date.getDate();
-//     if (month >= 1 && month <= 9) {
-//         month = "0" + month;
-//     }
-//     if (strDate >= 0 && strDate <= 9) {
-//         strDate = "0" + strDate;
-//     }
-//     var currentdate = year + seperator1 + month + seperator1 + strDate;
-//     return(currentdate);
-// }
 //活动起止
 $.ajax({
     url:prefix+"isOngoing",
@@ -53,7 +38,11 @@ $.ajax({
             timestamp: arr.timestamp, 
             nonceStr: arr.nonceStr, 
             signature: arr.signature,
-            jsApiList: ['startRecord','stopRecord','onVoiceRecordEnd','onVoicePlayEnd','playVoice','pauseVoice','uploadVoice','stopVoice'] 
+            jsApiList: [                    
+            'checkJsApi',//判断当前客户端版本是否支持指定JS接口
+            'onMenuShareTimeline',//分享给好友
+            'onMenuShareAppMessage'//分享到朋友圈
+        ]
         });
         wx.ready(function(){
             wx.onMenuShareTimeline({
