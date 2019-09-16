@@ -43,8 +43,9 @@ def checkSubscribe(open_id):
         assess_token = data['access_token']
     userinfo = requests.get(
         "https://api.weixin.qq.com/cgi-bin/user/info?access_token=" + assess_token + "&openid=" + open_id + "&lang=zh_CN").text
-    if "subscribe" in userinfo:
-        subscribe = userinfo['subscribe']
+    user_json = json.loads(userinfo)
+    if "subscribe" in user_json:
+        subscribe = user_json['subscribe']
         if subscribe:
             return True
         else:
