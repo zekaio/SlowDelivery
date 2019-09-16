@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/capsule.css">
+</head>
+<body>
+    <div id="app">
+        <div id="page1" class="page1">
+            <div id="box" class="box">
+                <img src="img/title2.png" class="title">
+                <div class="item1">
+                    <div class="tips">毕业时间 <span>默认毕业寄出</span></div>
+                </div>
+                <div class="item2">
+                    <select id="graduate" class="icon">
+                        <option>2020</option>
+                        <option>2021</option>
+                        <option>2022</option>
+                        <option selected>2023</option>
+                        <option>2024</option>
+                    </select>
+                </div>
+                <div class="item1">
+                    <div class="tips">信纸类型 <span>一种类型只能寄一封信哦</span></div>
+                </div>
+                <div class="which">
+                    <div class="back" onclick="yes1()">
+                        <div class="block"><img class="yes" id="yes1" src="img/yes2.png">文字</div>
+                    </div>
+                    <div class="back" onclick="yes2()">
+                        <div class="block"><img class="yes hidden" id="yes2" src="img/yes2.png">语音</div>
+                    </div>
+                </div>
+                <div class="btn" onclick="next()">确定</div>
+        </div>
+        <router-view></router-view>
+    </div>
+    <script src="js/jquery.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/vue-router.js"></script>
+    <script src="js/conf.js"></script>
+    <script src="js/capsule.js"></script>
+</div>
+</body>
+</html>

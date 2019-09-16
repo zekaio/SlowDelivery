@@ -29,7 +29,7 @@
             $("#box").css("height","9vh");
         }
         var tt=0;
-        function getDate(){
+        function getNowFormatDate(){
             var date = new Date();
             var year = date.getFullYear();
             var month = date.getMonth() + 1;
@@ -45,7 +45,7 @@
         }
         window.onload=function(){
             $("#w1").html(sessionStorage.getItem('name')+"同学：");
-            $("#w2").html("你好！你于"+getDate()+"光临我们的木棉");
+            $("#w2").html("你好！你于"+getNowFormatDate()+"光临我们的木棉");
             $("#w3").html("邮局");
             $("#w1").addClass("word ty");
             $("#w2").addClass("word ty ty1");
