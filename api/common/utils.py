@@ -35,11 +35,12 @@ def checkSubscribe(open_id):
     response = requests.get(
         "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + cfg['APPID'] + "&secret=" + cfg[
             'AppSecret'], headers=headers).text
-    if "errcode" in response:
+    data = json.loads(response)
+    if "errcode" in data:
         abort(401, message="APPID is invalid.")
         return False
     else:
-        assess_token = response['access_token']
+        assess_token = data['access_token']
     userinfo = requests.get(
         "https://api.weixin.qq.com/cgi-bin/user/info?access_token=" + assess_token + "&openid=" + open_id + "&lang=zh_CN").text
     if "subscribe" in userinfo:
