@@ -62,6 +62,20 @@
         border-radius:7.5px;
         padding:3vh 6vw 1vh 6vw;
     }
+    .box2{
+        position: absolute;
+        top:172%; 
+        width:74vw;
+        margin:0 auto;
+        left:0; right:0;
+        height:13.5vh;
+        background:#ffffff;
+        color:#333333;
+        font-size:4vw;
+        opacity:0.9;
+        border-radius:7.5px;
+        padding:3vh 6vw 1vh 12vw;
+    }
     .arrow2{
         position:absolute;
         right:10vw;bottom:2vh;
