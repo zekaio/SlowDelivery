@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/intro.css">
+    <script src="js/jquery.js"></script>
+</head>
+<body>
+    <div id="app">
+        <img class="bg" src="img/bg2.jpg">
+        <div class="box under">
+            <img class="npc" src="img/npc.png">
+        </div>
+        <div class="box front" onclick="change()">
+            <p id="w1"></p>
+            <p id="w2"></p>
+            <p id="w3"></p>
+            <div class="btn2" id="mainpage" onclick="back()">主页</div>
+            <div id="bottom" class="bottom hidden">
+            <div class="reject" id="mypage" onclick="back()">主页</div>
+            <div class="agree" id="send" onclick="send()">再寄一封</div>
+        </div>
+        </div>
+    </div>
+    <script src="js/conf.js"></script>
+    <script>
+        var tt=0;
+        function count(){
+            tt++;
+            console.log(tt);
+        }
+        window.onload=function(){
+            $("#w1").html("九月之初 乾坤未定 时光满递 不负韶华");
+            $("#w1").addClass("word ty");
+            clock=setInterval("count()",1000);
+        }
+        function change(){
+            if (tt>=2){
+                clearInterval(clock);tt=0;
+                checkCapsule();
+            }
+        }
+        var url=""
+        function checkCapsule(){
+            $.ajax({
+                url:prefix+"checkTimeCapsule",
+                type:"post",
+                dataType:"json",
+                success:function(res){
+                    if ((res.check_text)&&(res.check_voice)){
+                        $("#mainpage").css("display","block");
+                    }
+                     else if (res.check_text){
+                        $("#bottom").removeClass("hidden");
+                        url="capsule.html#/voice"
+                     }
+                      else if (res.check_voice){
+                        $("#bottom").removeClass("hidden");
+                        url="capsule.html#/letter"
+                      }
+                },
+                error:function(err){
+                    if (err.errmsg==401){
+                        Bindwx();
+                    }
+                    if (err.errmsg==407){
+                        Subscribe();
+                    }
+                }
+            })
+        }
+        function back(){
+            window.location.href="conclusion.html";
+        }
+        function send(){
+            window.location.href=url;
+        }
+    </script>
+</body>
+</html>

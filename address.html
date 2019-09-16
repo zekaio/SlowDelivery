@@ -53,7 +53,8 @@
                     if (err.response) {
                         switch (err.response.status) {
                             case 400:
-                            console.log("没有获取到file_id或msg")
+                                console.log("没有获取到file_id或msg");
+                                break;
                             case 401:
                                 Bindwx();
                                 break;

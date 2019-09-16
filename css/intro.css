@@ -1,11 +1,11 @@
 *{
     margin:0;
     padding:0;
-    font-family:"黑体"
+    font-family:"SimHei"
 }
-html{
-    width:100%;
-    height:100%;
+html, body, #app{ 
+    width: 100vw; height: 100vh; 
+    overflow:hidden;
 }
 .bg{
     width:100%;
@@ -19,31 +19,45 @@ html{
 }
 .box{
     position:absolute;
-    top:72%;left:5vw;
-    width:80vw;
-    height:12vh;
+    top:72%; 
+    left:0; right:0;
+    margin:0 auto;
+    width:80vw; height:13.5vh;
+    background:#ffffff;
+    color:#333333;
     font-size:4vw;
-    background-color:#ffffff;
     opacity:0.9;
     border-radius:7.5px;
-    padding:3vh 6vw 3vh 6vw;
+    padding:3vh 6vw 1vh 6vw;
+}
+.npc2{
+    position:absolute;
+    width:60%;
+    bottom:21vh;right:-7vw;
 }
 .box2{
     position:absolute;
-    top:72%;left:5vw;
-    width:80vw;
-    height:17vh;
+    top:72%; 
+    left:0; right:0;
+    margin:0 auto;
+    width:80vw; height:20vh;
+    background:#ffffff;
+    color:#333333;
     font-size:4vw;
-    background-color:#ffffff;
     opacity:0.9;
     border-radius:7.5px;
-    padding:3vh 6vw 3vh 6vw;
+    padding:3vh 6vw 1vh 6vw;
 }
 .under{
     z-index:1;
 }
 .front{
     z-index:2;
+}
+.arrow2{
+    position:absolute;
+    right:10vw;bottom:2vh;
+    width:5vw;
 }
 .word{
     text-align:left;
@@ -52,9 +66,8 @@ html{
     white-space:nowrap;
     overflow:hidden;
 }
-.ty{
-    animation: type 2s steps(50, end) forwards;
-    animation-fill-mode:both;
+p{
+    margin-bottom:2px;
 }
 .ty{
     animation: type 2s steps(50, end) forwards;
@@ -78,27 +91,21 @@ html{
 @keyframes type{
     from {width:0;}
 }
-.next{
-    position:absolute;
-    width:5vw;
-    right:8vw;
-    bottom:5px;
-}
 .btn{
     margin-left:22.5vw;
-    width:35vw; height:11vw;
+    width:35vw; height:10vw;
     background:#b5a7c5;
     color:#ffffff;
     border-radius:5px;
     font-size:5vw;
-    line-height:11vw;
+    line-height:10vw;
     text-align:center;
     position:relative;
     margin-top:13%;
 }
 .btn2{
-    margin-left:26vw;
-    width:25vw; height:9vw;
+    margin-left:22.5vw;
+    width:35vw; height:10vw;
     background:#b5a7c5;
     color:#ffffff;
     border-radius:5px;
@@ -121,23 +128,23 @@ html{
     visibility:hidden;
 }
 .reject{
-    width:28vw; height:8vw;
+    width:35vw; height:10vw;
     background: #e6dee8;
     color:#9475a5;
     border-radius:3px;
     font-size:5vw;
-    line-height:8vw;
+    line-height:10vw;
     text-align:center;
     vertical-align: middle;
     margin:2vw;
 }
 .agree{
-    width:28vw; height:8vw;
+    width:35vw; height:10vw;
     background:#b5a7c5;
     color:#ffffff;
     border-radius:3px;
     font-size:5vw;
-    line-height:8vw;
+    line-height:10vw;
     text-align:center;
     vertical-align: middle;
     margin:2vw;

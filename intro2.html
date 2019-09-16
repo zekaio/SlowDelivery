@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/intro.css">
+    <script src="js/jquery.js"></script>
+</head>
+<body>
+    <div id="app">
+        <img class="bg" src="img/bg2.jpg">
+        <div class="box under">
+            <img class="npc" src="img/npc.png">
+        </div>
+        <div class="box front" onclick="change()">
+            <p id="w1"></p>
+            <p id="w2"></p>
+            <p id="w3"></p>
+            <p id="w4"></p>
+            <img class="arrow2" src="img/arrow2.png">
+        </div>
+    </div>
+    <script src="js/conf.js"></script>
+    <script>
+        var tt=0;
+        window.onload=function(){
+            $("#w1").html("大学的旅途会经历寒潮、风雷与霹雳，我们");
+            $("#w2").html("共享着雾霭、流岚与虹霓，唯有不变的是我");
+            $("#w3").html("们行囊中的理想与初心");
+            $("#w4").html("");
+            $("#w1").addClass("word ty");
+            $("#w2").addClass("word ty ty2");
+            $("#w3").addClass("word ty ty3");
+            clock=setInterval("count()",1000);
+        }
+        function count(){
+            tt++;
+            console.log(tt);
+        }
+        var status=0;
+        function change(){
+            if ((status==0)&&(tt>=5)){
+                clearInterval(clock);tt=0;
+                clock=setInterval("count()",1000);
+                $("#w1").removeClass("word ty");
+                $("#w2").removeClass("word ty ty2");
+                $("#w3").removeClass("word ty ty3");
+                $("#w1").html("给毕业后的自己写一封信吧,与过去、现在");
+                $("#w2").html("和未来对话,更是与自己和世界对话。木棉");
+                $("#w3").html("邮局会将其珍藏起来,待到毕业之时发还给");
+                $("#w4").html("您");
+                setTimeout(function(){
+                    $("#w1").addClass("word ty");
+                    $("#w2").addClass("word ty ty2");
+                    $("#w3").addClass("word ty ty3");
+                    $("#w4").addClass("word ty ty4");
+                },1);
+                status=1;
+            }
+            if ((status==1)&&(tt>=3)){
+                clearInterval(clock);tt=0;
+                window.location.href="capsule.html";
+            }
+        }
+    </script>
+</body>
+</html>
