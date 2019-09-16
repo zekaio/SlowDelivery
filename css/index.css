@@ -1,7 +1,7 @@
     *{
         margin:0;
         padding:0;
-        font-family:"黑体"
+        font-family:"SimHei"
     }
     html, body, #app{ 
         width: 100%; height: 100%; 
@@ -22,8 +22,7 @@
     }
     .title{
         position: absolute;
-        left:8vw;
-        bottom:8%;
+        left:8vw; bottom:8%;
         width:20vh; height:20vh;
         animation:enter 2s;
         animation-delay:0.5s;
@@ -33,7 +32,7 @@
         0%{opacity:0;}
         100%{opacity:1;}
     }
-    .arrow{
+    .arrow1{
         position:absolute;
         width:10vw;
         left:45vw;
@@ -49,22 +48,33 @@
         width:60%;
         bottom:16vh;right:-7vw;
     }
+    /* 每行最多17个字 17*4+6*2=80 */
     .box{
         position:absolute;
-        top:172%;left:5vw;
-        width:80vw;
-        height:14vh;
+        top:172%; 
+        left:0; right:0;
+        margin:0 auto;
+        width:80vw; height:13.5vh;
+        background:#ffffff;
+        color:#333333;
         font-size:4vw;
-        background-color:#ffffff;
         opacity:0.9;
         border-radius:7.5px;
         padding:3vh 6vw 1vh 6vw;
+    }
+    .arrow2{
+        position:absolute;
+        right:10vw;bottom:2vh;
+        width:5vw;
     }
     .under{
         z-index:1;
     }
     .front{
         z-index:2;
+    }
+    p{
+        margin-bottom:2px;
     }
     .word{
         text-align: left;
@@ -88,9 +98,4 @@
     }
     @keyframes type{
         from {width:0;}
-    }
-    .next{
-        position:absolute;
-        right:8vw;bottom:2vh;
-        width:5vw;
     }
