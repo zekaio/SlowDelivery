@@ -12,8 +12,6 @@ function judge(num){
 
 var clicked=false;
 function submit(){
-    if (!clicked){
-    clicked=true;
     let name = $("#name").val();
     let phone = $("#phone").val();
     if (name == "" ){
@@ -33,32 +31,35 @@ function submit(){
         $("#err2").addClass("hidden"); 
      }
     if (($("#err1").hasClass("hidden")) && ($("#err2").hasClass("hidden"))){
-      axios.post(prefix + 'updateInfo', {
-        name: JSON.stringify(name),
-        tel: JSON.stringify(phone)
-      })
-      .then(function (res) {
-        window.location.href="intro.html"
-      })
-      .catch(function (err) {
-        if (err.response) {
-            switch (err.response.status) {
-                case 401:
-                    Bindwx();
-                    break;
-                case 407:
-                    Subscribe();
-                    break;
-                case 409:
-                    console.log("已填写过信息");
-                    window.location.href="intro.html"
-                    break;
-            }
-        } else {
-            alert("请求发送失败，请稍后再试");
+      if (!clicked){
+        clicked=true;
+            axios.post(prefix + 'updateInfo', {
+              name: JSON.stringify(name),
+              tel: JSON.stringify(phone)
+            })
+            .then(function (res) {
+              sessionStorage.setItem('name', name);
+              window.location.href="intro.html"
+            })
+            .catch(function (err) {
+              if (err.response) {
+                  switch (err.response.status) {
+                      case 401:
+                          Bindwx();
+                          break;
+                      case 407:
+                          Subscribe();
+                          break;
+                      case 409:
+                          console.log("已填写过信息");
+                          window.location.href="intro.html"
+                          break;
+                  }
+              } else {
+                  alert("请求发送失败，请稍后再试");
+              }
+              clicked = false;
+            })
         }
-        clicked = false;
-      })
-    }
     }
 }
