@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from config.config import cfg
 from sqlalchemy import create_engine, Column, Integer, String, Text, LargeBinary, Boolean
 from sqlalchemy.ext.declarative import declarative_base
