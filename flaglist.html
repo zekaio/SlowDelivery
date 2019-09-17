@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <img class="generate" id="generate" crossOrigin="anonymous">
+    <img class="generate box2" id="generate" crossOrigin="anonymous">
     <div class="big2 hidden" id="main2">
         <div class="box2">
             <img src="img/title4.png" class="title">
@@ -89,6 +89,7 @@
             },
 
         })
+
         axios.get(prefix + 'getFlag')
             .then(function (res) {
                 document.getElementById("name").innerText = res.data.name;

@@ -32,9 +32,6 @@
                     <flag v-for="(item,index) of flagList" v-if="index==0" :content="item" :index="index"
                         :is-choose="imgShow[index].show" @choose="handleChoose" @delete="handleDelete"></flag>
                     <img class="tips" id="tips" src="img/tips1.png">
-
-
-
                     <flag v-for="(item,index) of flagList" v-if="index==1" :content="item" :index="index"
                         :is-choose="imgShow[index].show" @choose="handleChoose" @delete="handleDelete"></flag>
                     <flag v-for="(item,index) of flagList" v-if="index==2" :content="item" :index="index"
@@ -72,11 +69,9 @@
         //固定元素高度
         var winHeight = $(window).height();
         document.body.style.backgroundSize = "100vw " + winHeight + "px";
-        document.getElementById("box").style.height = 0.7 * winHeight + "px";
-        document.getElementById("box").style.marginTop = 0.1 * winHeight + "px";
         document.getElementById("box2").style.height = 0.6 * winHeight + "px";
         document.getElementById("box2").style.marginTop = 0.02 * winHeight + "px";
-        document.getElementById("tips").style.marginTop = -0.04 * winHeight + 'px';
+        document.getElementById("tips").style.marginTop = -0.05 * winHeight + 'px';
         document.getElementById("tips").style.marginBottom = 0.018 * winHeight + 'px';
         document.getElementById("free").style.height = 0.08 * winHeight + 'px';
         document.getElementById("myself").style.backgroundSize = "12vw " + 0.045 * winHeight + "px";
@@ -106,6 +101,9 @@
                             break;
                         case 407:
                             Subscribe();
+                            break;
+                        case 409:
+                            window.location.href = "flaglist.html"
                             break;
                     }
                 }
@@ -152,7 +150,7 @@
                 <div class="back">
                     <div class="block" @click="tick">
                         <img class="tick" v-if="isChoose" src="img/yes1.png">
-                        {{content}}
+                        <span style="text-align: left; display: inline-block;" >{{content}}</span>
                     </div>
                 </div>
                 `,
@@ -187,7 +185,7 @@
                 return {
                     inputValue: '',
                     list: [],
-                    flagList: ["", "", "", "", "", ""],
+                    flagList: ["好好的谈一次恋爱", "", "", "", "", ""],
                     count: 0,
                     imgShow: [{
                         show: false
@@ -256,7 +254,7 @@
             for (let a = 0; a < flags.length; a++) {
                 flagarr.push(flags[a].innerText);
             }
-            console.log(flagarr);
+
             if (!clicked) {
                 clicked = true;
                 axios.post(prefix + 'sendFlag', {
@@ -280,7 +278,7 @@
                                     Subscribe();
                                     break;
                                 case 409:
-                                    console.log("已填写过flag")
+                                    window.location.href = "flaglist.html"
                                     break;
                             }
                         } else {
