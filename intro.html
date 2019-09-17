@@ -41,6 +41,7 @@
             console.log(tt);
         }
         var status = 0;
+        var flaged = false
 
         function change() {
             if ((status == 0) && (tt >= 5)) {
@@ -58,10 +59,22 @@
                 }, 1);
                 status = 1;
             }
+            // judge weather 立 flag already
+            $.ajax({
+                url: prefix + "checkFlag",
+                type: "get",
+                success: function (res) {
+                    if (res.check_flag)
+                        flaged = true
+                }
+            })
             if ((status == 1) && (tt >= 3)) {
                 clearInterval(clock);
                 tt = 0;
-                window.location.href = "flag.html";
+                if (!flaged)
+                    window.location.href = "flag.html";
+                else
+                    window.location.href = "flaglist.html"
             }
         }
     </script>

@@ -99,7 +99,7 @@
                         case 405:
                             window.location.href = "info.html";
                             break;
-                        case 407:
+                        case 406:
                             Subscribe();
                             break;
                         case 409:
@@ -150,7 +150,7 @@
                 <div class="back">
                     <div class="block" @click="tick">
                         <img class="tick" v-if="isChoose" src="img/yes1.png">
-                        <span style="text-align: left; display: inline-block;" >{{content}}</span>
+                        <span style="text-align: left; display: inline-block; word-break: keep-all;" >{{content}}</span>
                     </div>
                 </div>
                 `,
@@ -185,7 +185,7 @@
                 return {
                     inputValue: '',
                     list: [],
-                    flagList: ["", "", "", "", "", ""],
+                    flagList: ["爱我就跟我走把，哈哈", "", "", "", "", ""],
                     count: 0,
                     imgShow: [{
                         show: false
@@ -204,7 +204,8 @@
             },
             methods: {
                 handleSubmit: function () {
-                    if ((!this.inputValue == '') && (this.count <= 7)) {
+                    if ((!this.inputValue == '') && (this.count <= 7) && this.list.indexOf(this
+                        .inputValue) === -1) {
                         this.list.push(this.inputValue);
                         this.inputValue = '';
                         judgeImg();
@@ -274,7 +275,7 @@
                                 case 404:
                                     window.location.href = "info.html"
                                     break;
-                                case 407:
+                                case 406:
                                     Subscribe();
                                     break;
                                 case 409:
