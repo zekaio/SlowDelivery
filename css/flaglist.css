@@ -132,7 +132,8 @@ li {
 
 .name,
 .time {
-    font-family: "KaiTi", "_GB2312", "STKaiti", "Microsoft YaHei"
+    /* font-family: "KaiTi", "_GB2312", "STKaiti", "Microsoft YaHei" */
+    font-family: "STKaiti", "KaiTi", "Microsoft YaHei", "YouYuan";
 }
 
 .time {

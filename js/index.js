@@ -64,7 +64,7 @@ function change() {
     status = 1;
   }
   axios.get(prefix + "getInfo").then(function(res) {
-    if (!res.data.record) infoCompleted = true;
+    if (res.data.record) infoCompleted = true;
   });
   if (status == 1 && tt >= 5) {
     clearInterval(clock);
