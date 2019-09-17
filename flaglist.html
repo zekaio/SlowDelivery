@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="css/flaglist.css">
     <script src="js/jquery.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@0.19.0/dist/axios.min.js"></script>
-    <script src="js/dom-to-image.js"></script>
+    <!-- <script src="js/dom-to-image.js"></script> -->
+    <script src="js/html2canvas.min.js"></script>
 </head>
 
 <body>
@@ -88,63 +89,39 @@
             },
 
         })
-        // axios.get(prefix + 'getFlag')
-        //     .then(function (res) {
-        //         document.getElementById("name").innerText = res.data.name;
-        //         main.$data.flags = res.data.flag;
-        //         main2.$data.flags = res.data.flag;
-        //     })
-        //     .catch(function (err) {
-        //         if (err.response) {
-        //             switch (err.response.status) {
-        //                 case 401:
-        //                     Bindwx();
-        //                     break;
-        //                 case 404:
-        //                     console.log("未填写flag");
-        //                     location.href = "flag.html";
-        //                     break;
-        //                 case 407:
-        //                     Subscribe();
-        //                     break;
-        //             }
-        //         } else {
-        //             alert("请求发送失败，请稍后再试");
-        //         }
-        //     })
-
-        //图片？
-
-        setTimeout( () => {
-            var node = document.getElementById('main2');
-            console.log(node)
-        domtoimage.toSvg(node)
-            .then(function (dataUrl) {
-                console.log("get svg url")
-                domtoimage.impl.util.makeImage(dataUrl).then(domtoimage.impl.util.delay(100)).then(function(img){
-                    console.log("success")
-                    console.log(img)
-                    let canvas = document.createElement('canvas');
-                    canvas.width = domtoimage.impl.util.width(node)
-                    canvas.height = domtoimage.impl.util.height(node)
-                    canvas.getContext('2d').drawImage(img, 0, 0);
-                    console.log(canvas)
-                    let uri = canvas.toDataURL()
-                    console.log(uri.substr(0, 50))                  
-                    $("#generate")[0].src = uri
-                })
-                // var img = new Image();
-                // img.setAttribute("id","generate")
-                // img.setAttribute('crossOrigin', 'anonymous');
-                // img.onerror = () => {console.log}
-                // img.src = dataUrl;
-                // document.body.appendChild(img);
-                // $("#generate")[0].src = dataUrl;
+        axios.get(prefix + 'getFlag')
+            .then(function (res) {
+                document.getElementById("name").innerText = res.data.name;
+                main.$data.flags = res.data.flag;
+                main2.$data.flags = res.data.flag;
+                //图片？
+                setTimeout(() => {
+                    var node = document.getElementById('main2');
+                    html2canvas(node).then((canvas) => {
+                        $("#generate")[0].src = canvas.toDataURL()
+                    })
+                }, 500)
             })
-            .catch(function (error) {
-                console.error('oops, something went wrong!', error);
-            });
-        }, 5000)
+            .catch(function (err) {
+                if (err.response) {
+                    switch (err.response.status) {
+                        case 401:
+                            Bindwx();
+                            break;
+                        case 404:
+                            console.log("未填写flag");
+                            location.href = "flag.html";
+                            break;
+                        case 407:
+                            Subscribe();
+                            break;
+                    }
+                } else {
+                    alert("请求发送失败，请稍后再试");
+                }
+            })
+
+
 
 
         function Continue() {
