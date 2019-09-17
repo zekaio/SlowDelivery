@@ -51,7 +51,10 @@ class sendTimeCapsule(Resource):
                     msg = data['message']
                 except:
                     abort(400, message="参数错误。")
-            obj.sendTimeCapsule(openId, data['type'], msg, data['time'],data['send_offline'],data['address'])
+            if(data['send_offline']):
+                obj.sendTimeCapsule(openId, data['type'], msg, data['time'],data['send_offline'],data['address'])
+            else:
+                obj.sendTimeCapsule(openId, data['type'], msg, data['time'],data['send_offline'])
         return jsonify({
             "errcode": 0,
             "errmsg": ""
