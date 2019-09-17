@@ -185,7 +185,7 @@
                 return {
                     inputValue: '',
                     list: [],
-                    flagList: ["爱我就跟我走把，哈哈", "", "", "", "", ""],
+                    flagList: ["", "", "", "", "", ""],
                     count: 0,
                     imgShow: [{
                         show: false
@@ -205,7 +205,7 @@
             methods: {
                 handleSubmit: function () {
                     if ((!this.inputValue == '') && (this.count <= 7) && this.list.indexOf(this
-                        .inputValue) === -1) {
+                            .inputValue) === -1) {
                         this.list.push(this.inputValue);
                         this.inputValue = '';
                         judgeImg();

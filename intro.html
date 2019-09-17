@@ -42,6 +42,7 @@
         }
         var status = 0;
         var flaged = false
+        var firstQueryFlag = true
 
         function change() {
             if ((status == 0) && (tt >= 5)) {
@@ -60,14 +61,17 @@
                 status = 1;
             }
             // judge weather 立 flag already
-            $.ajax({
-                url: prefix + "checkFlag",
-                type: "get",
-                success: function (res) {
-                    if (res.check_flag)
-                        flaged = true
-                }
-            })
+            if (firstQueryFlag) {
+                firstQueryFlag = false
+                $.ajax({
+                    url: prefix + "checkFlag",
+                    type: "get",
+                    success: function (res) {
+                        if (res.check_flag)
+                            flaged = true
+                    }
+                })
+            }
             if ((status == 1) && (tt >= 3)) {
                 clearInterval(clock);
                 tt = 0;

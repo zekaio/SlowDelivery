@@ -47,6 +47,7 @@ function count() {
 }
 var status = 0; //第几段话
 var infoCompleted = false;
+var firstQueryInfo = true;
 function change() {
   if (status == 0 && tt >= 2) {
     clearInterval(clock);
@@ -63,9 +64,12 @@ function change() {
     }, 1);
     status = 1;
   }
-  axios.get(prefix + "getInfo").then(function(res) {
-    if (res.data.record) infoCompleted = true;
-  });
+  if (firstQueryInfo) {
+    firstQueryInfo = false;
+    axios.get(prefix + "getInfo").then(function(res) {
+      if (res.data.record) infoCompleted = true;
+    });
+  }
   if (status == 1 && tt >= 5) {
     clearInterval(clock);
     tt = 0;
@@ -86,7 +90,7 @@ function change() {
     clearInterval(clock);
     tt = 0;
     if (infoCompleted) window.location.href = "intro.html";
-    window.location.href = "info.html";
+    else window.location.href = "info.html";
   }
 }
 
