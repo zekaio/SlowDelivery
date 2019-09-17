@@ -87,7 +87,7 @@ body {
 /* 主容器 */
 .box {
     width: 90%;
-    padding-bottom: 50px;
+    padding: 10px 0 25px 0;
     position: relative;
     left: 5%;
     margin-top: 10vh;
