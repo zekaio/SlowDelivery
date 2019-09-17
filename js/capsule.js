@@ -128,7 +128,7 @@ function checkTimeCapsule() {
 }
 
 function next() {
-  checkCapsule();
+  checkTimeCapsule();
   var gradute = $("#graduate option:selected").val();
   sessionStorage.setItem("time", gradute);
   if ($("#yes1").hasClass("hidden")) {
