@@ -101,7 +101,7 @@
                             Bindwx();
                             break;
                         case 405:
-                            window.location.href="info.html";
+                            window.location.href = "info.html";
                             break;
                         case 407:
                             Subscribe();
@@ -259,11 +259,11 @@
             if (!clicked) {
                 clicked = true;
                 axios.post(prefix + 'sendFlag', {
-                        name: JSON.stringify(sessionStorage.getItem('name')),
-                        flag: JSON.stringify(flagarr)
+                        name: sessionStorage.getItem('name'),
+                        flag: flagarr
                     })
                     .then(function (res) {
-                        window.location.href="flaglist.html"
+                        window.location.href = "flaglist.html"
                         console.log(res);
                     })
                     .catch(function (err) {
@@ -272,8 +272,8 @@
                                 case 401:
                                     Bindwx();
                                     break;
-                                case 404: 
-                                    window.location.href="info.html"
+                                case 404:
+                                    window.location.href = "info.html"
                                     break;
                                 case 407:
                                     Subscribe();

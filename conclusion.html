@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
@@ -7,10 +8,11 @@
     <link rel="stylesheet" href="css/index.css">
     <script src="js/jquery.js"></script>
 </head>
+
 <body>
     <div id="app">
         <img class="bg" src="img/bg1.jpg">
-        <img class="title" src="img/title1.png">   
+        <img class="title" src="img/title1.png">
         <img class="logo" src="img/logo1.png">
         <div class="btn btn1" onclick="checkFlag()">flag清单</div>
     </div>
@@ -18,31 +20,29 @@
     <script src="js/vue-router.js"></script>
     <script src="js/conf.js"></script>
     <script>
-        function checkFlag(){
-        $.ajax({
-            url:prefix+"checkFlag",
-            type:"post",
-            dataType:"json",
-            success:function(res){
-                if (res.check_flag){
-                    window.location.href="flaglist.html"
+        function checkFlag() {
+            $.ajax({
+                url: prefix + "checkFlag",
+                type: "get",
+                success: function (res) {
+                    if (res.check_flag) {
+                        window.location.href = "flaglist.html"
+                    } else {
+                        sessionStorage.setItem('err', 0);
+                        window.location.href = "sorry.html";
+                    }
+                },
+                error: function (err) {
+                    if (err.errmsg == 401) {
+                        Bindwx();
+                    }
+                    if (err.errmsg == 407) {
+                        Subscribe();
+                    }
                 }
-                else{
-                    sessionStorage.setItem('err', 0);
-                    window.location.href="sorry.html";
-                }
-            },
-            error:function(err){
-                if (err.errmsg==401){
-                    Bindwx();
-                }
-                if (err.errmsg==407){
-                    Subscribe();
-                }
-            }
-        })
-    }
+            })
+        }
     </script>
 </body>
-</html>
 
+</html>

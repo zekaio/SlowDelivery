@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="css/info.css">
     <script src="https://cdn.jsdelivr.net/npm/axios@0.19.0/dist/axios.min.js"></script>
 </head>
+
 <body>
     <div id="box" class="box">
         <img src="img/title5.png" class="title">
@@ -28,58 +30,59 @@
         document.getElementById("box").style.height = 0.7 * winHeight + "px";
         document.body.style.backgroundSize = "100vw " + winHeight + "px";
         document.getElementById("btn").style.bottom = 0.4 * winHeight + "px";
-        var clicked=false;
-        function submit(){
-            if (!clicked){
-            let address=$("#addr").val();
-             if (address==""){
-                $("#err1").html("收信人地址不能为空");
-                $("#err1").removeClass("hidden")
-            }
-             else{
-                $("#err1").html("");
-                $("#err1").addClass("hidden");
-                axios.post(prefix+ 'sendTimeCapsule', {
-                    type:JSON.stringify(sessionStorage.getItem('type')),
-                    message:JSON.stringify(sessionStorage.getItem('message')),
-                    time:JSON.stringify(sessionStorage.getItem('time')),
-                    send_offline:JSON.stringify(true),
-                    address:JSON.stringify(address)
-                })
-                .then(function (res) {
-                    window.location.href="capsule-end.html";
-                })
-                .catch(function (err) {
-                    if (err.response) {
-                        switch (err.response.status) {
-                            case 400:
-                                console.log("没有获取到file_id或msg");
-                                break;
-                            case 401:
-                                Bindwx();
-                                break;
-                            case 404:
-                                console.log("服务器上没有音频")
-                                break;
-                            case 405: 
-                                window.location.href="info.html"
-                                break;
-                            case 407:
-                                Subscribe();
-                                break;
-                            case 409:
-                                console.log("已填写过")
-                                break;
-                        }
-                    } else {
-                        alert("请求发送失败，请稍后再试");
-                    }
-                    clicked = false;
-                })
-            }
+        var clicked = false;
+
+        function submit() {
+            if (!clicked) {
+                let address = $("#addr").val();
+                if (address == "") {
+                    $("#err1").html("收信人地址不能为空");
+                    $("#err1").removeClass("hidden")
+                } else {
+                    $("#err1").html("");
+                    $("#err1").addClass("hidden");
+                    axios.post(prefix + 'sendTimeCapsule', {
+                            type: sessionStorage.getItem('type'),
+                            message: sessionStorage.getItem('message'),
+                            time: sessionStorage.getItem('time'),
+                            send_offline: true,
+                            address: address
+                        })
+                        .then(function (res) {
+                            window.location.href = "capsule-end.html";
+                        })
+                        .catch(function (err) {
+                            if (err.response) {
+                                switch (err.response.status) {
+                                    case 400:
+                                        console.log("没有获取到file_id或msg");
+                                        break;
+                                    case 401:
+                                        Bindwx();
+                                        break;
+                                    case 404:
+                                        console.log("服务器上没有音频")
+                                        break;
+                                    case 405:
+                                        window.location.href = "info.html"
+                                        break;
+                                    case 407:
+                                        Subscribe();
+                                        break;
+                                    case 409:
+                                        console.log("已填写过")
+                                        break;
+                                }
+                            } else {
+                                alert("请求发送失败，请稍后再试");
+                            }
+                            clicked = false;
+                        })
+                }
 
             }
         }
     </script>
 </body>
+
 </html>
