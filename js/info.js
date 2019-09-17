@@ -7,32 +7,33 @@ if ($(window).height() <= 500) {
   document.body.style.backgroundImage = "url('./img/bg3.png')";
 }
 
-axios.get(prefix + 'getInfo')
-  .then(function (res) {
+axios
+  .get(prefix + "getInfo")
+  .then(function(res) {
     if (res.data.record) {
       window.location.href = "intro.html";
     }
   })
-  .catch(function (err) {
+  .catch(function(err) {
     if (err.response) {
       switch (err.response.status) {
         case 401:
           Bindwx();
           break;
-        case 407:
+        case 406:
           Subscribe();
           break;
       }
     } else {
       alert("请求发送失败，请稍后再试");
     }
-  })
+  });
 
 function judge(num) {
-  if (!(/^1(3|4|5|6|7|8|9)\d{9}$/.test(num))) {
-    return false
+  if (!/^1(3|4|5|6|7|8|9)\d{9}$/.test(num)) {
+    return false;
   } else {
-    return true
+    return true;
   }
 }
 
@@ -56,36 +57,37 @@ function submit() {
   } else {
     $("#err2").addClass("hidden");
   }
-  if (($("#err1").hasClass("hidden")) && ($("#err2").hasClass("hidden"))) {
+  if ($("#err1").hasClass("hidden") && $("#err2").hasClass("hidden")) {
     if (!clicked) {
       clicked = true;
-      axios.post(prefix + 'updateInfo', {
+      axios
+        .post(prefix + "updateInfo", {
           name: name,
           tel: phone
         })
-        .then(function (res) {
-          sessionStorage.setItem('name', name);
-          window.location.href = "intro.html"
+        .then(function(res) {
+          sessionStorage.setItem("name", name);
+          window.location.href = "intro.html";
         })
-        .catch(function (err) {
+        .catch(function(err) {
           if (err.response) {
             switch (err.response.status) {
               case 401:
                 Bindwx();
                 break;
-              case 407:
+              case 406:
                 Subscribe();
                 break;
               case 409:
                 console.log("已填写过信息");
-                window.location.href = "intro.html"
+                window.location.href = "intro.html";
                 break;
             }
           } else {
             alert("请求发送失败，请稍后再试");
           }
           clicked = false;
-        })
+        });
     }
   }
 }

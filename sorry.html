@@ -1,51 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
     <link rel="stylesheet" href="css/info.css">
 </head>
+
 <body>
     <div id="box" class="box">
-            <img src="img/title5.png" class="title">
-            <div class="sorry">
-                <p id="w1">抱歉，你还没有立flag</p>
-                <p id="w2">趁现在去明晰自己的目标吧</p>
-            </div>
-            <div id="bottom" class="bottom">
-                <div class="up" onclick="go()" id="btn1">去立flag</div>
-                <div class="down" onclick="mypage()" >主页</div>
-            </div>
+        <img src="img/title5.png" class="title">
+        <div class="sorry">
+            <p id="w1">抱歉，你还没有立flag</p>
+            <p id="w2">趁现在去明晰自己的目标吧</p>
         </div>
-        <script src="js/jquery.js"></script>
-        <script src="js/conf.js"></script>
-        <script>
-            url="flag.html";
-            var type=sessionStorage.getItem('err');
-            if (type==1){
-                $("#w1").html("抱歉，你还没有寄出文字信件");
-                $("#w2").html("趁现在向未来的自己问好吧！");
-                $("#btn1").html("去寄信");
-                sessionStorage.setItem('err', 0);
-                url="capsule.html#/letter"
-            }
-            if (type==2){
-                $("#w1").html("抱歉，你还没有寄出语音信件");
-                $("#w2").html("趁现在向未来的自己问好吧！");
-                $("#btn1").html("去寄信");
-                sessionStorage.setItem('err', 0);
-                url="capsule.html#/voice";
-            }
-            var winHeight = $(window).height();
-            document.getElementById("box").style.height = 0.6 * winHeight + "px";
-            document.body.style.backgroundSize = "100vw " + winHeight + "px";
-            function go(){
-                window.location.href=url;
-            }
-            function mypage(){
-                window.location.href="conclusion.html"
-            }
-        </script>
+        <div id="bottom" class="bottom">
+            <div class="up" onclick="go()" id="btn1">去立flag</div>
+            <div class="down" onclick="mypage()">主页</div>
+        </div>
+    </div>
+    <script src="js/jquery.js"></script>
+    <script src="js/conf.js"></script>
+    <script>
+        url = "flag.html";
+        var type = sessionStorage.getItem('err');
+        if (type == 1) {
+            $("#w1").html("抱歉，你还没有寄出文字信件");
+            $("#w2").html("趁现在向未来的自己问好吧！");
+            $("#btn1").html("去寄信");
+            sessionStorage.setItem('err', 0);
+            url = "capsule.html#/letter"
+        }
+        if (type == 2) {
+            $("#w1").html("抱歉，你还没有寄出语音信件");
+            $("#w2").html("趁现在向未来的自己问好吧！");
+            $("#btn1").html("去寄信");
+            sessionStorage.setItem('err', 0);
+            url = "capsule.html#/voice";
+        }
+        var winHeight = $(window).height();
+        document.getElementById("box").style.height = 0.6 * winHeight + "px";
+        document.body.style.backgroundSize = "100vw " + winHeight + "px";
+
+        function go() {
+            window.location.href = url;
+        }
+
+        function mypage() {
+            window.location.href = "conclusion.html"
+        }
+    </script>
 </body>
+
 </html>

@@ -1,4 +1,4 @@
-window.onload = function () {
+window.onload = function() {
   if ($(window).height() <= 500) {
     $("#box").css("height", 1.2 * $(window).height());
   } else if ($(window).height() >= 800) {
@@ -8,15 +8,15 @@ window.onload = function () {
   }
   document.body.style.backgroundSize = "100vw " + $(window).height() + "px";
   fetch(prefix + "setSession", {
-    method: 'get'
-  })
-}
+    method: "get"
+  });
+};
 
 function judge(num) {
-  if (!(/^1(3|4|5|6|7|8|9)\d{9}$/.test(num))) {
-    return false
+  if (!/^1(3|4|5|6|7|8|9)\d{9}$/.test(num)) {
+    return false;
   } else {
-    return true
+    return true;
   }
 }
 
@@ -45,7 +45,7 @@ function submit() {
   } else {
     $("#err1").addClass("hidden");
   }
-  //  
+  //
   if (sendphone == "") {
     $("#err2").html("手机号不能为空");
     $("#err2").removeClass("hidden");
@@ -55,14 +55,14 @@ function submit() {
   } else {
     $("#err2").addClass("hidden");
   }
-  //  
+  //
   if (receivepeople == "") {
     $("#err3").html("姓名不能为空");
     $("#err3").removeClass("hidden");
   } else {
     $("#err3").addClass("hidden");
   }
-  // 
+  //
   if (receivephone == "") {
     $("#err4").html("手机号不能为空");
     $("#err4").removeClass("hidden");
@@ -100,11 +100,11 @@ function submit() {
         capsule_tag: code,
         time: time
       }),
-      success: function () {
-        sessionStorage.setItem('name', sendpeople);
+      success: function() {
+        sessionStorage.setItem("name", sendpeople);
         window.location.href = "offline-end.html";
       },
-      error: function (err) {
+      error: function(err) {
         if (err.errmsg == 401) {
           Bindwx();
         }
@@ -116,10 +116,10 @@ function submit() {
           $("#err6").html("取信码已被使用");
           $("#err6").removeClass("hidden");
         }
-        if (err.errmsg == 407) {
+        if (err.errmsg == 406) {
           Subscribe();
         }
       }
-    })
+    });
   }
 }
