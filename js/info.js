@@ -7,6 +7,27 @@ if ($(window).height() <= 500) {
   document.body.style.backgroundImage = "url('./img/bg3.png')";
 }
 
+axios.get(prefix + 'getInfo')
+.then(function (res) {
+  if (res.data.record) {
+    window.location.href="intro.html";
+  }
+})
+.catch(function (err) {
+  if (err.response) {
+    switch (err.response.status) {
+      case 401:
+        Bindwx();
+        break;
+      case 407:
+        Subscribe();
+        break;
+    }
+  } else {
+    alert("请求发送失败，请稍后再试");
+  }
+})
+
 function judge(num) {
   if (!(/^1(3|4|5|6|7|8|9)\d{9}$/.test(num))) {
     return false
