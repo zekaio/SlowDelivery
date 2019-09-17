@@ -1,33 +1,37 @@
 </html>
 <!DOCTYPE html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
     <link rel="stylesheet" href="css/intro.css">
     <script src="https://cdn.jsdelivr.net/npm/axios@0.19.0/dist/axios.min.js"></script>
 </head>
+
 <body>
     <div id="app">
-            <img class="bg" src="img/bg2.jpg">
-            <div class="box2 under">
-                <img class="npc2" src="img/npc.png">
+        <img class="bg" src="img/bg2.jpg">
+        <div class="box2 under">
+            <img class="npc2" src="img/npc.png">
+        </div>
+        <div class="box2 front" onclick="change()">
+            <p id="w1"></p>
+            <p id="w2"></p>
+            <p id="w3"></p>
+            <div id="bottom" class="bottom hidden">
+                <div class="reject" onclick="no()">不了</div>
+                <div class="agree" onclick="yes()">好的</div>
             </div>
-            <div class="box2 front" onclick="change()">
-                <p id="w1"></p>
-                <p id="w2"></p>
-                <p id="w3"></p>
-                <div id="bottom" class="bottom hidden">
-                    <div class="reject" onclick="no()">不了</div>
-                    <div class="agree" onclick="yes()" >好的</div>
-                </div>
-            </div>
+        </div>
     </div>
     <script src="js/jquery.js"></script>
     <script src="js/vue.js"></script>
     <script src="js/vue-router.js"></script>
     <script src="js/conf.js"></script>
     <script src="js/ask.js"></script>
-</div>
+    </div>
 </body>
+
 </html>
