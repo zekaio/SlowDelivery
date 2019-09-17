@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
     <link rel="stylesheet" href="css/intro.css">
     <script src="js/jquery.js"></script>
 </head>
+
 <body>
     <div id="app">
         <img class="bg" src="img/bg2.jpg">
         <div class="box under">
-            <img class="npc" src="img/npc.png">  
+            <img class="npc" src="img/npc.png">
         </div>
         <div class="box front" id="box" onclick="change()">
             <p id="w1"></p>
@@ -22,14 +25,15 @@
     </div>
     <script src="js/conf.js"></script>
     <script>
-        if ($(window).height()<=500) {
-            $("#box").css("height","17vh");
+        if ($(window).height() <= 500) {
+            $("#box").css("height", "17vh");
         }
-        if ($(window).height()>=800) {
-            $("#box").css("height","9vh");
+        if ($(window).height() >= 800) {
+            $("#box").css("height", "9vh");
         }
-        var tt=0;
-        function getNowFormatDate(){
+        var tt = 0;
+
+        function getNowFormatDate() {
             var date = new Date();
             var year = date.getFullYear();
             var month = date.getMonth() + 1;
@@ -41,58 +45,65 @@
                 strDate = "0" + strDate;
             }
             var currentdate = year + "年" + month + "月" + strDate + "日";
-            return(currentdate);
+            return (currentdate);
         }
-        window.onload=function(){
-            $("#w1").html(sessionStorage.getItem('name')+"同学：");
-            $("#w2").html("你好！你于"+getNowFormatDate()+"光临我们的木棉");
+        window.onload = function () {
+            $("#w1").html(sessionStorage.getItem('name') + "同学：");
+            $("#w2").html("你好！你于" + getNowFormatDate() + "光临我们的木棉");
             $("#w3").html("邮局");
             $("#w1").addClass("word ty");
             $("#w2").addClass("word ty ty1");
             $("#w3").addClass("word ty ty33");
-            clock=setInterval("count()",1000);
+            clock = setInterval("count()", 1000);
         }
-        function count(){
+
+        function count() {
             tt++;
             console.log(tt);
         }
-        var status=0;
-        function change(){
-            if ((status==0)&&(tt>=3)){
-                clearInterval(clock);tt=0;
-                clock=setInterval("count()",1000);
+        var status = 0;
+
+        function change() {
+            if ((status == 0) && (tt >= 3)) {
+                clearInterval(clock);
+                tt = 0;
+                clock = setInterval("count()", 1000);
                 $("#w1").removeClass("word ty");
                 $("#w2").removeClass("word ty ty1");
                 $("#w3").removeClass("word ty ty33");
                 $("#w1").html("当再见成为你好时，我们已经从遥远的旅途");
                 $("#w2").html("归来，捧着沉甸甸的未来向你问好");
                 $("#w3").html("");
-                setTimeout(function(){
+                setTimeout(function () {
                     $("#w1").addClass("word ty");
                     $("#w2").addClass("word ty ty2");
-                },1);
-                status=1;
+                }, 1);
+                status = 1;
             }
-            if ((status==1)&&(tt>=4)){
-                clearInterval(clock);tt=0;
-                clock=setInterval("count()",1000);
+            if ((status == 1) && (tt >= 4)) {
+                clearInterval(clock);
+                tt = 0;
+                clock = setInterval("count()", 1000);
                 $("#w1").removeClass("word ty");
                 $("#w2").removeClass("word ty ty2");
                 $("#w1").html("九月之初 乾坤未定 时光慢递 不负韶华");
                 $("#w2").html("");
-                setTimeout(function(){
+                setTimeout(function () {
                     $("#w1").addClass("word ty");
-                },1);
-                status=2;
+                }, 1);
+                status = 2;
             }
-            if ((status==2)&&(tt>=2)){
-                clearInterval(clock);tt=0;
-                $("#again").css("display","block");
+            if ((status == 2) && (tt >= 2)) {
+                clearInterval(clock);
+                tt = 0;
+                $("#again").css("display", "block");
             }
         }
-        function back(){
-            window.location.href="offline-info.html";
+
+        function back() {
+            window.location.href = "offline-info.html";
         }
     </script>
 </body>
+
 </html>

@@ -1,10 +1,13 @@
 <!DOCTYPE html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/capsule.css">
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
 </head>
+
 <body>
     <div id="app">
         <div id="page1" class="page1">
@@ -34,14 +37,15 @@
                     </div>
                 </div>
                 <div class="btn" onclick="next()">确定</div>
+            </div>
+            <router-view></router-view>
         </div>
-        <router-view></router-view>
+        <script src="js/jquery.js"></script>
+        <script src="js/vue.js"></script>
+        <script src="js/vue-router.js"></script>
+        <script src="js/conf.js"></script>
+        <script src="js/capsule.js"></script>
     </div>
-    <script src="js/jquery.js"></script>
-    <script src="js/vue.js"></script>
-    <script src="js/vue-router.js"></script>
-    <script src="js/conf.js"></script>
-    <script src="js/capsule.js"></script>
-</div>
 </body>
+
 </html>
