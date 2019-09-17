@@ -1,6 +1,8 @@
 var winHeight = $(window).height();
 document.body.style.backgroundSize = "100vw " + winHeight + "px";
 document.getElementById("box").style.height = 0.6 * winHeight + "px";
+document.getElementById("box").style.paddingTop = 0.1 * winHeight + "px";
+document.getElementById("btn").style.top = 0.01 * winHeight + "px";
 if ($(window).height()<=500) {
   document.body.style.backgroundImage="url('./img/bg3.png')";
 }

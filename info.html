@@ -11,31 +11,33 @@
     <div id="box" class="box">
         <img src="img/decoration1.png" class="d1">
         <img src="img/decoration2.png" class="d2">
-        <div class="item1">
-            <div class="tips">昵称
-                <!-- <img src="img/icon1.png" class="icon"> -->
+        <div class="info" id="info1">
+            <div class="item1" >
+                <div class="tips">昵称
+                    <!-- <img src="img/icon1.png" class="icon"> -->
+                </div>
+            </div>
+            <div class="item2">
+                <input id="name"/>
+            </div>
+            <div class="item2">
+                <div class="err hidden" id="err1"></div>
             </div>
         </div>
-        <div class="item2">
-            <input id="name"/>
-        </div>
-        <div class="item2">
-            <div class="err hidden" id="err1"></div>
-        </div>
-
-        <div class="item1">
-            <div class="tips">手机号码
-                <!-- <img src="img/icon1.png" class="icon"> -->
+        <div class="info" id="info2">
+            <div class="item1">
+                <div class="tips">手机号码
+                    <!-- <img src="img/icon1.png" class="icon"> -->
+                </div>
+            </div>
+            <div class="item2">
+                <input id="phone" maxlength="11"/>
+            </div>
+            <div class="item2">
+                <div class="err hidden" id="err2"></div>
             </div>
         </div>
-        <div class="item2">
-            <input id="phone" maxlength="11"/>
-        </div>
-        <div class="item2">
-            <div class="err hidden" id="err2"></div>
-        </div>
-        <div class="btn" onclick="submit()">确定</div>
-        <!-- <router-link to="/start" class="btn">确认</router-link> -->
+        <div class="btn" id="btn" onclick="submit()">确定</div>
     </div>
     <script src="js/jquery.js"></script>
     <script src="js/conf.js"></script>
