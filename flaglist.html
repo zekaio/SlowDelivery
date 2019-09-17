@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <img class="generate" id="generate">
+    <img class="generate" id="generate" crossOrigin="anonymous">
     <div class="big2 hidden" id="main2">
         <div class="box2">
             <img src="img/title4.png" class="title">
@@ -88,44 +88,64 @@
             },
 
         })
-        axios.get(prefix + 'getFlag')
-            .then(function (res) {
-                document.getElementById("name").innerText = res.data.name;
-                main.$data.flags = res.data.flag;
-                main2.$data.flags = res.data.flag;
-            })
-            .catch(function (err) {
-                if (err.response) {
-                    switch (err.response.status) {
-                        case 401:
-                            Bindwx();
-                            break;
-                        case 404:
-                            console.log("未填写flag");
-                            location.href = "flag.html";
-                            break;
-                        case 407:
-                            Subscribe();
-                            break;
-                    }
-                } else {
-                    alert("请求发送失败，请稍后再试");
-                }
-            })
+        // axios.get(prefix + 'getFlag')
+        //     .then(function (res) {
+        //         document.getElementById("name").innerText = res.data.name;
+        //         main.$data.flags = res.data.flag;
+        //         main2.$data.flags = res.data.flag;
+        //     })
+        //     .catch(function (err) {
+        //         if (err.response) {
+        //             switch (err.response.status) {
+        //                 case 401:
+        //                     Bindwx();
+        //                     break;
+        //                 case 404:
+        //                     console.log("未填写flag");
+        //                     location.href = "flag.html";
+        //                     break;
+        //                 case 407:
+        //                     Subscribe();
+        //                     break;
+        //             }
+        //         } else {
+        //             alert("请求发送失败，请稍后再试");
+        //         }
+        //     })
 
         //图片？
-        var node = document.getElementById('main2');
-        domtoimage.toPng(node)
+
+        setTimeout( () => {
+            var node = document.getElementById('main2');
+            console.log(node)
+        domtoimage.toSvg(node)
             .then(function (dataUrl) {
-                alert(111);
-                var img = new Image();
-                img.src = dataUrl;
-                document.body.appendChild(img);
-                $("#generate").src = dataUrl;
+                console.log("get svg url")
+                domtoimage.impl.util.makeImage(dataUrl).then(domtoimage.impl.util.delay(100)).then(function(img){
+                    console.log("success")
+                    console.log(img)
+                    let canvas = document.createElement('canvas');
+                    canvas.width = domtoimage.impl.util.width(node)
+                    canvas.height = domtoimage.impl.util.height(node)
+                    canvas.getContext('2d').drawImage(img, 0, 0);
+                    console.log(canvas)
+                    let uri = canvas.toDataURL()
+                    console.log(uri.substr(0, 50))                  
+                    $("#generate")[0].src = uri
+                })
+                // var img = new Image();
+                // img.setAttribute("id","generate")
+                // img.setAttribute('crossOrigin', 'anonymous');
+                // img.onerror = () => {console.log}
+                // img.src = dataUrl;
+                // document.body.appendChild(img);
+                // $("#generate")[0].src = dataUrl;
             })
             .catch(function (error) {
                 console.error('oops, something went wrong!', error);
             });
+        }, 5000)
+
 
         function Continue() {
             window.location.href = "intro2.html";
