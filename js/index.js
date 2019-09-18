@@ -76,7 +76,7 @@ function change() {
     clock = setInterval("count()", 1000);
     $("#w1").removeClass("word ty");
     $("#w2").removeClass("word ty ty2");
-    $("#w1").html("在此之前，请先在这份清单署上你的名字，");
+    $("#w1").html("在此之前，请先在这份清单上写下自己想说的话，");
     $("#w2").html("订立你与未来的契约吧~");
     $("#w3").html("");
     $("#w4").html("");
