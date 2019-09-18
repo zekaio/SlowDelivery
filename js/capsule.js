@@ -193,11 +193,12 @@ $.ajax({
 
       function finishRecord() {
         clearInterval(timer);
-        this.isRecorded = true;
+        Third.$data.isRecorded = true;
         next();
       }
       /////松手结束录音////////////
       $("#talk").on("touchend", function(event) {
+        alert("record end");
         event.preventDefault();
         $("#talk").html("按住录音");
         END = new Date().getTime();
@@ -209,8 +210,9 @@ $.ajax({
           wx.stopRecord({
             success: function(res) {
               localId = res.localId;
+              alert(localId);
               finishRecord();
-              this.totalTime = END - START;
+              Third.$data.totalTime = END - START;
             }
           });
         }
@@ -220,7 +222,7 @@ $.ajax({
         complete: function(res) {
           localId = res.localId;
           finishRecord();
-          this.totalTime = 60;
+          Third.$data.totalTime = 60;
         }
       });
       //////录完跳到//////////////////
@@ -236,12 +238,12 @@ $.ajax({
         $("#continue").style.display = "none";
         localId = null;
         serverId = null;
-        this.isRecorded = false;
-        this.totalTime = 0;
+        Third.$data.isRecorded = false;
+        Third.$data.totalTime = 0;
       }
       //////试听录音/////////////////////////
       function CountDown() {
-        this.totalTime = this.totalTime - 1;
+        Third.$data.totalTime = Third.$data.totalTime - 1;
       }
       //单击播放 再按停止
       function Myvoice() {
