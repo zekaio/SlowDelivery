@@ -24,6 +24,7 @@ var localId = null;
 var serverId = null;
 var Playing = false;
 var timer = null;
+var clicked = false;
 var START;
 var END;
 var t;
@@ -31,13 +32,103 @@ var tt;
 var ttt;
 var tttt;
 var ttttt;
+//////试听录音/////////////////////////
+function CountDown() {
+  this.totalTime = this.totalTime - 1;
+}
+//单击播放 再按停止
+function Myvoice() {
+  if (Playing == false) {
+    Playing = true;
+    Play();
+  } else {
+    wx.stopVoice({
+      localId: localId,
+      success: function() {
+        Stop();
+      }
+    });
+  }
+}
 
+function Play() {
+  wx.playVoice({
+    localId: localId,
+    success: function() {
+      timer = setInterval(function() {
+        CountDown();
+      }, 1000);
+    }
+  });
+}
+
+function Stop() {
+  clearInterval(timer);
+  Playing = false;
+}
 const Third = {
   data() {
     return {
       isRecorded: false,
       totalTime: 0
     };
+  },
+  method: {
+    //////返回重录/////////////////
+    back() {
+      // $("#talk").style.display = "block";
+      // $("#again").style.display = "none";
+      // $("#continue").style.display = "none";
+      this.$refs.record.style.display = "none";
+      this.$refs.repeat.style.display = "block";
+      this.$refs.continue.style.display = "block";
+      localId = null;
+      serverId = null;
+      this.isRecorded = false;
+      this.totalTime = 0;
+    },
+    submitVoice() {
+      if (!clicked) {
+        $.ajax({
+          url: prefix + "sendTimeCapsule",
+          type: "post",
+          dataType: "json",
+          data: JSON.stringify({
+            type: sessionStorage.getItem("type"),
+            message: sessionStorage.getItem("message"),
+            time: sessionStorage.getItem("time"),
+            file_id: localId
+          }),
+          success: function(data) {
+            checkInfo.voice = true;
+            localStorage.setItem("checkInfo", JSON.stringify(checkInfo));
+            window.location.href = "capsule-end.html";
+          },
+          error: function(err) {
+            switch (err.errmsg) {
+              case 400:
+                console.log("没有获取到file_id或msg");
+              case 401:
+                Bindwx();
+                break;
+              case 404:
+                console.log("服务器上没有音频");
+                break;
+              case 405:
+                window.location.href = "info.html?capsule.html";
+                break;
+              case 406:
+                Subscribe();
+                break;
+              case 409:
+                console.log("已填写过");
+                break;
+            }
+          }
+        });
+        clicked = false;
+      }
+    }
   },
   mounted() {
     $.ajax({
@@ -161,53 +252,6 @@ const Third = {
             this.$refs.repeat.style.display = "block";
             this.$refs.continue.style.display = "block";
           }
-          //////返回重录/////////////////
-          function back() {
-            // $("#talk").style.display = "block";
-            // $("#again").style.display = "none";
-            // $("#continue").style.display = "none";
-            this.$refs.record.style.display = "none";
-            this.$refs.repeat.style.display = "block";
-            this.$refs.continue.style.display = "block";
-            localId = null;
-            serverId = null;
-            this.isRecorded = false;
-            this.totalTime = 0;
-          }
-          //////试听录音/////////////////////////
-          function CountDown() {
-            this.totalTime = this.totalTime - 1;
-          }
-          //单击播放 再按停止
-          function Myvoice() {
-            if (Playing == false) {
-              Playing = true;
-              Play();
-            } else {
-              wx.stopVoice({
-                localId: localId,
-                success: function() {
-                  Stop();
-                }
-              });
-            }
-          }
-
-          function Play() {
-            wx.playVoice({
-              localId: localId,
-              success: function() {
-                timer = setInterval(function() {
-                  CountDown();
-                }, 1000);
-              }
-            });
-          }
-
-          function Stop() {
-            clearInterval(timer);
-            Playing = false;
-          }
 
           wx.onVoicePlayEnd({
             success: function(res) {
@@ -216,50 +260,6 @@ const Third = {
             }
           });
           ////////保存录音/////////////////
-          var clicked = false;
-
-          function submitVoice() {
-            if (!clicked) {
-              $.ajax({
-                url: prefix + "sendTimeCapsule",
-                type: "post",
-                dataType: "json",
-                data: JSON.stringify({
-                  type: sessionStorage.getItem("type"),
-                  message: sessionStorage.getItem("message"),
-                  time: sessionStorage.getItem("time"),
-                  file_id: localId
-                }),
-                success: function(data) {
-                  checkInfo.voice = true;
-                  localStorage.setItem("checkInfo", JSON.stringify(checkInfo));
-                  window.location.href = "capsule-end.html";
-                },
-                error: function(err) {
-                  switch (err.errmsg) {
-                    case 400:
-                      console.log("没有获取到file_id或msg");
-                    case 401:
-                      Bindwx();
-                      break;
-                    case 404:
-                      console.log("服务器上没有音频");
-                      break;
-                    case 405:
-                      window.location.href = "info.html?capsule.html";
-                      break;
-                    case 406:
-                      Subscribe();
-                      break;
-                    case 409:
-                      console.log("已填写过");
-                      break;
-                  }
-                }
-              });
-              clicked = false;
-            }
-          }
         });
       }
     });
