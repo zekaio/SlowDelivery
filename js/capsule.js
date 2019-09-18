@@ -80,42 +80,6 @@ function getNowFormatDate() {
 }
 $("#time").html(getNowFormatDate());
 
-// 取出已存在的内容
-let userInfo,
-  checkInfo = localStorage.getItem("checkInfo");
-if (checkInfo) {
-  checkInfo = JSON.parse(checkInfo);
-  if (checkInfo.text && checkInfo.voice)
-    window.location.href = "conclusion.html";
-} else
-  axios
-    .get(prefix + "getInfo")
-    .then(function(res) {
-      let { record } = res.data;
-      if (record) {
-        userInfo = { name: res.data.name, tel: res.data.tel };
-        checkInfo = {
-          flag: res.data.check_flag,
-          text: res.data.check_text,
-          voice: res.data.check_voice
-        };
-        localStorage.setItem("userInfo", JSON.stringify(userInfo));
-        localStorage.setItem("checkInfo", JSON.stringify(checkInfo));
-      } else window.location.href = "info.html?from=capsule.html";
-    })
-    .catch(function(err) {
-      if (err.response) {
-        switch (err.response.status) {
-          case 401:
-            Bindwx();
-            break;
-          case 406:
-            Subscribe();
-            break;
-        }
-      }
-    });
-
 function yes1() {
   $("#yes1").removeClass("hidden");
   $("#yes2").addClass("hidden");

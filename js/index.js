@@ -20,8 +20,6 @@
 //       }
 //     }
 //   });
-let userInfo = null,
-  checkInfo = null;
 
 let section = [
   "欢迎光临木棉邮局，这里是毕业慢递专栏",

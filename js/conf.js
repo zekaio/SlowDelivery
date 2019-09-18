@@ -66,38 +66,36 @@ $.ajax({
 let userInfo = JSON.parse(localStorage.getItem("userInfo"));
 let checkInfo = JSON.parse(localStorage.getItem("checkInfo"));
 
-axios
-  .get(prefix + "getInfo")
-  .then(function(res) {})
-  .catch(function(err) {
-    if (err.response) {
-      switch (err.response.status) {
-        case 401:
-          Bindwx();
-          break;
-        case 406:
-          Subscribe();
-          break;
+function updateInfo(callback) {
+  if ((!userInfo || !checkInfo) && !~window.location.href.indexOf("info.html"))
+    $.ajax({
+      url: prefix + "getInfo",
+      type: "get",
+      dataType: "json",
+      success: function(res) {
+        let { record } = res.data;
+        if (record) {
+          userInfo = { name: res.data.name, tel: res.data.tel };
+          checkInfo = {
+            flag: res.data.check_flag,
+            text: res.data.check_text,
+            voice: res.data.check_voice
+          };
+          localStorage.setItem("userInfo", JSON.stringify(userInfo));
+          localStorage.setItem("checkInfo", JSON.stringify(checkInfo));
+          if (updateInfoCallback) callback(userInfo, checkInfo);
+        } else {
+          // enter from home page
+          if (window.location.href.match(/future-mail\/(index.html)?$/)) return;
+          window.location.href = "info.html?from=" + window.location.href;
+        }
       }
-    }
-  });
+    });
+}
 
-$.ajax({
-  url: prefix + "getInfo",
-  type: "get",
-  dataType: "json",
-  success: function(res) {
-    let { record } = res.data;
-    if (record) {
-      userInfo = { name: res.data.name, tel: res.data.tel };
-      checkInfo = {
-        flag: res.data.check_flag,
-        text: res.data.check_text,
-        voice: res.data.check_voice
-      };
-      localStorage.setItem("userInfo", JSON.stringify(userInfo));
-      localStorage.setItem("checkInfo", JSON.stringify(checkInfo));
-      section.splice(2, 1);
-    }
-  }
-});
+// 当且仅当不是首页或者个人信息页面， 才判断是否已经填写信息
+if (
+  !~window.location.href.indexOf("info.html") &&
+  !~window.location.href.indexOf("index.html")
+)
+  updateInfo(updateInfoCallback);

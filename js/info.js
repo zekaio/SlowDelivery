@@ -7,7 +7,20 @@ if ($(window).height() <= 500) {
   document.body.style.backgroundImage = "url('./img/bg3.png')";
 }
 
-if (localStorage.getItem("userInfo")) window.location.href = "intro.html";
+function toGoalLink() {
+  let goal =
+    window.location.search
+      .match(/([^?=&]+)(=([^&]*))/g)
+      .reduce(
+        (a, v) => (
+          (a[v.slice(0, v.indexOf("="))] = v.slice(v.indexOf("=") + 1)), a
+        ),
+        {}
+      )["from"] || "intro.html";
+  window.location.href = goal;
+}
+
+if (userInfo) toGoalLink();
 else
   axios
     .get(prefix + "getInfo")
@@ -21,7 +34,7 @@ else
         };
         localStorage.setItem("userInfo", JSON.stringify(userInfo));
         localStorage.setItem("checkInfo", JSON.stringify(checkInfo));
-        window.location.href = "intro.html";
+        toGoalLink();
       }
     })
     .catch(function(err) {
@@ -85,17 +98,7 @@ function submit() {
             "checkInfo",
             JSON.stringify({ text: false, flag: false, voice: false })
           );
-          let goal =
-            window.location.search
-              .match(/([^?=&]+)(=([^&]*))/g)
-              .reduce(
-                (a, v) => (
-                  (a[v.slice(0, v.indexOf("="))] = v.slice(v.indexOf("=") + 1)),
-                  a
-                ),
-                {}
-              )["from"] || "intro.html";
-          window.location.href = goal;
+          toGoalLink();
         })
         .catch(function(err) {
           if (err.response) {
