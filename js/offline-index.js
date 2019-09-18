@@ -28,3 +28,6 @@ function change(){
         window.location.href="offline-info.html";
     }
 }
+function next() {
+    mySwiper.slideNext();
+}
