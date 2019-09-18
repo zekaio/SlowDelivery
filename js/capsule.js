@@ -217,6 +217,26 @@ $.ajax({
           });
         }
       });
+      $("#talk").on("touchcancel", function(event) {
+        alert("record cancle");
+        event.preventDefault();
+        $("#talk").html("按住录音");
+        END = new Date().getTime();
+        if (END - START < 300) {
+          //小于300ms，不录音
+          END = 0;
+          START = 0;
+        } else {
+          wx.stopRecord({
+            success: function(res) {
+              localId = res.localId;
+              alert(localId);
+              finishRecord();
+              Third.$data.totalTime = END - START;
+            }
+          });
+        }
+      });
       wx.onVoiceRecordEnd({
         // 录音时间超过一分钟没有停止的时候会执行 complete 回调
         complete: function(res) {
