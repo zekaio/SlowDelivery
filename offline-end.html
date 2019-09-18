@@ -64,7 +64,7 @@
         var status = 0;
 
         function change() {
-            if ((status == 0) && (tt >= 3)) {
+            if ((status == 0) && (tt >= 2)) {
                 clearInterval(clock);
                 tt = 0;
                 clock = setInterval("count()", 1000);
@@ -80,7 +80,7 @@
                 }, 1);
                 status = 1;
             }
-            if ((status == 1) && (tt >= 4)) {
+            if ((status == 1) && (tt >= 0.5)) {
                 clearInterval(clock);
                 tt = 0;
                 clock = setInterval("count()", 1000);
@@ -93,7 +93,7 @@
                 }, 1);
                 status = 2;
             }
-            if ((status == 2) && (tt >= 2)) {
+            if ((status == 2) && (tt >= 0.5)) {
                 clearInterval(clock);
                 tt = 0;
                 $("#again").css("display", "block");

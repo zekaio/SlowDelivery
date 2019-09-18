@@ -14,7 +14,7 @@ function count() {
 var status = 0;
 
 function change() {
-  if (status == 0 && tt >= 5) {
+  if (status == 0 && tt >= 2) {
     clearInterval(clock);
     $("#bottom").removeClass("hidden");
   }

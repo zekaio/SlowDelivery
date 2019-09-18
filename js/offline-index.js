@@ -23,7 +23,7 @@ function count(){
     console.log(tt);
 }
 function change(){
-    if (tt>=5){
+    if (tt>=2){
         clearInterval(clock);tt=0;
         window.location.href="offline-info.html";
     }

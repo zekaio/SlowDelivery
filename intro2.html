@@ -45,7 +45,7 @@
         var status = 0;
 
         function change() {
-            if ((status == 0) && (tt >= 5)) {
+            if ((status == 0) && (tt >= 2)) {
                 clearInterval(clock);
                 tt = 0;
                 clock = setInterval("count()", 1000);
@@ -64,7 +64,7 @@
                 }, 1);
                 status = 1;
             }
-            if ((status == 1) && (tt >= 3)) {
+            if ((status == 1) && (tt >= 2)) {
                 clearInterval(clock);
                 tt = 0;
                 window.location.href = "capsule.html";
