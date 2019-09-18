@@ -28,7 +28,12 @@
             "大学的旅途会经历寒潮、风雷与霹雳，我们共享着雾霭、流岚与虹霓，唯有不变的是我们行囊中的理想与初心。",
             "给毕业后的自己写一封信吧~与过去、现在和未来对话，更是与自己和世界对话。木棉邮局会将其珍藏起来，待到毕业之时发还给您。"
         ];
-        initChangeHandle("content", () => {})
+        initChangeHandle("content", () => {
+            if (checkInfo) {
+                if (checkInfo.text && checkInfo.voice)
+                    window.location.href = "conclusion.html";
+            } else window.location.href = "capsule.html"
+        })
         change()
     </script>
 </body>

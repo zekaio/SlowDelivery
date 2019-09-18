@@ -17,7 +17,7 @@
             <p id="w2"></p>
         </div>
         <div id="bottom" class="bottom">
-            <div class="up" onclick="go()" id="btn1">去立flag</div>
+            <div class="up" onclick="go()" id="btn1"></div>
             <div class="down" onclick="mypage()">主页</div>
         </div>
     </div>
@@ -26,14 +26,14 @@
     <script>
         url = "flag.html";
         var type = sessionStorage.getItem('err');
-        if (type == 1) {
+        if (type == "1") {
             $("#w1").html("抱歉，你已经寄出过文字信件");
             $("#w2").html("还可以寄语音信件哦");
             $("#btn1").html("去寄信");
             sessionStorage.setItem('err', 0);
             url = "capsule.html#/voice"
-        }
-        if (type == 2) {
+        } else
+        if (type == "2") {
             $("#w1").html("抱歉，你已经寄出过语音信件");
             $("#w2").html("还可以寄文字信件哦");
             $("#btn1").html("去寄信");
@@ -51,7 +51,7 @@
         document.body.style.backgroundSize = "100vw " + winHeight + "px";
 
         function go() {
-            window.location.replace = url;
+            window.location.replace(url);
         }
 
         function mypage() {

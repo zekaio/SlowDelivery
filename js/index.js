@@ -71,7 +71,7 @@ var infoCompleted = false;
 var firstQueryInfo = true;
 initChangeHandle("content", () => {
   if (!userInfo) window.location.href = "info.html";
-  else window.location.href = "intro.thml";
+  else window.location.href = "intro.html";
 });
 
 function next() {

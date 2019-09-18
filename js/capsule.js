@@ -90,28 +90,29 @@ function yes2() {
   $("#yes1").addClass("hidden");
 }
 
-function checkTimeCapsule() {
+function next() {
   let { text: p1, voice: p2 } = checkInfo;
-  if (p1 && !p2) {
+  let type = $("#yes1").hasClass("hidden") ? "voice" : "text";
+
+  if (p1 && !p2 && type === "text") {
     sessionStorage.setItem("err", 1);
     window.location.href = "sorry.html";
-  } else if (!p1 && p2) {
+    return;
+  } else if (!p1 && p2 && type === "voice") {
     sessionStorage.setItem("err", 2);
     window.location.href = "sorry.html";
+    return;
   } else if (p1 && p2) {
     window.location.href = "conclusion.html";
+    return;
   }
-}
-
-function next() {
-  checkTimeCapsule();
   var gradute = $("#graduate option:selected").val();
   sessionStorage.setItem("time", gradute);
-  if ($("#yes1").hasClass("hidden")) {
+
+  if (type === "voice") {
     sessionStorage.setItem("type", "voice");
     router.push("voice");
-  }
-  if ($("#yes2").hasClass("hidden")) {
+  } else {
     sessionStorage.setItem("type", "text");
     router.push("letter");
   }
