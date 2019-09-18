@@ -26,6 +26,231 @@ const Third = {
       totalTime: 0
     };
   },
+  mounted() {
+    var localId = null;
+    var serverId = null;
+    var Playing = false;
+    var timer = null;
+    $.ajax({
+      url: "https://hemc.100steps.net/2017/wechat/Home/Public/getJsApi",
+      type: "post",
+      dataType: "json",
+      data: {
+        url: location.href
+      },
+      success: function(arr) {
+        wx.config({
+          debug: false,
+          appId: arr.appId,
+          timestamp: arr.timestamp,
+          nonceStr: arr.nonceStr,
+          signature: arr.signature,
+          jsApiList: [
+            "startRecord",
+            "stopRecord",
+            "onVoiceRecordEnd",
+            "onVoicePlayEnd",
+            "playVoice",
+            "pauseVoice",
+            "uploadVoice",
+            "stopVoice"
+          ]
+        });
+        wx.ready(function() {
+          /////按住开始录音//////////
+          $("#talk").on("touchstart", function(event) {
+            event.preventDefault();
+            $("#talk").html("松开结束");
+            START = new Date().getTime();
+            wx.startRecord({
+              success: function() {
+                recording();
+              }
+            });
+          });
+          //////音量波纹/////////////////
+          var arr = [
+            "img/mai1.png",
+            "img/mai2.png",
+            "img/mai3.png",
+            "img/mai4.png"
+          ];
+          var num = 0;
+
+          function dance() {
+            num++;
+            if (num == arr.length) {
+              num = 0;
+            }
+            $("#mai").src = arr[num];
+          }
+
+          function recording() {
+            timer = setInterval(function() {
+              dance();
+            }, 500);
+          }
+
+          function finishRecord() {
+            clearInterval(timer);
+            this.isRecorded = true;
+            next();
+          }
+          /////松手结束录音////////////
+          $("#talk").on("touchend", function(event) {
+            alert("record end");
+            event.preventDefault();
+            $("#talk").html("按住录音");
+            END = new Date().getTime();
+            if (END - START < 300) {
+              //小于300ms，不录音
+              END = 0;
+              START = 0;
+            } else {
+              wx.stopRecord({
+                success: function(res) {
+                  localId = res.localId;
+                  alert(localId);
+                  finishRecord();
+                  this.totalTime = END - START;
+                }
+              });
+            }
+          });
+          $("#talk").on("touchcancel", function(event) {
+            alert("record cancle");
+            event.preventDefault();
+            $("#talk").html("按住录音");
+            END = new Date().getTime();
+            if (END - START < 300) {
+              //小于300ms，不录音
+              END = 0;
+              START = 0;
+            } else {
+              wx.stopRecord({
+                success: function(res) {
+                  localId = res.localId;
+                  alert(localId);
+                  finishRecord();
+                  this.totalTime = END - START;
+                }
+              });
+            }
+          });
+          wx.onVoiceRecordEnd({
+            // 录音时间超过一分钟没有停止的时候会执行 complete 回调
+            complete: function(res) {
+              localId = res.localId;
+              finishRecord();
+              this.totalTime = 60;
+            }
+          });
+          //////录完跳到//////////////////
+          function next() {
+            $("#talk").style.display = "none";
+            $("#again").style.display = "block";
+            $("#continue").style.display = "block";
+          }
+          //////返回重录/////////////////
+          function back() {
+            $("#talk").style.display = "block";
+            $("#again").style.display = "none";
+            $("#continue").style.display = "none";
+            localId = null;
+            serverId = null;
+            this.isRecorded = false;
+            this.totalTime = 0;
+          }
+          //////试听录音/////////////////////////
+          function CountDown() {
+            this.totalTime = this.totalTime - 1;
+          }
+          //单击播放 再按停止
+          function Myvoice() {
+            if (Playing == false) {
+              Playing = true;
+              Play();
+            } else {
+              wx.stopVoice({
+                localId: localId,
+                success: function() {
+                  Stop();
+                }
+              });
+            }
+          }
+
+          function Play() {
+            wx.playVoice({
+              localId: localId,
+              success: function() {
+                timer = setInterval(function() {
+                  CountDown();
+                }, 1000);
+              }
+            });
+          }
+
+          function Stop() {
+            clearInterval(timer);
+            Playing = false;
+          }
+
+          wx.onVoicePlayEnd({
+            success: function(res) {
+              localId = res.localId; // 返回音频的本地ID
+              Stop();
+            }
+          });
+          ////////保存录音/////////////////
+          var clicked = false;
+
+          function submitVoice() {
+            if (!clicked) {
+              $.ajax({
+                url: prefix + "sendTimeCapsule",
+                type: "post",
+                dataType: "json",
+                data: JSON.stringify({
+                  type: sessionStorage.getItem("type"),
+                  message: sessionStorage.getItem("message"),
+                  time: sessionStorage.getItem("time"),
+                  file_id: localId
+                }),
+                success: function(data) {
+                  checkInfo.voice = true;
+                  localStorage.setItem("checkInfo", JSON.stringify(checkInfo));
+                  window.location.href = "capsule-end.html";
+                },
+                error: function(err) {
+                  switch (err.errmsg) {
+                    case 400:
+                      console.log("没有获取到file_id或msg");
+                    case 401:
+                      Bindwx();
+                      break;
+                    case 404:
+                      console.log("服务器上没有音频");
+                      break;
+                    case 405:
+                      window.location.href = "info.html?capsule.html";
+                      break;
+                    case 406:
+                      Subscribe();
+                      break;
+                    case 409:
+                      console.log("已填写过");
+                      break;
+                  }
+                }
+              });
+              clicked = false;
+            }
+          }
+        });
+      }
+    });
+  },
   template: `
       <div id="page3" class="page3">
           <div class="box3">
@@ -127,226 +352,3 @@ function submitLetter() {
     window.location.href = "ask.html";
   }
 }
-var localId = null;
-var serverId = null;
-var Playing = false;
-var timer = null;
-$.ajax({
-  url: "https://hemc.100steps.net/2017/wechat/Home/Public/getJsApi",
-  type: "post",
-  dataType: "json",
-  data: {
-    url: location.href
-  },
-  success: function(arr) {
-    wx.config({
-      debug: false,
-      appId: arr.appId,
-      timestamp: arr.timestamp,
-      nonceStr: arr.nonceStr,
-      signature: arr.signature,
-      jsApiList: [
-        "startRecord",
-        "stopRecord",
-        "onVoiceRecordEnd",
-        "onVoicePlayEnd",
-        "playVoice",
-        "pauseVoice",
-        "uploadVoice",
-        "stopVoice"
-      ]
-    });
-    wx.ready(function() {
-      /////按住开始录音//////////
-      $("#talk").on("touchstart", function(event) {
-        event.preventDefault();
-        $("#talk").html("松开结束");
-        START = new Date().getTime();
-        wx.startRecord({
-          success: function() {
-            recording();
-          }
-        });
-      });
-      //////音量波纹/////////////////
-      var arr = [
-        "img/mai1.png",
-        "img/mai2.png",
-        "img/mai3.png",
-        "img/mai4.png"
-      ];
-      var num = 0;
-
-      function dance() {
-        num++;
-        if (num == arr.length) {
-          num = 0;
-        }
-        $("#mai").src = arr[num];
-      }
-
-      function recording() {
-        timer = setInterval(function() {
-          dance();
-        }, 500);
-      }
-
-      function finishRecord() {
-        clearInterval(timer);
-        Third.$data.isRecorded = true;
-        next();
-      }
-      /////松手结束录音////////////
-      $("#talk").on("touchend", function(event) {
-        alert("record end");
-        event.preventDefault();
-        $("#talk").html("按住录音");
-        END = new Date().getTime();
-        if (END - START < 300) {
-          //小于300ms，不录音
-          END = 0;
-          START = 0;
-        } else {
-          wx.stopRecord({
-            success: function(res) {
-              localId = res.localId;
-              alert(localId);
-              finishRecord();
-              Third.$data.totalTime = END - START;
-            }
-          });
-        }
-      });
-      $("#talk").on("touchcancel", function(event) {
-        alert("record cancle");
-        event.preventDefault();
-        $("#talk").html("按住录音");
-        END = new Date().getTime();
-        if (END - START < 300) {
-          //小于300ms，不录音
-          END = 0;
-          START = 0;
-        } else {
-          wx.stopRecord({
-            success: function(res) {
-              localId = res.localId;
-              alert(localId);
-              finishRecord();
-              Third.$data.totalTime = END - START;
-            }
-          });
-        }
-      });
-      wx.onVoiceRecordEnd({
-        // 录音时间超过一分钟没有停止的时候会执行 complete 回调
-        complete: function(res) {
-          localId = res.localId;
-          finishRecord();
-          Third.$data.totalTime = 60;
-        }
-      });
-      //////录完跳到//////////////////
-      function next() {
-        $("#talk").style.display = "none";
-        $("#again").style.display = "block";
-        $("#continue").style.display = "block";
-      }
-      //////返回重录/////////////////
-      function back() {
-        $("#talk").style.display = "block";
-        $("#again").style.display = "none";
-        $("#continue").style.display = "none";
-        localId = null;
-        serverId = null;
-        Third.$data.isRecorded = false;
-        Third.$data.totalTime = 0;
-      }
-      //////试听录音/////////////////////////
-      function CountDown() {
-        Third.$data.totalTime = Third.$data.totalTime - 1;
-      }
-      //单击播放 再按停止
-      function Myvoice() {
-        if (Playing == false) {
-          Playing = true;
-          Play();
-        } else {
-          wx.stopVoice({
-            localId: localId,
-            success: function() {
-              Stop();
-            }
-          });
-        }
-      }
-
-      function Play() {
-        wx.playVoice({
-          localId: localId,
-          success: function() {
-            timer = setInterval(function() {
-              CountDown();
-            }, 1000);
-          }
-        });
-      }
-
-      function Stop() {
-        clearInterval(timer);
-        Playing = false;
-      }
-
-      wx.onVoicePlayEnd({
-        success: function(res) {
-          localId = res.localId; // 返回音频的本地ID
-          Stop();
-        }
-      });
-      ////////保存录音/////////////////
-      var clicked = false;
-
-      function submitVoice() {
-        if (!clicked) {
-          $.ajax({
-            url: prefix + "sendTimeCapsule",
-            type: "post",
-            dataType: "json",
-            data: JSON.stringify({
-              type: sessionStorage.getItem("type"),
-              message: sessionStorage.getItem("message"),
-              time: sessionStorage.getItem("time"),
-              file_id: localId
-            }),
-            success: function(data) {
-              checkInfo.voice = true;
-              localStorage.setItem("checkInfo", JSON.stringify(checkInfo));
-              window.location.href = "capsule-end.html";
-            },
-            error: function(err) {
-              switch (err.errmsg) {
-                case 400:
-                  console.log("没有获取到file_id或msg");
-                case 401:
-                  Bindwx();
-                  break;
-                case 404:
-                  console.log("服务器上没有音频");
-                  break;
-                case 405:
-                  window.location.href = "info.html?capsule.html";
-                  break;
-                case 406:
-                  Subscribe();
-                  break;
-                case 409:
-                  console.log("已填写过");
-                  break;
-              }
-            }
-          });
-          clicked = false;
-        }
-      }
-    });
-  }
-});
