@@ -32,7 +32,8 @@ body,
     right: 0;
     margin: 0 auto;
     width: 80vw;
-    height: 13.5vh;
+    /* height: 13.5vh; */
+    height: 6em;
     background: #ffffff;
     color: #333333;
     font-size: 4vw;
