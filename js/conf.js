@@ -19,13 +19,14 @@ $.ajax({
     }
   }
 });
+
 //微信bind
 function Bindwx() {
   location.href = bbt + encodeURIComponent(location.href);
 }
 //关注公众号
 function Subscribe() {
-  alert("要先关注百步梯公众号哦~")
+  alert("要先关注百步梯公众号哦~");
   location.href = bbtPublic + encodeURIComponent(location.href);
 }
 //分享到朋友圈
@@ -59,5 +60,44 @@ $.ajax({
         }
       });
     });
+  }
+});
+
+let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+let checkInfo = JSON.parse(localStorage.getItem("checkInfo"));
+
+axios
+  .get(prefix + "getInfo")
+  .then(function(res) {})
+  .catch(function(err) {
+    if (err.response) {
+      switch (err.response.status) {
+        case 401:
+          Bindwx();
+          break;
+        case 406:
+          Subscribe();
+          break;
+      }
+    }
+  });
+
+$.ajax({
+  url: prefix + "getInfo",
+  type: "get",
+  dataType: "json",
+  success: function(res) {
+    let { record } = res.data;
+    if (record) {
+      userInfo = { name: res.data.name, tel: res.data.tel };
+      checkInfo = {
+        flag: res.data.check_flag,
+        text: res.data.check_text,
+        voice: res.data.check_voice
+      };
+      localStorage.setItem("userInfo", JSON.stringify(userInfo));
+      localStorage.setItem("checkInfo", JSON.stringify(checkInfo));
+      section.splice(2, 1);
+    }
   }
 });

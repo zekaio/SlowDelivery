@@ -81,6 +81,10 @@ function submit() {
             "userInfo",
             JSON.stringify({ name, tel: phone })
           );
+          localStorage.setItem(
+            "checkInfo",
+            JSON.stringify({ text: false, flag: false, voice: false })
+          );
           let goal =
             window.location.search
               .match(/([^?=&]+)(=([^&]*))/g)
