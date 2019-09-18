@@ -26,6 +26,11 @@ var Playing = false;
 var timer = null;
 var START;
 var END;
+var t;
+var tt;
+var ttt;
+var tttt;
+var ttttt;
 
 const Third = {
   data() {
@@ -42,7 +47,8 @@ const Third = {
       data: {
         url: location.href
       },
-      success: function(arr) {
+      success: arr => {
+        t = this.$data;
         wx.config({
           debug: false,
           appId: arr.appId,
@@ -60,9 +66,11 @@ const Third = {
             "stopVoice"
           ]
         });
-        wx.ready(function() {
+        wx.ready(() => {
           /////按住开始录音//////////
+          tt = this.$data;
           $("#talk").on("touchstart", function(event) {
+            ttt = this.$data;
             event.preventDefault();
             $("#talk").html("松开结束");
             START = new Date().getTime();
@@ -119,7 +127,8 @@ const Third = {
               });
             }
           });
-          $("#talk").on("touchcancel", function(event) {
+          $("#talk").on("touchcancel", event => {
+            tttt = this.$data;
             event.preventDefault();
             $("#talk").html("按住录音");
             END = new Date().getTime();
@@ -129,7 +138,7 @@ const Third = {
               START = 0;
             } else {
               wx.stopRecord({
-                success: function(res) {
+                success: res => {
                   localId = res.localId;
                   finishRecord();
                   this.totalTime = END - START;
@@ -147,6 +156,7 @@ const Third = {
           });
           //////录完跳到//////////////////
           function next() {
+            ttttt = this.$data;
             // $("#talk").style.display = "none";
             // $("#again").style.display = "block";
             // $("#continue").style.display = "block";
