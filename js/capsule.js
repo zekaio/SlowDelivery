@@ -19,6 +19,14 @@ const Second = {
         </script>//?
     `
 };
+
+var localId = null;
+var serverId = null;
+var Playing = false;
+var timer = null;
+var START;
+var END;
+
 const Third = {
   data() {
     return {
@@ -27,10 +35,6 @@ const Third = {
     };
   },
   mounted() {
-    var localId = null;
-    var serverId = null;
-    var Playing = false;
-    var timer = null;
     $.ajax({
       url: "https://hemc.100steps.net/2017/wechat/Home/Public/getJsApi",
       type: "post",
@@ -98,7 +102,6 @@ const Third = {
           }
           /////松手结束录音////////////
           $("#talk").on("touchend", function(event) {
-            alert("record end");
             event.preventDefault();
             $("#talk").html("按住录音");
             END = new Date().getTime();
@@ -110,7 +113,6 @@ const Third = {
               wx.stopRecord({
                 success: function(res) {
                   localId = res.localId;
-                  alert(localId);
                   finishRecord();
                   this.totalTime = END - START;
                 }
@@ -118,7 +120,6 @@ const Third = {
             }
           });
           $("#talk").on("touchcancel", function(event) {
-            alert("record cancle");
             event.preventDefault();
             $("#talk").html("按住录音");
             END = new Date().getTime();
@@ -130,7 +131,6 @@ const Third = {
               wx.stopRecord({
                 success: function(res) {
                   localId = res.localId;
-                  alert(localId);
                   finishRecord();
                   this.totalTime = END - START;
                 }
@@ -147,15 +147,21 @@ const Third = {
           });
           //////录完跳到//////////////////
           function next() {
-            $("#talk").style.display = "none";
-            $("#again").style.display = "block";
-            $("#continue").style.display = "block";
+            // $("#talk").style.display = "none";
+            // $("#again").style.display = "block";
+            // $("#continue").style.display = "block";
+            this.$refs.record.style.display = "none";
+            this.$refs.repeat.style.display = "block";
+            this.$refs.continue.style.display = "block";
           }
           //////返回重录/////////////////
           function back() {
-            $("#talk").style.display = "block";
-            $("#again").style.display = "none";
-            $("#continue").style.display = "none";
+            // $("#talk").style.display = "block";
+            // $("#again").style.display = "none";
+            // $("#continue").style.display = "none";
+            this.$refs.record.style.display = "none";
+            this.$refs.repeat.style.display = "block";
+            this.$refs.continue.style.display = "block";
             localId = null;
             serverId = null;
             this.isRecorded = false;
@@ -261,9 +267,10 @@ const Third = {
               </div>
               <img id="mai" class="mai" src="img/mai1.png">
               <div class="bottom">
-                  <div id="talk" class="btn3" style="user-select:none;">按住说话</div>
-                  <div id="again"class="again" onclick="back()">重录</div>
-                  <div id="continue"class="continue" onclick="submitVoice()">继续</div>
+
+                  <div id="talk" class="btn3" style="user-select:none;" ref="record">按住说话</div>
+                  <div id="again"class="again" onclick="back()" ref="repeat">重录</div>
+                  <div id="continue"class="continue" onclick="submitVoice()" ref="continue">继续</div>
               </div>
           </div>
       </div>
