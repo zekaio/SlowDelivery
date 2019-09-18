@@ -25,7 +25,7 @@ url:"https://hemc.100steps.net/folder_name/api/method_name"
 
 `401`：未绑定微信账号
 
-`407`：用户未关注公众号
+`406`：用户未关注公众号
 
 
 
@@ -45,7 +45,7 @@ url:"https://hemc.100steps.net/folder_name/api/method_name"
 
 `401`：未绑定微信账号
 
-`407`：用户未关注公众号
+`406`：用户未关注公众号
 
 
 
@@ -57,17 +57,20 @@ url:"https://hemc.100steps.net/folder_name/api/method_name"
 
 #### 返回参数
 
-| 名称   | 类型    | 说明                   |
-| ------ | ------- | ---------------------- |
-| record | Boolean | 用户信息已填写则返回真 |
-| name   | String  | 姓名/昵称              |
-| tel    | String  | 手机号                 |
+|    名称     | 类型    | 说明                   |
+| :---------: | ------- | ---------------------- |
+|   record    | Boolean | 用户信息已填写则返回真 |
+|    name     | String  | 姓名/昵称              |
+|     tel     | String  | 手机号                 |
+| check_flag  | Boolean |                        |
+| check_text  | Boolean |                        |
+| check_voice | Boolean |                        |
 
 #### 错误信息
 
 `401`：未绑定微信账号
 
-`407`：用户未关注公众号
+`406`：用户未关注公众号
 
 
 
@@ -97,7 +100,7 @@ url:"https://hemc.100steps.net/folder_name/api/method_name"
 
 `401`：未绑定微信账号
 
-`407`：用户未关注公众号
+`406`：用户未关注公众号
 
 `409`：用户已填写过信息
 
@@ -128,7 +131,7 @@ url:"https://hemc.100steps.net/folder_name/api/method_name"
 
 `404`：用户还未填写姓名和手机号
 
-`407`：用户未关注公众号
+`406`：用户未关注公众号
 
 `409`：已经填写过flag
 
@@ -151,7 +154,7 @@ url:"https://hemc.100steps.net/folder_name/api/method_name"
 
 `401`：未绑定微信账号
 
-`407`：用户未关注公众号
+`406`：用户未关注公众号
 
 `404`：没有填写flag
 
@@ -191,7 +194,7 @@ url:"https://hemc.100steps.net/folder_name/api/method_name"
 
 `405`：用户没有填写姓名手机号
 
-`407`：用户未关注公众号
+`406`：用户未关注公众号
 
 `409`：用户已填写过录音或文字（看当时提交的是哪个，防止有人直接输网址进入页面再写一次）
 
@@ -229,7 +232,7 @@ url:"https://hemc.100steps.net/folder_name/api/method_name"
 
 `404`：取信码不存在
 
-`407`：用户未关注公众号
+`406`：用户未关注公众号
 
 `409`：取信码已被使用
 
@@ -271,5 +274,5 @@ url:"https://hemc.100steps.net/folder_name/api/method_name"
 
 `405`：未填写信息
 
-`407`：用户未关注公众号
+`406`：用户未关注公众号
 
