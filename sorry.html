@@ -27,15 +27,15 @@
         url = "flag.html";
         var type = sessionStorage.getItem('err');
         if (type == 1) {
-            $("#w1").html("抱歉，你还没有寄出文字信件");
-            $("#w2").html("趁现在向未来的自己问好吧！");
+            $("#w1").html("抱歉，你已经寄出过文字信件");
+            $("#w2").html("还可以寄语音信件哦");
             $("#btn1").html("去寄信");
             sessionStorage.setItem('err', 0);
             url = "capsule.html#/letter"
         }
         if (type == 2) {
-            $("#w1").html("抱歉，你还没有寄出语音信件");
-            $("#w2").html("趁现在向未来的自己问好吧！");
+            $("#w1").html("抱歉，你已经寄出过语音信件");
+            $("#w2").html("还可以寄文字信件哦");
             $("#btn1").html("去寄信");
             sessionStorage.setItem('err', 0);
             url = "capsule.html#/voice";

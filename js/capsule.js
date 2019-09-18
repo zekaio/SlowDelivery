@@ -21,25 +21,30 @@ const Second = {
     `
 };
 const Third = {
-  data: {
-    isRecorded: false
+  data() {
+    return{
+      isRecorded: false,
+      totalTime:0,
+    }
   },
   template: `
-        <div id="page3" class="page3">
-            <div class="box3">
-                <img src="img/title3.png" class="title3">
-                <div class="line"><hr></div>
-                <div v-if="isRecorded==true" class="myvoice" onclick="Myvoice()"><div id="duration" class="duration">{{x}}"</div></div>
-                <img id="mai" class="mai" src="img/mai1.png">
-                <div class="bottom">
-                    <div id="talk" class="btn3">按住说话</div>
-                    <div id="again"class="again" onclick="back()">重录</div>
-                    <div id="continue"class="continue" onclick="submitVoice()">继续</div>
-                </div>
-            </div>
+      <div id="page3" class="page3">
+          <div class="box3">
+              <img src="img/title3.png" class="title3">
+              <div class="line"><hr></div>
+              <div v-if="isRecorded==true" class="myvoice" onclick="Myvoice()">
+                <div id="duration" class="duration">{{totalTime}}</div>
+              </div>
+              <img id="mai" class="mai" src="img/mai1.png">
+              <div class="bottom">
+                  <div id="talk" class="btn3">按住说话</div>
+                  <div id="again"class="again" onclick="back()">重录</div>
+                  <div id="continue"class="continue" onclick="submitVoice()">继续</div>
+              </div>
+          </div>
       </div>
       <router-view></router-view>
-        `
+      `
 };
 const routes = [
   {
@@ -106,13 +111,15 @@ function checkTimeCapsule() {
     url: prefix + "checkTimeCapsule",
     type: "get",
     success: function(res) {
-      if (!res.check_text) {
+      let p1=res.check_text;
+      let p2=res.check_voice;
+      if (p1 && (!p2)) {
         sessionStorage.setItem("err", 1);
         window.location.href = "sorry.html";
-      } else if (!res.check_voice) {
+      } else if ((!p1)&&(p2)) {
         sessionStorage.setItem("err", 2);
         window.location.href = "sorry.html";
-      } else {
+      } else if (p1 && p2){
         window.location.href = "conclusion.html";
       }
     },
@@ -152,10 +159,8 @@ function submitLetter() {
 }
 var localId = null;
 var serverId = null;
-var isRecorded = 0;
 var Playing = false;
 var timer = null;
-var totalTime = 0;
 $.ajax({
   url: "https://hemc.100steps.net/2017/wechat/Home/Public/getJsApi",
   type: "post",
@@ -218,7 +223,7 @@ $.ajax({
 
       function finishRecord() {
         clearInterval(timer);
-        this.isRecorded = 1;
+        this.isRecorded = true;
         next();
       }
       /////松手结束录音////////////
@@ -235,17 +240,17 @@ $.ajax({
             success: function(res) {
               localId = res.localId;
               finishRecord();
-              totalTime = END - START;
+              this.totalTime = END - START;
             }
           });
         }
       });
       wx.onVoiceRecordEnd({
         // 录音时间超过一分钟没有停止的时候会执行 complete 回调
-        complete: function(res) {
+        complete:function(res) {
           window.localId = res.localId;
           finishRecord();
-          totalTime = 60;
+          this.totalTime = 60;
         }
       });
       //////录完跳到//////////////////
@@ -261,18 +266,17 @@ $.ajax({
         $("#continue").style.display = "none";
         localId = null;
         serverId = null;
-        isRecorded = 0;
-        totalTime = 0;
+        this.isRecorded = false;
+        this.totalTime = 0;
       }
       //////试听录音/////////////////////////
       function CountDown() {
-        let nowT = $("#duration").html();
-        nowT--;
-        $("#duration").html(nowT);
+        this.totalTime=this.totalTime-1;
       }
-
+      //单击播放 再按停止
       function Myvoice() {
         if (Playing == false) {
+          Playing=true;
           Play();
         } else {
           wx.stopVoice({
@@ -297,8 +301,9 @@ $.ajax({
 
       function Stop() {
         clearInterval(timer);
-        $("#duration").html(totalTime);
+        Playing=false;
       }
+
       wx.onVoicePlayEnd({
         success: function(res) {
           window.localId = res.localId; // 返回音频的本地ID

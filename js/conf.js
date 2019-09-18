@@ -25,6 +25,7 @@ function Bindwx() {
 }
 //关注公众号
 function Subscribe() {
+  alert("要先关注百步梯公众号哦~")
   location.href = bbtPublic + encodeURIComponent(location.href);
 }
 //分享到朋友圈
