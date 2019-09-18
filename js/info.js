@@ -76,7 +76,11 @@ function submit() {
           tel: phone
         })
         .then(function(res) {
-          sessionStorage.setItem("name", name);
+          // sessionStorage.setItem("name", name);
+          localStorage.setItem(
+            "userInfo",
+            JSON.stringify({ name, tel: phone })
+          );
           let goal =
             window.location.search
               .match(/([^?=&]+)(=([^&]*))/g)

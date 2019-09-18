@@ -29,6 +29,9 @@ function no() {
       send_offline: false
     })
     .then(function(res) {
+      let checkInfo = JSON.parse(localStorage.getItem("checkInfo"));
+      checkInfo.letter = true;
+      localStorage.setItem("checkInfo", JSON.stringify(checkInfo));
       window.location.href = "capsule-end.html";
     })
     .catch(function(err) {
@@ -44,7 +47,7 @@ function no() {
             console.log("服务器上没有音频");
             break;
           case 405:
-            window.location.href = "info.html";
+            window.location.href = "info.html?from=ask.html";
             break;
           case 406:
             Subscribe();

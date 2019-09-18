@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/info.css">
     <script src="https://cdn.jsdelivr.net/npm/axios@0.19.0/dist/axios.min.js"></script>
 </head>
+
 <body>
     <div id="box" class="box">
         <img src="img/title5.png" class="title">
@@ -30,27 +31,29 @@
         document.getElementById("box").style.height = 0.7 * winHeight + "px";
         document.body.style.backgroundSize = "100vw " + winHeight + "px";
         document.getElementById("btn").style.bottom = 0.4 * winHeight + "px";
+
         function checkTimeCapsule() {
             $.ajax({
                 url: prefix + "checkTimeCapsule",
                 type: "get",
-                success: function(res) {
-                 if (res.check_text==false){
-                     window.location.href="capsule.html";
-                 }
+                success: function (res) {
+                    if (res.check_text == false) {
+                        window.location.href = "capsule.html";
+                    }
                 },
-                error: function(err) {
-                if (err.response.status == 401) {
-                    Bindwx();
-                }
-                if (err.response.status == 406) {
-                    Subscribe();
-                }
+                error: function (err) {
+                    if (err.response.status == 401) {
+                        Bindwx();
+                    }
+                    if (err.response.status == 406) {
+                        Subscribe();
+                    }
                 }
             });
         }
         checkTimeCapsule();
         var clicked = false;
+
         function submit() {
             if (!clicked) {
                 let address = $("#addr").val();
@@ -83,7 +86,7 @@
                                         console.log("服务器上没有音频")
                                         break;
                                     case 405:
-                                        window.location.href = "info.html"
+                                        window.location.href = "info.html?from=address.html"
                                         break;
                                     case 406:
                                         Subscribe();

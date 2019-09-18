@@ -97,7 +97,7 @@
                             Bindwx();
                             break;
                         case 405:
-                            window.location.href = "info.html";
+                            window.location.href = "info.html?from=flag.html";
                             break;
                         case 406:
                             Subscribe();
@@ -259,7 +259,7 @@
             if (!clicked) {
                 clicked = true;
                 axios.post(prefix + 'sendFlag', {
-                        name: sessionStorage.getItem('name'),
+                        name: JSON.parse(localStorage.getItem("userInfo")).name,
                         flag: flagarr
                     })
                     .then(function (res) {
@@ -273,7 +273,7 @@
                                     Bindwx();
                                     break;
                                 case 404:
-                                    window.location.href = "info.html"
+                                    window.location.href = "info.html?from=flag.html"
                                     break;
                                 case 406:
                                     Subscribe();

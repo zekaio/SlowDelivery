@@ -45,7 +45,8 @@
             var currentdate = year + "年" + month + "月" + strDate + "日";
             return (currentdate);
         }
-        let section = [sessionStorage.getItem('name') + "同学：\n 你好！你于" + getNowFormatDate() + "光临我们的木棉邮局",
+        let section = [JSON.parse(localStorage.getItem('userInfo')).name + "同学：\n 你好！你于" + getNowFormatDate() +
+            "光临我们的木棉邮局",
             "当再见成为你好之时，我们已经从遥远的旅途归来，捧着沉甸甸的未来向你问好，一纸情长，届时你是否已实现心中所愿？", "九月之初 乾坤未定 时光慢递 不负韶华"
         ]
 

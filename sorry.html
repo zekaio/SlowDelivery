@@ -13,8 +13,8 @@
     <div id="box" class="box">
         <img src="img/title5.png" class="title">
         <div class="sorry">
-            <p id="w1">抱歉，你还没有立flag</p>
-            <p id="w2">趁现在去明晰自己的目标吧</p>
+            <p id="w1"></p>
+            <p id="w2"></p>
         </div>
         <div id="bottom" class="bottom">
             <div class="up" onclick="go()" id="btn1">去立flag</div>
@@ -39,13 +39,19 @@
             $("#btn1").html("去寄信");
             sessionStorage.setItem('err', 0);
             url = "capsule.html#/letter";
+        } else {
+            $("#w1").html("抱歉，你还没有立flag");
+            $("#w2").html("趁现在去明晰自己的目标吧");
+            $("#btn1").html("去立Flag");
+            sessionStorage.setItem('err', 0);
+            url = "capsule.html#/letter";
         }
         var winHeight = $(window).height();
         document.getElementById("box").style.height = 0.6 * winHeight + "px";
         document.body.style.backgroundSize = "100vw " + winHeight + "px";
 
         function go() {
-            window.location.href = url;
+            window.location.replace = url;
         }
 
         function mypage() {

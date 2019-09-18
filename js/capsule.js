@@ -22,10 +22,10 @@ const Second = {
 };
 const Third = {
   data() {
-    return{
+    return {
       isRecorded: false,
-      totalTime:0,
-    }
+      totalTime: 0
+    };
   },
   template: `
       <div id="page3" class="page3">
@@ -79,22 +79,42 @@ function getNowFormatDate() {
   return currentdate;
 }
 $("#time").html(getNowFormatDate());
-$.ajax({
-  url: prefix + "getInfo",
-  type: "post",
-  dataType: "json",
-  success: function(res) {
-    $("#name").html(res.name);
-  },
-  error: function(err) {
-    if (err.errmsg == 406) {
-      Subscribe();
-    }
-    if (err.errmsg == 401) {
-      Bindwx();
-    }
-  }
-});
+
+// 取出已存在的内容
+let userInfo,
+  checkInfo = localStorage.getItem("checkInfo");
+if (checkInfo) {
+  checkInfo = JSON.parse(checkInfo);
+  if (checkInfo.text && checkInfo.voice)
+    window.location.href = "conclusion.html";
+} else
+  axios
+    .get(prefix + "getInfo")
+    .then(function(res) {
+      let { record } = res.data;
+      if (record) {
+        userInfo = { name: res.data.name, tel: res.data.tel };
+        checkInfo = {
+          flag: res.data.check_flag,
+          text: res.data.check_text,
+          voice: res.data.check_voice
+        };
+        localStorage.setItem("userInfo", JSON.stringify(userInfo));
+        localStorage.setItem("checkInfo", JSON.stringify(checkInfo));
+      } else window.location.href = "info.html?from=capsule.html";
+    })
+    .catch(function(err) {
+      if (err.response) {
+        switch (err.response.status) {
+          case 401:
+            Bindwx();
+            break;
+          case 406:
+            Subscribe();
+            break;
+        }
+      }
+    });
 
 function yes1() {
   $("#yes1").removeClass("hidden");
@@ -107,31 +127,16 @@ function yes2() {
 }
 
 function checkTimeCapsule() {
-  $.ajax({
-    url: prefix + "checkTimeCapsule",
-    type: "get",
-    success: function(res) {
-      let p1=res.check_text;
-      let p2=res.check_voice;
-      if (p1 && (!p2)) {
-        sessionStorage.setItem("err", 1);
-        window.location.href = "sorry.html";
-      } else if ((!p1)&&(p2)) {
-        sessionStorage.setItem("err", 2);
-        window.location.href = "sorry.html";
-      } else if (p1 && p2){
-        window.location.href = "conclusion.html";
-      }
-    },
-    error: function(err) {
-      if (err.response.status == 401) {
-        Bindwx();
-      }
-      if (err.response.status == 406) {
-        Subscribe();
-      }
-    }
-  });
+  let { text: p1, voice: p2 } = checkInfo;
+  if (p1 && !p2) {
+    sessionStorage.setItem("err", 1);
+    window.location.href = "sorry.html";
+  } else if (!p1 && p2) {
+    sessionStorage.setItem("err", 2);
+    window.location.href = "sorry.html";
+  } else if (p1 && p2) {
+    window.location.href = "conclusion.html";
+  }
 }
 
 function next() {
@@ -247,7 +252,7 @@ $.ajax({
       });
       wx.onVoiceRecordEnd({
         // 录音时间超过一分钟没有停止的时候会执行 complete 回调
-        complete:function(res) {
+        complete: function(res) {
           window.localId = res.localId;
           finishRecord();
           this.totalTime = 60;
@@ -271,12 +276,12 @@ $.ajax({
       }
       //////试听录音/////////////////////////
       function CountDown() {
-        this.totalTime=this.totalTime-1;
+        this.totalTime = this.totalTime - 1;
       }
       //单击播放 再按停止
       function Myvoice() {
         if (Playing == false) {
-          Playing=true;
+          Playing = true;
           Play();
         } else {
           wx.stopVoice({
@@ -301,7 +306,7 @@ $.ajax({
 
       function Stop() {
         clearInterval(timer);
-        Playing=false;
+        Playing = false;
       }
 
       wx.onVoicePlayEnd({
@@ -326,6 +331,8 @@ $.ajax({
               file_id: localId
             }),
             success: function(data) {
+              checkInfo.voice = true;
+              localStorage.setItem("checkInfo", JSON.stringify(checkInfo));
               window.location.href = "capsule-end.html";
             },
             error: function(err) {
@@ -339,7 +346,7 @@ $.ajax({
                   console.log("服务器上没有音频");
                   break;
                 case 405:
-                  window.location.href = "info.html";
+                  window.location.href = "info.html?capsule.html";
                   break;
                 case 406:
                   Subscribe();
