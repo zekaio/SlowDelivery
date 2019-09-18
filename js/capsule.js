@@ -3,8 +3,7 @@ document.getElementById("box").style.height = 0.8 * winHeight + "px";
 const Second = {
   template: `
         <div id="page2" class="page2">
-            <div id="box2" class="box2" style="height=${0.8 * winHeight +
-              "px"};">
+            <div id="box2" class="box2">
                 <img src="img/title3.png" class="title2">
                 <textarea id="myletter" placeholder="输入信的内容"></textarea>
                 <div class="sign" id="name"></div>
@@ -79,6 +78,7 @@ function getNowFormatDate() {
   return currentdate;
 }
 $("#time").html(getNowFormatDate());
+$("#name").html(userInfo.name);
 
 function yes1() {
   $("#yes1").removeClass("hidden");

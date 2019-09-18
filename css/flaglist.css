@@ -57,8 +57,13 @@ html {
     position: absolute;
     width: 80vw;
     height: 89vh;
-    margin-left: 10vw;
-    margin-top: 2vh;
+    /* margin-left: 10vw; */
+    /* margin-top: 2vh; */
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     border-radius: 7.5px;
     background-color: #ffffff;
     opacity: 0.9;
