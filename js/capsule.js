@@ -67,10 +67,8 @@ const Third = {
           ]
         });
         wx.ready(() => {
-          /////按住开始录音//////////
-          tt = this.$data;
-          $("#talk").on("touchstart", function(event) {
-            ttt = this.$data;
+          /////按住开始录音///////
+          $("#talk").on("touchstart", event => {
             event.preventDefault();
             $("#talk").html("松开结束");
             START = new Date().getTime();
@@ -106,29 +104,10 @@ const Third = {
           function finishRecord() {
             clearInterval(timer);
             this.isRecorded = true;
-            next();
+            next.bind(this)();
           }
           /////松手结束录音////////////
-          $("#talk").on("touchend", function(event) {
-            event.preventDefault();
-            $("#talk").html("按住录音");
-            END = new Date().getTime();
-            if (END - START < 300) {
-              //小于300ms，不录音
-              END = 0;
-              START = 0;
-            } else {
-              wx.stopRecord({
-                success: function(res) {
-                  localId = res.localId;
-                  finishRecord();
-                  this.totalTime = END - START;
-                }
-              });
-            }
-          });
-          $("#talk").on("touchcancel", event => {
-            tttt = this.$data;
+          $("#talk").on("touchend", event => {
             event.preventDefault();
             $("#talk").html("按住录音");
             END = new Date().getTime();
@@ -140,7 +119,25 @@ const Third = {
               wx.stopRecord({
                 success: res => {
                   localId = res.localId;
-                  finishRecord();
+                  finishRecord.bind(this)();
+                  this.totalTime = END - START;
+                }
+              });
+            }
+          });
+          $("#talk").on("touchcancel", event => {
+            event.preventDefault();
+            $("#talk").html("按住录音");
+            END = new Date().getTime();
+            if (END - START < 300) {
+              //小于300ms，不录音
+              END = 0;
+              START = 0;
+            } else {
+              wx.stopRecord({
+                success: res => {
+                  localId = res.localId;
+                  finishRecord.bind(this)();
                   this.totalTime = END - START;
                 }
               });
@@ -148,9 +145,9 @@ const Third = {
           });
           wx.onVoiceRecordEnd({
             // 录音时间超过一分钟没有停止的时候会执行 complete 回调
-            complete: function(res) {
+            complete: res => {
               localId = res.localId;
-              finishRecord();
+              finishRecord.bind(this)();
               this.totalTime = 60;
             }
           });
