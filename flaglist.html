@@ -14,7 +14,7 @@
 
 <body>
     <img class="generate box2" id="generate" crossOrigin="anonymous">
-    <div class="big2 hidden" id="main2">
+    <div class="big2 hidden" id="main2" style="visibility:hidden">
         <div class="box2">
             <img src="img/title4.png" class="title">
 
@@ -99,6 +99,7 @@
                 //图片？
                 setTimeout(() => {
                     var node = document.getElementById('main2');
+                    node.style.visibility = "visible"
                     html2canvas(node).then((canvas) => {
                         $("#generate")[0].src = canvas.toDataURL()
                     })

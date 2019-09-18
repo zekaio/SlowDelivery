@@ -36,7 +36,7 @@ const Third = {
               </div>
               <img id="mai" class="mai" src="img/mai1.png">
               <div class="bottom">
-                  <div id="talk" class="btn3">按住说话</div>
+                  <div id="talk" class="btn3" style="user-select:none;">按住说话</div>
                   <div id="again"class="again" onclick="back()">重录</div>
                   <div id="continue"class="continue" onclick="submitVoice()">继续</div>
               </div>
@@ -218,7 +218,7 @@ $.ajax({
       wx.onVoiceRecordEnd({
         // 录音时间超过一分钟没有停止的时候会执行 complete 回调
         complete: function(res) {
-          window.localId = res.localId;
+          localId = res.localId;
           finishRecord();
           this.totalTime = 60;
         }
@@ -276,7 +276,7 @@ $.ajax({
 
       wx.onVoicePlayEnd({
         success: function(res) {
-          window.localId = res.localId; // 返回音频的本地ID
+          localId = res.localId; // 返回音频的本地ID
           Stop();
         }
       });
