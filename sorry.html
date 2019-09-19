@@ -25,11 +25,13 @@
     <script src="js/conf.js"></script>
     <script>
         url = "flag.html";
+        let type = ""
         var type = sessionStorage.getItem('err');
         if (type == "1") {
             $("#w1").html("抱歉，你已经寄出过文字信件");
             $("#w2").html("还可以寄语音信件哦");
             $("#btn1").html("去寄信");
+            type = "voice"
             sessionStorage.setItem('err', 0);
             url = "capsule.html#/voice"
         } else
@@ -37,6 +39,7 @@
             $("#w1").html("抱歉，你已经寄出过语音信件");
             $("#w2").html("还可以寄文字信件哦");
             $("#btn1").html("去寄信");
+            type = "text"
             sessionStorage.setItem('err', 0);
             url = "capsule.html#/letter";
         } else {
@@ -51,6 +54,7 @@
         document.body.style.backgroundSize = "100vw " + winHeight + "px";
 
         function go() {
+            sessionStorage.setItem("type", type)
             window.location.replace(url);
         }
 

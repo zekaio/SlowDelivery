@@ -26,6 +26,7 @@ var Playing = false;
 var timer = null;
 var clicked = false;
 var num = 0;
+var arr = ["img/mai1.png", "img/mai2.png", "img/mai3.png", "img/mai4.png"];
 var START;
 var END;
 //////试听录音/////////////////////////
@@ -56,6 +57,20 @@ function Play() {
       }, 1000);
     }
   });
+}
+
+//////音量波纹/////////////////
+
+function dance() {
+  num++;
+  if (num == arr.length) {
+    num = 0;
+  }
+  $("#mai").src = arr[num];
+}
+
+function recording() {
+  timer = setInterval(dance, 500);
 }
 
 function Stop() {
@@ -96,6 +111,7 @@ const Third = {
             checkInfo.voice = true;
             localStorage.setItem("checkInfo", JSON.stringify(checkInfo));
             window.location.href = "capsule-end.html";
+            clicked = false;
           },
           error: function(err) {
             switch (err.errmsg) {
@@ -117,9 +133,9 @@ const Third = {
                 console.log("已填写过");
                 break;
             }
+            clicked = false;
           }
         });
-        clicked = false;
       }
     }
   },
@@ -154,7 +170,7 @@ const Third = {
           /////按住开始录音///////
           $("#talk").on("touchstart", event => {
             event.preventDefault();
-            $("#talk").html("松开结束");
+            $("#talk").html("松开 结束");
             START = new Date().getTime();
             wx.startRecord({
               success: function() {
@@ -162,25 +178,6 @@ const Third = {
               }
             });
           });
-          //////音量波纹/////////////////
-          var arr = [
-            "img/mai1.png",
-            "img/mai2.png",
-            "img/mai3.png",
-            "img/mai4.png"
-          ];
-
-          function dance() {
-            num++;
-            if (num == arr.length) {
-              num = 0;
-            }
-            $("#mai").src = arr[num];
-          }
-
-          function recording() {
-            timer = setInterval(dance, 500);
-          }
 
           function finishRecord() {
             clearInterval(timer);
@@ -190,7 +187,7 @@ const Third = {
           /////松手结束录音////////////
           $("#talk").on("touchend", event => {
             event.preventDefault();
-            $("#talk").html("按住录音");
+            $("#talk").html("按住 录音");
             END = new Date().getTime();
             if (END - START < 300) {
               //小于300ms，不录音
@@ -208,7 +205,7 @@ const Third = {
           });
           $("#talk").on("touchcancel", event => {
             event.preventDefault();
-            $("#talk").html("按住录音");
+            $("#talk").html("按住 录音");
             END = new Date().getTime();
             if (END - START < 300) {
               //小于300ms，不录音
@@ -255,13 +252,12 @@ const Third = {
           <div class="box3">
               <img src="img/title3.png" class="title3">
               <div class="line"></div>
-              <div v-if="isRecorded==true" class="myvoice" onclick="Myvoice()">
+              <div v-if="isRecorded" class="myvoice" onclick="Myvoice()">
                 <div id="duration" class="duration">{{Math.ceil( totalTime / 1000 )}} "</div>
               </div>
-              <img id="mai" class="mai" src="img/mai1.png">
-              <div class="bottom">
-
-                  <div id="talk" class="btn3" style="user-select:none;" ref="record">按住说话</div>
+              <img id="mai" class="mai" src="img/mai1.png" v-else>
+              <div class="bottom" style="position: absolute;bottom: 10vw;top: auto; width: 80%; left: 10%; justify-content: space-around;">
+                  <div id="talk" class="btn3" style="user-select:none; width: 100%;" ref="record" >按住 说话</div>
                   <div id="again"class="again" @click="back()" ref="repeat">重录</div>
                   <div id="continue"class="continue" @click="submitVoice()" ref="continue">继续</div>
               </div>
