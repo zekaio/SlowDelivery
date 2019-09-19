@@ -1,11 +1,13 @@
-var winHeight = $(window).height() + "px";
+var winHeight = "height:" + $(window).height() + "px;";
 document.getElementById("box").style.height = 0.8 * winHeight + "px";
 const Second = {
-  data: {
-    winHeight
+  data() {
+    return {
+      winHeight
+    };
   },
   template: `
-        <div id="page2" class="page2" :style="{height: winHeight}" >
+        <div id="page2" class="page2" :style="${winHeight}" >
             <div id="box2" class="box2">
                 <img src="img/title3.png" class="title2">
                 <textarea id="myletter" placeholder="输入信的内容"></textarea>
