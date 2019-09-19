@@ -191,10 +191,18 @@ const Third = {
             "stopVoice"
           ]
         });
+
+	MUTEX = false;
         wx.ready(() => {
           /////按住开始录音///////
           $("#talk").on("touchstart", event => {
-            event.preventDefault();
+        
+            //console.info("touchstart: MUTEX: "+MUTEX);
+            if(MUTEX) {
+		//alert("请勿点击过快！");
+	    	return //MUTEX = false;
+	    } MUTEX = true;
+	    event.preventDefault();
             $("#talk").html("松开 结束");
             START = new Date().getTime();
             wx.startRecord({
@@ -211,13 +219,19 @@ const Third = {
           }
           /////松手结束录音////////////
           $("#talk").on("touchend", event => {
-            event.preventDefault();
+            //console.info("touchend: MUTEX: "+MUTEX);
+            if(!MUTEX) return;
+	    event.preventDefault();
             $("#talk").html("按住 录音");
             END = new Date().getTime();
-            if (END - START < 300) {
+	    //console.info("START: "+START+" , END: "+END);
+            //console.info("DELTA: "+(END-START));
+	    if (END - START < 300) {
               //小于300ms，不录音
               END = 0;
               START = 0;
+	      wx.stopRecord();
+	      clearInterval(timer);
             } else {
               wx.stopRecord({
                 success: res => {
@@ -227,6 +241,7 @@ const Third = {
                 }
               });
             }
+            MUTEX = false;
           });
           $("#talk").on("touchcancel", event => {
             event.preventDefault();
