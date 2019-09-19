@@ -21,7 +21,7 @@ body,
   padding-top: 10%;
   background-image: url(../img/bg5.jpg);
   background-repeat: no-repeat;
-  background-size: 100vw 100vh;
+  background-size: 100% 100%;
 }
 
 .page1 {
@@ -173,7 +173,7 @@ select {
   height: 100%;
   margin: 0 auto 0;
   padding-bottom: 8vw;
-  padding-top: 2vh;
+  padding-top: 2%;
   border-radius: 7.5px;
   background-color: #ffffff;
   opacity: 0.9;
@@ -184,7 +184,7 @@ select {
   position: relative;
   width: 40vw;
   margin-left: 20vw;
-  margin-top: 2vh;
+  margin-top: 2%;
 }
 
 textarea {
@@ -192,7 +192,7 @@ textarea {
   font-size: 4vw;
   width: 80%;
   margin: 0 auto 5vw;
-  height: 47vh;
+  height: 47%;
   border: none;
   padding: 2vw;
   display: block;
