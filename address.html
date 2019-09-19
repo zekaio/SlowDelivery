@@ -50,9 +50,9 @@
                             address: address
                         })
                         .then(function (res) {
-                            let checkInfo = JSON.parse(localStorage.getItem("checkInfo"));
+                            let checkInfo = JSON.parse(sessionStorage.getItem("checkInfo"));
                             checkInfo.text = true;
-                            localStorage.setItem("checkInfo", JSON.stringify(checkInfo));
+                            sessionStorage.setItem("checkInfo", JSON.stringify(checkInfo));
                             window.location.replace("address-end.html");
                         })
                         .catch(function (err) {

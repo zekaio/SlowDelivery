@@ -33,8 +33,8 @@ else
           text: res.data.check_text,
           voice: res.data.check_voice
         };
-        localStorage.setItem("userInfo", JSON.stringify(userInfo));
-        localStorage.setItem("checkInfo", JSON.stringify(checkInfo));
+        sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
+        sessionStorage.setItem("checkInfo", JSON.stringify(checkInfo));
         toGoalLink();
       }
     })
@@ -91,11 +91,11 @@ function submit() {
         })
         .then(function(res) {
           // sessionStorage.setItem("name", name);
-          localStorage.setItem(
+          sessionStorage.setItem(
             "userInfo",
             JSON.stringify({ name, tel: phone })
           );
-          localStorage.setItem(
+          sessionStorage.setItem(
             "checkInfo",
             JSON.stringify({ text: false, flag: false, voice: false })
           );

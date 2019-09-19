@@ -29,7 +29,7 @@
             "待到毕业之时回顾，看看有多少 flag 能被打破~"
         ];
         initChangeHandle("content", () => {
-            let checkInfo = localStorage.getItem("checkInfo")
+            let checkInfo = sessionStorage.getItem("checkInfo")
             if (!checkInfo || !JSON.parse(checkInfo).flag) window.location.href = "flag.html"
             else window.location.href = "flaglist.html"
         })

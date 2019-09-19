@@ -20,9 +20,9 @@ function no() {
       send_offline: false
     })
     .then(function(res) {
-      let checkInfo = JSON.parse(localStorage.getItem("checkInfo"));
+      let checkInfo = JSON.parse(sessionStorage.getItem("checkInfo"));
       checkInfo.text = true;
-      localStorage.setItem("checkInfo", JSON.stringify(checkInfo));
+      sessionStorage.setItem("checkInfo", JSON.stringify(checkInfo));
       section.push(
         "感谢您的选择，我们将会在毕业之时，发短信提醒您在线上查收信件与 flag 清单，请不用担心忘记查收。"
       );

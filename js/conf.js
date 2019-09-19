@@ -71,8 +71,8 @@ $.ajax({
   }
 });
 
-let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-let checkInfo = JSON.parse(localStorage.getItem("checkInfo"));
+let userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+let checkInfo = JSON.parse(sessionStorage.getItem("checkInfo"));
 
 function updateInfo(callback) {
   if ((!userInfo || !checkInfo) && !~window.location.href.indexOf("info.html"))
@@ -89,8 +89,8 @@ function updateInfo(callback) {
             text: res.data.check_text,
             voice: res.data.check_voice
           };
-          localStorage.setItem("userInfo", JSON.stringify(userInfo));
-          localStorage.setItem("checkInfo", JSON.stringify(checkInfo));
+          sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
+          sessionStorage.setItem("checkInfo", JSON.stringify(checkInfo));
           if (updateInfoCallback) callback(userInfo, checkInfo);
         } else {
           // enter from home page

@@ -132,7 +132,7 @@ const Third = {
               }),
               success: function(data) {
                 checkInfo.voice = true;
-                localStorage.setItem("checkInfo", JSON.stringify(checkInfo));
+                sessionStorage.setItem("checkInfo", JSON.stringify(checkInfo));
                 window.location.href = "capsule-end.html";
                 clicked = false;
               },
