@@ -73,7 +73,7 @@ function updateInfo(callback) {
       type: "get",
       dataType: "json",
       success: function(res) {
-        let { record } = res.data;
+        let record = res.data.record || null;
         if (record) {
           userInfo = { name: res.data.name, tel: res.data.tel };
           checkInfo = {

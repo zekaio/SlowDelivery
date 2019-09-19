@@ -8,15 +8,16 @@ if ($(window).height() <= 500) {
 }
 
 function toGoalLink() {
-  let goal =
-    window.location.search
-      .match(/([^?=&]+)(=([^&]*))/g)
-      .reduce(
-        (a, v) => (
-          (a[v.slice(0, v.indexOf("="))] = v.slice(v.indexOf("=") + 1)), a
-        ),
-        {}
-      )["from"] || "intro.html";
+  let goal = !~window.location.search.indexOf("?")
+    ? "intro.html"
+    : window.location.search
+        .match(/([^?=&]+)(=([^&]*))/g)
+        .reduce(
+          (a, v) => (
+            (a[v.slice(0, v.indexOf("="))] = v.slice(v.indexOf("=") + 1)), a
+          ),
+          {}
+        )["from"] || "intro.html";
   window.location.href = goal;
 }
 
