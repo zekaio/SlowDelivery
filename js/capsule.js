@@ -25,6 +25,7 @@ var serverId = null;
 var Playing = false;
 var timer = null;
 var clicked = false;
+var num = 0;
 var START;
 var END;
 //////试听录音/////////////////////////
@@ -168,7 +169,6 @@ const Third = {
             "img/mai3.png",
             "img/mai4.png"
           ];
-          var num = 0;
 
           function dance() {
             num++;
@@ -256,7 +256,7 @@ const Third = {
               <img src="img/title3.png" class="title3">
               <div class="line"></div>
               <div v-if="isRecorded==true" class="myvoice" onclick="Myvoice()">
-                <div id="duration" class="duration">{{totalTime}}</div>
+                <div id="duration" class="duration">{{Math.ceil( totalTime / 1000 )}} "</div>
               </div>
               <img id="mai" class="mai" src="img/mai1.png">
               <div class="bottom">
