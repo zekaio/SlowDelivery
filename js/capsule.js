@@ -1,9 +1,28 @@
 var winHeight = "height:" + $(window).height() + "px;";
 document.getElementById("box").style.height = 0.8 * winHeight + "px";
+function getNowFormatDate() {
+  var date = new Date();
+  var seperator1 = ".";
+  var year = date.getFullYear();
+  var month = date.getMonth() + 1;
+  var strDate = date.getDate();
+  if (month >= 1 && month <= 9) {
+    month = "0" + month;
+  }
+  if (strDate >= 0 && strDate <= 9) {
+    strDate = "0" + strDate;
+  }
+  var currentdate = year + seperator1 + month + seperator1 + strDate;
+  return currentdate;
+}
+
+
 const Second = {
   data() {
     return {
-      winHeight
+      winHeight,
+      time: getNowFormatDate(),
+      name: userInfo.name
     };
   },
   template: `
@@ -11,8 +30,8 @@ const Second = {
             <div id="box2" class="box2">
                 <img src="img/title3.png" class="title2">
                 <textarea id="myletter" placeholder="输入信的内容"></textarea>
-                <div class="sign" id="name"></div>
-                <div class="sign" id="time"></div>
+                <div class="sign" id="name">{{name}}</div>
+                <div class="sign" id="time">{{time}}</div>
                 <div class="btn2" onclick="submitLetter()">提交</div>
                 <div class="tip2"><span>信件内容一经提交无法修改</span></div>
             </div>
@@ -299,23 +318,6 @@ const app = new Vue({
   }
 }).$mount("#app");
 
-function getNowFormatDate() {
-  var date = new Date();
-  var seperator1 = ".";
-  var year = date.getFullYear();
-  var month = date.getMonth() + 1;
-  var strDate = date.getDate();
-  if (month >= 1 && month <= 9) {
-    month = "0" + month;
-  }
-  if (strDate >= 0 && strDate <= 9) {
-    strDate = "0" + strDate;
-  }
-  var currentdate = year + seperator1 + month + seperator1 + strDate;
-  return currentdate;
-}
-$("#time").html(getNowFormatDate());
-$("#name").html(userInfo.name);
 
 function yes1() {
   $("#yes1").removeClass("hidden");
