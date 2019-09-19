@@ -27,7 +27,7 @@ url:"https://hemc.100steps.net/folder_name/api/method_name"
 
 `406`：用户未关注公众号
 
-
+`408`：数据库出错，message是错误信息
 
 ### checkFlag
 
@@ -46,6 +46,8 @@ url:"https://hemc.100steps.net/folder_name/api/method_name"
 `401`：未绑定微信账号
 
 `406`：用户未关注公众号
+
+`408`：数据库出错，message是错误信息
 
 
 
@@ -71,6 +73,8 @@ url:"https://hemc.100steps.net/folder_name/api/method_name"
 `401`：未绑定微信账号
 
 `406`：用户未关注公众号
+
+`408`：数据库出错，message是错误信息
 
 
 
@@ -104,6 +108,8 @@ url:"https://hemc.100steps.net/folder_name/api/method_name"
 
 `409`：用户已填写过信息
 
+`408`：数据库出错，message是错误信息
+
 
 
 ### sendFlag
@@ -135,6 +141,8 @@ url:"https://hemc.100steps.net/folder_name/api/method_name"
 
 `409`：已经填写过flag
 
+`408`：数据库出错，message是错误信息
+
 
 
 ### getFlag
@@ -157,6 +165,8 @@ url:"https://hemc.100steps.net/folder_name/api/method_name"
 `406`：用户未关注公众号
 
 `404`：没有填写flag
+
+`408`：数据库出错，message是错误信息
 
 
 
@@ -198,6 +208,8 @@ url:"https://hemc.100steps.net/folder_name/api/method_name"
 
 `409`：用户已填写过录音或文字（看当时提交的是哪个，防止有人直接输网址进入页面再写一次）
 
+`408`：数据库出错，message是错误信息
+
 
 
 ### sendOfflineCapsule
@@ -235,6 +247,8 @@ url:"https://hemc.100steps.net/folder_name/api/method_name"
 `406`：用户未关注公众号
 
 `409`：取信码已被使用
+
+`408`：数据库出错，message是错误信息
 
 
 
@@ -275,4 +289,6 @@ url:"https://hemc.100steps.net/folder_name/api/method_name"
 `405`：未填写信息
 
 `406`：用户未关注公众号
+
+`408`：数据库出错，message是错误信息
 
