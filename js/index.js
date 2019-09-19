@@ -88,5 +88,5 @@ initChangeHandle("content", () => {
 
 function next() {
   mySwiper.slideNext();
-  setTimeout(change, 300);
+  // setTimeout(change, 300);
 }
