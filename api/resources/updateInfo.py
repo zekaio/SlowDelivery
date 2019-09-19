@@ -3,11 +3,12 @@ from flask import jsonify, request
 from flask_restful import Resource, abort
 from common.database import database
 from common.utils import checkTel
-from common.utils import checkSubscribe, checkLogin
+from common.utils import checkSubscribe, checkLogin,checkTime
 
 
 class updateInfo(Resource):
     def post(self):
+        checkTime()
         openId = checkLogin()
         checkSubscribe(openId)
         obj = database()

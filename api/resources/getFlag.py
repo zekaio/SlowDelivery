@@ -3,11 +3,12 @@ from flask import jsonify
 from flask_restful import Resource, abort
 import pickle
 from common.database import database
-from common.utils import checkSubscribe, checkLogin
+from common.utils import checkSubscribe, checkLogin,checkTime
 
 
 class getFlag(Resource):
     def get(self):
+        checkTime()
         openId = checkLogin()
         checkSubscribe(openId)
         obj = database()
