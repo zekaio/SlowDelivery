@@ -97,43 +97,50 @@ const Third = {
     },
     submitVoice() {
       if (!clicked) {
-        $.ajax({
-          url: prefix + "sendTimeCapsule",
-          type: "post",
-          dataType: "json",
-          data: JSON.stringify({
-            type: sessionStorage.getItem("type"),
-            message: sessionStorage.getItem("message"),
-            time: sessionStorage.getItem("time"),
-            file_id: localId
-          }),
-          success: function(data) {
-            checkInfo.voice = true;
-            localStorage.setItem("checkInfo", JSON.stringify(checkInfo));
-            window.location.href = "capsule-end.html";
-            clicked = false;
-          },
-          error: function(err) {
-            switch (err.errmsg) {
-              case 400:
-                console.log("没有获取到file_id或msg");
-              case 401:
-                Bindwx();
-                break;
-              case 404:
-                console.log("服务器上没有音频");
-                break;
-              case 405:
-                window.location.href = "info.html?capsule.html";
-                break;
-              case 406:
-                Subscribe();
-                break;
-              case 409:
-                console.log("已填写过");
-                break;
-            }
-            clicked = false;
+        wx.uploadVoice({
+          localId: localId, // 需要上传的音频的本地ID，由stopRecord接口获得
+          isShowProgressTips: 1, // 默认为1，显示进度提示
+          success: function(res) {
+            // var serverId = res.serverId; // 返回音频的服务器端ID
+            $.ajax({
+              url: prefix + "sendTimeCapsule",
+              type: "post",
+              dataType: "json",
+              data: JSON.stringify({
+                type: sessionStorage.getItem("type"),
+                message: sessionStorage.getItem("message"),
+                time: sessionStorage.getItem("time"),
+                file_id: res.serverId
+              }),
+              success: function(data) {
+                checkInfo.voice = true;
+                localStorage.setItem("checkInfo", JSON.stringify(checkInfo));
+                window.location.href = "capsule-end.html";
+                clicked = false;
+              },
+              error: function(err) {
+                switch (err.errmsg) {
+                  case 400:
+                    console.log("没有获取到file_id或msg");
+                  case 401:
+                    Bindwx();
+                    break;
+                  case 404:
+                    console.log("服务器上没有音频");
+                    break;
+                  case 405:
+                    window.location.href = "info.html?capsule.html";
+                    break;
+                  case 406:
+                    Subscribe();
+                    break;
+                  case 409:
+                    console.log("已填写过");
+                    break;
+                }
+                clicked = false;
+              }
+            });
           }
         });
       }
