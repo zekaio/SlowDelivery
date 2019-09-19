@@ -81,7 +81,10 @@ function updateInfo(callback) {
       type: "get",
       dataType: "json",
       success: function(res) {
-        let record = res.data.record || null;
+        let record;
+        if (res.data && res.data.hasOwnProperty("record"))
+          record = res.data.record;
+        else record = null;
         if (record) {
           userInfo = { name: res.data.name, tel: res.data.tel };
           checkInfo = {
