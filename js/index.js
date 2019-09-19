@@ -40,6 +40,12 @@ axios
       };
       localStorage.setItem("userInfo", JSON.stringify(userInfo));
       localStorage.setItem("checkInfo", JSON.stringify(checkInfo));
+      if (checkInfo) {
+        if (checkInfo.text && checkInfo.voice) {
+          window.location.href = "conclusion.html";
+          return;
+        }
+      }
       section.splice(2, 1);
     }
   })
