@@ -76,8 +76,8 @@ class database(object):
                      .filter(Users.open_id == open_id)
                      .first()
                      )
-        except:
-            abort(408, message="数据库出错")
+        except Exception as e:
+            abort(408, message=str(e))
             return False
         Session.close()
         if not query:
@@ -91,8 +91,8 @@ class database(object):
         Session.add(Users(open_id=open_id, name=name, tel=tel))
         try:
             Session.commit()
-        except:
-            abort(408, message="数据库出错")
+        except Exception as e:
+            abort(408, message=str(e))
         Session.close()
         return True
 
@@ -112,8 +112,8 @@ class database(object):
             Session.add(Flags(open_id=open_id, name=data['name'], flag=flag))
             try:
                 Session.commit()
-            except:
-                abort(408, message="数据库出错")
+            except Exception as e:
+                abort(408, message=str(e))
             Session.close()
             return True
 
@@ -130,8 +130,8 @@ class database(object):
                          .filter(Flags.open_id == open_id)
                          .first()
                          )
-            except:
-                abort(408, message="数据库出错")
+            except Exception as e:
+                abort(408, message=str(e))
                 return False
             Session.close()
             if not query:
@@ -154,8 +154,8 @@ class database(object):
                          .filter(Users.open_id == open_id)
                          .first()
                          )
-            except:
-                abort(408, message="数据库出错")
+            except Exception as e:
+                abort(408, message=str(e))
                 return False
             if msgtype == "voice":
                 Session.add(
@@ -169,8 +169,8 @@ class database(object):
                 query.check_text = True
             try:
                 Session.commit()
-            except:
-                abort(408, message="数据库出错")
+            except Exception as e:
+                abort(408, message=str(e))
             Session.close()
             return True
 
@@ -184,8 +184,8 @@ class database(object):
                      .filter(OfflineCapsule.capsule_tag == capsule_tag.lower())
                      .first()
                      )
-        except:
-            abort(408, message="数据库出错")
+        except Exception as e:
+            abort(408, message=str(e))
             return False
         if query is None:
             abort(404, message="取信码无效")
@@ -202,8 +202,8 @@ class database(object):
             query.time = Time
             try:
                 Session.commit()
-            except:
-                abort(408, message="数据库出错")
+            except Exception as e:
+                abort(408, message=str(e))
             Session.close()
             return True
 
@@ -220,8 +220,8 @@ class database(object):
                          .query(DefaultFlag)
                          .all()
                          )
-            except:
-                abort(408, message="数据库出错")
+            except Exception as e:
+                abort(408, message=str(e))
                 return False
             arr = []
             for flag in query:
@@ -240,8 +240,8 @@ class database(object):
                      .filter(Users.open_id == open_id)
                      .first()
                      )
-        except:
-            abort(408, message="数据库出错")
+        except Exception as e:
+            abort(408, message=str(e))
             return False
         return {"check_text": query.check_text, "check_voice": query.check_voice}
 
@@ -254,8 +254,8 @@ class database(object):
                      .filter(Users.open_id == open_id)
                      .first()
                      )
-        except:
-            abort(408, message="数据库出错")
+        except Exception as e:
+            abort(408, message=str(e))
             return False
         return query.check_flag
 
@@ -267,8 +267,8 @@ class database(object):
                      .filter(TimeCapsule.open_id == open_id)
                      .first()
                      )
-        except:
-            abort(408, message="数据库出错")
+        except Exception as e:
+            abort(408, message=str(e))
             return False
         Session.close()
         return query.time
