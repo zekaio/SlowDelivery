@@ -110,12 +110,10 @@ function submit() {
                 Subscribe();
                 break;
               case 409:
-                console.log("已填写过信息");
+                alert("已填写过信息");
                 window.location.href = "intro.html";
                 break;
             }
-          } else {
-            alert("请求发送失败，请稍后再试");
           }
           clicked = false;
         });

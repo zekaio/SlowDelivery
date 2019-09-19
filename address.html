@@ -31,26 +31,6 @@
         var winHeight = $(window).height();
         document.body.style.backgroundSize = "100vw " + winHeight + "px";
 
-        function checkTimeCapsule() {
-            $.ajax({
-                url: prefix + "checkTimeCapsule",
-                type: "get",
-                success: function (res) {
-                    if (res.check_text == false) {
-                        window.location.href = "capsule.html";
-                    }
-                },
-                error: function (err) {
-                    if (err.response.status == 401) {
-                        Bindwx();
-                    }
-                    if (err.response.status == 406) {
-                        Subscribe();
-                    }
-                }
-            });
-        }
-        checkTimeCapsule();
         var clicked = false;
 
         function submit() {
