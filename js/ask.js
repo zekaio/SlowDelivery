@@ -27,7 +27,7 @@ function no() {
       );
       change();
       status = false;
-      document.getElementsByClassName("agree")[0].style.display = "none";
+      document.getElementsByClassName("reject")[0].style.display = "none";
     })
     .catch(function(err) {
       if (err.response) {

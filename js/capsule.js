@@ -16,7 +16,6 @@ function getNowFormatDate() {
   return currentdate;
 }
 
-
 const Second = {
   data() {
     return {
@@ -85,7 +84,7 @@ function dance() {
   if (num == arr.length) {
     num = 0;
   }
-  $("#mai").src = arr[num];
+  $("#mai")[0].src = arr[num];
 }
 
 function recording() {
@@ -317,7 +316,6 @@ const app = new Vue({
       this.showChooseType = false;
   }
 }).$mount("#app");
-
 
 function yes1() {
   $("#yes1").removeClass("hidden");
