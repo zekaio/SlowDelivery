@@ -18,6 +18,7 @@
         </div>
         <div class="box2 front" onclick="change()">
             <p id="content"></p>
+            <img class="arrow2" src="img/arrow2.png">
             <div class="btn2" id="mainpage" onclick="back()" style="position: absolute; bottom: 0; margin-bottom: 3vw;">
                 主页</div>
             <div id="bottom" class="bottom hidden" style="position: absolute; bottom: 0; margin-bottom: 1vw;">
@@ -51,6 +52,8 @@
         var type
 
         initChangeHandle("content", () => {
+            $(".arrow2")[0].style.display = "none";
+
             if (checkInfo.text && checkInfo.voice)
                 $("#mainpage").css("display", "block");
             else {

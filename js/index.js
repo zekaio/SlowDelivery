@@ -63,7 +63,11 @@ var mySwiper = new Swiper(".swiper-container", {
     loadPreNext: true,
     loadOnTransitionStart: true
   },
-  on: {}
+  on: {
+    transitionEnd: function() {
+      change();
+    }
+  }
 });
 
 var status = 0; //第几段话

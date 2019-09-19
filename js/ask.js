@@ -6,6 +6,7 @@ let section = [
 let status = true;
 
 initChangeHandle("content", () => {
+  $(".arrow2")[0].style.display = "none";
   $("#bottom").removeClass("hidden");
 });
 change();
