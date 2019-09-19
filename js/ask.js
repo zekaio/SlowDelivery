@@ -1,24 +1,14 @@
-var tt = 0;
-$("#w1").html("您好，我们邮局还为您的flag清单和信件提");
-$("#w2").html("供打印的附加服务，届时线下寄出。若需要");
-$("#w3").html("此项服务，请提供您的线下地址");
-$("#w1").addClass("word ty");
-$("#w2").addClass("word ty ty2");
-$("#w3").addClass("word ty ty3");
-clock = setInterval("count()", 1000);
+let section = [
+  "您好，我们邮局还为您的flag清单和信件提此项服务，请提供您的线下地址"
+];
 
-function count() {
-  tt++;
-  console.log(tt);
-}
-var status = 0;
+// 默认选择提供线下地址
+let status = true;
 
-function change() {
-  if (status == 0 && tt >= 2) {
-    clearInterval(clock);
-    $("#bottom").removeClass("hidden");
-  }
-}
+initChangeHandle("content", () => {
+  $("#bottom").removeClass("hidden");
+});
+change();
 
 function no() {
   axios
@@ -32,7 +22,12 @@ function no() {
       let checkInfo = JSON.parse(localStorage.getItem("checkInfo"));
       checkInfo.letter = true;
       localStorage.setItem("checkInfo", JSON.stringify(checkInfo));
-      window.location.href = "capsule-end.html";
+      section.push(
+        "感谢您的选择，我们将会在毕业之时，发短信提醒您在线上查收信件与 flag 清单，请不用担心忘记查收。"
+      );
+      change();
+      status = false;
+      document.getElementsByClassName("agree")[0].style.display = "none";
     })
     .catch(function(err) {
       if (err.response) {
@@ -64,5 +59,6 @@ function no() {
 }
 
 function yes() {
-  window.location.href = "address.html";
+  if (status) window.location.replace("address.html");
+  else window.location.replace("capsule-end.html");
 }

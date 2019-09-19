@@ -15,7 +15,7 @@
         <img src="img/title5.png" class="title">
         <div class="item1" style="margin-left: 15%;">
             <div class="tips">收信人地址
-                <img src="img/icon1.png" class="icon">
+                <img src="img/icon1.png" class="icon" style="margin-left: 0;">
             </div>
         </div>
         <textarea style="height: 30vw; left: 15%; width: 70%;" id="addr"
@@ -70,7 +70,7 @@
                             address: address
                         })
                         .then(function (res) {
-                            window.location.href = "capsule-end.html";
+                            window.location.replace("address-end.html");
                         })
                         .catch(function (err) {
                             if (err.response) {

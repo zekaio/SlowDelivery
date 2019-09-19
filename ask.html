@@ -17,10 +17,8 @@
             <img class="npc2" src="img/npc.png">
         </div>
         <div class="box2 front" onclick="change()">
-            <p id="w1"></p>
-            <p id="w2"></p>
-            <p id="w3"></p>
-            <div id="bottom" class="bottom hidden">
+            <p id="content"></p>
+            <div id="bottom" class="bottom hidden" style="position: absolute;bottom: 1vw;">
                 <div class="reject" onclick="no()">不了</div>
                 <div class="agree" onclick="yes()">好的</div>
             </div>
@@ -30,6 +28,7 @@
     <script src="js/vue.js"></script>
     <script src="js/vue-router.js"></script>
     <script src="js/conf.js"></script>
+    <script src="js/dialoguePrinter.js"></script>
     <script src="js/ask.js"></script>
     </div>
 </body>

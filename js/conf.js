@@ -98,4 +98,4 @@ if (
   !~window.location.href.indexOf("info.html") &&
   !~window.location.href.indexOf("index.html")
 )
-  updateInfo(updateInfoCallback);
+  updateInfo((updateInfoCallback = null));

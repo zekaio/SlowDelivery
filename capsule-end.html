@@ -28,27 +28,29 @@
         </div>
     </div>
     <script src="js/conf.js"></script>
+    <script src="js/dialoguePrinter.js"></script>
     <script>
-        var tt = 0;
-
-        function count() {
-            tt++;
-            console.log(tt);
-        }
-        window.onload = function () {
-            $("#w1").html("九月之初 乾坤未定 时光满递 不负韶华");
-            $("#w1").addClass("word ty");
-            clock = setInterval("count()", 1000);
-        }
-
-        function change() {
-            if (tt >= 1) {
-                clearInterval(clock);
-                tt = 0;
-                checkCapsule();
+        function getNowFormatDate() {
+            var date = new Date();
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var strDate = date.getDate();
+            if (month >= 1 && month <= 9) {
+                month = "0" + month;
             }
+            if (strDate >= 0 && strDate <= 9) {
+                strDate = "0" + strDate;
+            }
+            var currentdate = year + "年" + month + "月" + strDate + "日";
+            return (currentdate);
         }
-        var url = ""
+        let section = [userInfo.name + "同学：\n 你好！你于" + getNowFormatDate() +
+            "光临我们的木棉邮局",
+            "当再见成为你好之时，我们已经从遥远的旅途归来，捧着沉甸甸的未来向你问好，一纸情长，届时你是否已实现心中所愿？", "九月之初 乾坤未定 时光慢递 不负韶华"
+        ]
+
+        initChangeHandle("content", () => {})
+        change()
 
         function checkCapsule() {
             $.ajax({

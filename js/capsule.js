@@ -27,11 +27,6 @@ var timer = null;
 var clicked = false;
 var START;
 var END;
-var t;
-var tt;
-var ttt;
-var tttt;
-var ttttt;
 //////试听录音/////////////////////////
 function CountDown() {
   this.totalTime = this.totalTime - 1;
@@ -73,15 +68,12 @@ const Third = {
       totalTime: 0
     };
   },
-  method: {
+  methods: {
     //////返回重录/////////////////
     back() {
-      // $("#talk").style.display = "block";
-      // $("#again").style.display = "none";
-      // $("#continue").style.display = "none";
-      this.$refs.record.style.display = "none";
-      this.$refs.repeat.style.display = "block";
-      this.$refs.continue.style.display = "block";
+      this.$refs.record.style.display = "block";
+      this.$refs.repeat.style.display = "none";
+      this.$refs.continue.style.display = "none";
       localId = null;
       serverId = null;
       this.isRecorded = false;
@@ -187,9 +179,7 @@ const Third = {
           }
 
           function recording() {
-            timer = setInterval(function() {
-              dance();
-            }, 500);
+            timer = setInterval(dance, 500);
           }
 
           function finishRecord() {
@@ -244,10 +234,6 @@ const Third = {
           });
           //////录完跳到//////////////////
           function next() {
-            ttttt = this.$data;
-            // $("#talk").style.display = "none";
-            // $("#again").style.display = "block";
-            // $("#continue").style.display = "block";
             this.$refs.record.style.display = "none";
             this.$refs.repeat.style.display = "block";
             this.$refs.continue.style.display = "block";
@@ -268,7 +254,7 @@ const Third = {
       <div id="page3" class="page3">
           <div class="box3">
               <img src="img/title3.png" class="title3">
-              <div class="line"><hr></div>
+              <div class="line"></div>
               <div v-if="isRecorded==true" class="myvoice" onclick="Myvoice()">
                 <div id="duration" class="duration">{{totalTime}}</div>
               </div>
@@ -276,8 +262,8 @@ const Third = {
               <div class="bottom">
 
                   <div id="talk" class="btn3" style="user-select:none;" ref="record">按住说话</div>
-                  <div id="again"class="again" onclick="back()" ref="repeat">重录</div>
-                  <div id="continue"class="continue" onclick="submitVoice()" ref="continue">继续</div>
+                  <div id="again"class="again" @click="back()" ref="repeat">重录</div>
+                  <div id="continue"class="continue" @click="submitVoice()" ref="continue">继续</div>
               </div>
           </div>
       </div>
