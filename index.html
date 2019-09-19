@@ -42,6 +42,14 @@
     </div>
     <script src="js/vue.js"></script>
     <script src="js/vue-router.js"></script>
+    <script>
+        let updateInfoCallback = (userInfo) => {
+            if (checkInfo) {
+                if (checkInfo.text && checkInfo.voice)
+                    window.location.href = "conclusion.html";
+            }
+        }
+    </script>
     <script src="js/conf.js"></script>
     <script src="js/dialoguePrinter.js"></script>
     <script src="js/index.js"></script>
