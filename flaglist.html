@@ -48,7 +48,7 @@
             </div>
 
         </div>
-        <div class="btn" onclick="Continue()">继续</div>
+        <div class="btn" onclick="Continue()" style="display: none;">继续</div>
     </div>
     <script src="js/vue.js"></script>
     <script src="js/vue-router.js"></script>
@@ -90,8 +90,8 @@
             },
 
         })
-        if (~window.location.href.indexOf("hide"))
-            $(".btn")[0].style.display = "none"
+        if (!~window.location.href.indexOf("hide"))
+            $(".btn")[0].style.display = "block"
 
         axios.get(prefix + 'getFlag')
             .then(function (res) {
