@@ -3,6 +3,9 @@ const bbt = "https://hemc.100steps.net/2017/wechat/Home/Index/index?state=";
 const bbtPublic =
   "https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MjM5NDA4NzM4MA==&scene=124#wechat_redirect";
 
+const shareLink = "https://hemc.100steps.net/2019/future-mail/index.html";
+const pictureurl = "https://hemc.100steps.net/2019/future-mail/img/poster.jpg";
+
 //活动起止
 $.ajax({
   url: prefix + "isOngoing",
@@ -42,21 +45,26 @@ $.ajax({
       timestamp: arr.timestamp,
       nonceStr: arr.nonceStr,
       signature: arr.signature,
-      jsApiList: [
-        "checkJsApi", //判断当前客户端版本是否支持指定JS接口
-        "onMenuShareTimeline", //分享给好友
-        "onMenuShareAppMessage" //分享到朋友圈
-      ]
+      jsApiList: ["updateTimelineShareData", "updateAppMessageShareData"]
     });
     wx.ready(function() {
-      wx.onMenuShareTimeline({
+      wx.updateTimelineShareData({
+        title: "木棉邮局——毕业慢递",
+        link: shareLink, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        imgUrl: pictureurl,
+        success: function() {
+          console.log("success");
+          // 设置成功
+        }
+      });
+      wx.updateAppMessageShareData({
         title: "木棉邮局——毕业慢递", // 分享标题
-        link: "https://hemc.100steps.net/2019/future-mail/index.html", // 分享链接
-        imgUrl: "../img/logo2.png", // 分享图标
-        success: function() {}, // 用户确认分享后执行的回调函数
-        cancel: function() {}, // 用户取消分享后执行的回调函数
-        fail: function(res) {
-          alert("分享失败，请重新尝试");
+        desc: "", // 分享描述
+        link: shareLink, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        imgUrl: pictureurl, // 分享图标
+        success: function() {
+          console.log("success");
+          // 设置成功
         }
       });
     });
