@@ -22,6 +22,9 @@ class Users(Base):
     check_text = Column(Boolean, default=False)
     check_voice = Column(Boolean, default=False)
     check_flag = Column(Boolean, default=False)
+    __table_args__ = {
+        'mysql_charset': 'utf8mb4'
+    }
 
 
 class Flags(Base):
@@ -30,7 +33,9 @@ class Flags(Base):
     open_id = Column(Text, nullable=False)
     name = Column(Text, nullable=False)
     flag = Column(LargeBinary, nullable=False)
-
+    __table_args__ = {
+        'mysql_charset': 'utf8mb4'
+    }
 
 class TimeCapsule(Base):
     __tablename__ = 'timeCapsule'
@@ -43,7 +48,9 @@ class TimeCapsule(Base):
     send_offline = Column(Boolean, nullable=True, default=False)
     address = Column(Text, nullable=True)
     tel = Column(String(11), nullable=True)
-
+    __table_args__ = {
+        'mysql_charset': 'utf8mb4'
+    }
 
 class OfflineCapsule(Base):
     __tablename__ = 'offlineCapsule'
@@ -55,13 +62,17 @@ class OfflineCapsule(Base):
     receiver_addr = Column(Text, nullable=True)
     capsule_tag = Column(String(cfg["length"]), nullable=False, unique=True)
     time = Column(Integer, nullable=True)
-
+    __table_args__ = {
+        'mysql_charset': 'utf8mb4'
+    }
 
 class DefaultFlag(Base):
     __tablename__ = 'defaultFlag'
     id = Column(Integer, primary_key=True, autoincrement=True)
     flag = Column(Text, nullable=False)
-
+    __table_args__ = {
+        'mysql_charset': 'utf8mb4'
+    }
 
 class database(object):
     def __init__(self):
