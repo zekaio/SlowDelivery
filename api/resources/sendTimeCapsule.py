@@ -19,6 +19,10 @@ class sendTimeCapsule(Resource):
             abort(404, message="请先填写信息")
         check = obj.checkTimeCapsule(openId)
         msg = None
+        if check['check_voice'] or check['check_text']:
+            time = obj.getTime(openId)
+        else:
+            time = data['time']
         if data['type'] == "voice":
             if check['check_voice']:
                 abort(409, message="已经填写过语音信件了。")
@@ -37,12 +41,11 @@ class sendTimeCapsule(Resource):
                                  "wb")
                         f.write(base64.b64decode(t["data"]))
                         f.close()
-                        obj.sendTimeCapsule(openId, data['type'], msg, data['time'])
-
                     else:
-                        abort(404, message="录音文件不存在。")
+                        abort(404, message="录音文件不存在1。")
                 except:
-                    abort(404, message="录音文件不存在。")
+                    abort(404, message="录音文件不存在2。")
+                obj.sendTimeCapsule(openId, data['type'], msg, time)
         else:
             if check['check_text']:
                 abort(409, message="已经填写过文字信件了。")
@@ -51,10 +54,10 @@ class sendTimeCapsule(Resource):
                     msg = data['message']
                 except:
                     abort(400, message="参数错误。")
-        if data['send_offline']:
-            obj.sendTimeCapsule(openId, data['type'], msg, data['time'], data['send_offline'], data['address'])
-        else:
-            obj.sendTimeCapsule(openId, data['type'], msg, data['time'], data['send_offline'])
+            if data['send_offline']:
+                obj.sendTimeCapsule(openId, data['type'], msg, time, data['send_offline'], data['address'])
+            else:
+                obj.sendTimeCapsule(openId, data['type'], msg, time, data['send_offline'])
         return jsonify({
             "errcode": 0,
             "errmsg": ""

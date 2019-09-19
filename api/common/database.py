@@ -70,11 +70,15 @@ class database(object):
     # 获取用户信息
     def getInfo(self, open_id):
         Session = self.__Session_class()
-        query = (Session
-                 .query(Users)
-                 .filter(Users.open_id == open_id)
-                 .first()
-                 )
+        try:
+            query = (Session
+                     .query(Users)
+                     .filter(Users.open_id == open_id)
+                     .first()
+                     )
+        except:
+            abort(408, message="数据库出错")
+            return False
         Session.close()
         if not query:
             return False
@@ -85,12 +89,15 @@ class database(object):
     def updateInfo(self, open_id, name, tel):
         Session = self.__Session_class()
         Session.add(Users(open_id=open_id, name=name, tel=tel))
-        Session.commit()
+        try:
+            Session.commit()
+        except:
+            abort(408, message="数据库出错")
         Session.close()
         return True
 
     # 保存flag
-    def sendFlag(self, open_id,  flag):
+    def sendFlag(self, open_id, flag):
         data = self.getInfo(open_id)
         if not data:
             return False
@@ -103,7 +110,10 @@ class database(object):
                      )
             query.check_flag = True
             Session.add(Flags(open_id=open_id, name=data['name'], flag=flag))
-            Session.commit()
+            try:
+                Session.commit()
+            except:
+                abort(408, message="数据库出错")
             Session.close()
             return True
 
@@ -111,14 +121,18 @@ class database(object):
     def getFlag(self, open_id):
         data = self.getInfo(open_id)
         if not data:
-            abort(404,message="请先填写姓名和手机号")
+            abort(404, message="请先填写姓名和手机号")
         else:
             Session = self.__Session_class()
-            query = (Session
-                     .query(Flags)
-                     .filter(Flags.open_id == open_id)
-                     .first()
-                     )
+            try:
+                query = (Session
+                         .query(Flags)
+                         .filter(Flags.open_id == open_id)
+                         .first()
+                         )
+            except:
+                abort(408, message="数据库出错")
+                return False
             Session.close()
             if not query:
                 return False
@@ -134,11 +148,15 @@ class database(object):
         else:
             tel = data['tel']
             Session = self.__Session_class()
-            query = (Session
-                     .query(Users)
-                     .filter(Users.open_id == open_id)
-                     .first()
-                     )
+            try:
+                query = (Session
+                         .query(Users)
+                         .filter(Users.open_id == open_id)
+                         .first()
+                         )
+            except:
+                abort(408, message="数据库出错")
+                return False
             if msgtype == "voice":
                 Session.add(
                     TimeCapsule(open_id=open_id, type=msgtype, file_id=message, time=Time, send_offline=send_offline,
@@ -149,7 +167,10 @@ class database(object):
                     TimeCapsule(open_id=open_id, type=msgtype, message=message, time=Time, send_offline=send_offline,
                                 address=address, tel=tel))
                 query.check_text = True
-            Session.commit()
+            try:
+                Session.commit()
+            except:
+                abort(408, message="数据库出错")
             Session.close()
             return True
 
@@ -157,11 +178,15 @@ class database(object):
     def sendOfflineCapsule(self, sender_name, sender_tel, receiver_name, receiver_tel, receiver_addr, capsule_tag,
                            Time):
         Session = self.__Session_class()
-        query = (Session
-                 .query(OfflineCapsule)
-                 .filter(OfflineCapsule.capsule_tag == capsule_tag.lower())
-                 .first()
-                 )
+        try:
+            query = (Session
+                     .query(OfflineCapsule)
+                     .filter(OfflineCapsule.capsule_tag == capsule_tag.lower())
+                     .first()
+                     )
+        except:
+            abort(408, message="数据库出错")
+            return False
         if query is None:
             abort(404, message="取信码无效")
             return False
@@ -175,7 +200,10 @@ class database(object):
             query.receiver_tel = receiver_tel
             query.receiver_addr = receiver_addr
             query.time = Time
-            Session.commit()
+            try:
+                Session.commit()
+            except:
+                abort(408, message="数据库出错")
             Session.close()
             return True
 
@@ -187,10 +215,14 @@ class database(object):
             return False
         if "defaultFlag" not in session:
             Session = self.__Session_class()
-            query = (Session
-                     .query(DefaultFlag)
-                     .all()
-                     )
+            try:
+                query = (Session
+                         .query(DefaultFlag)
+                         .all()
+                         )
+            except:
+                abort(408, message="数据库出错")
+                return False
             arr = []
             for flag in query:
                 arr.append(flag.flag)
@@ -202,19 +234,41 @@ class database(object):
     # 判断是否填写时光胶囊
     def checkTimeCapsule(self, open_id):
         Session = self.__Session_class()
-        query = (Session
-                 .query(Users)
-                 .filter(Users.open_id == open_id)
-                 .first()
-                 )
+        try:
+            query = (Session
+                     .query(Users)
+                     .filter(Users.open_id == open_id)
+                     .first()
+                     )
+        except:
+            abort(408, message="数据库出错")
+            return False
         return {"check_text": query.check_text, "check_voice": query.check_voice}
 
     # 判断是否填写flag
     def checkFlag(self, open_id):
         Session = self.__Session_class()
-        query = (Session
-                 .query(Users)
-                 .filter(Users.open_id == open_id)
-                 .first()
-                 )
+        try:
+            query = (Session
+                     .query(Users)
+                     .filter(Users.open_id == open_id)
+                     .first()
+                     )
+        except:
+            abort(408, message="数据库出错")
+            return False
         return query.check_flag
+
+    def getTime(self, open_id):
+        Session = self.__Session_class()
+        try:
+            query = (Session
+                     .query(TimeCapsule)
+                     .filter(TimeCapsule.open_id == open_id)
+                     .first()
+                     )
+        except:
+            abort(408, message="数据库出错")
+            return False
+        Session.close()
+        return query.time
