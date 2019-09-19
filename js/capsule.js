@@ -1,8 +1,11 @@
-var winHeight = $(window).height();
+var winHeight = $(window).height() + "px";
 document.getElementById("box").style.height = 0.8 * winHeight + "px";
 const Second = {
+  data: {
+    winHeight
+  },
   template: `
-        <div id="page2" class="page2">
+        <div id="page2" class="page2" :style="{height: winHeight}" >
             <div id="box2" class="box2">
                 <img src="img/title3.png" class="title2">
                 <textarea id="myletter" placeholder="输入信的内容"></textarea>
@@ -12,11 +15,10 @@ const Second = {
                 <div class="tip2"><span>信件内容一经提交无法修改</span></div>
             </div>
         </div>
-        <router-view></router-view>
         <script>
             var winHeight = $(window).height();
             document.getElementById("box2").style.height = 0.8 * winHeight + "px";
-        </script>//?
+        </script>
     `
 };
 
@@ -270,7 +272,6 @@ const Third = {
               </div>
           </div>
       </div>
-      <router-view></router-view>
       `
 };
 const routes = [
