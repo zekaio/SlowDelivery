@@ -13,15 +13,14 @@
 <body>
     <div id="app">
         <img class="bg" src="img/bg2.jpg">
-        <div class="box under">
+        <div class="box2 under">
             <img class="npc" src="img/npc.png">
         </div>
-        <div class="box front" onclick="change()">
-            <p id="w1"></p>
-            <p id="w2"></p>
-            <p id="w3"></p>
-            <div class="btn2" id="mainpage" onclick="back()">主页</div>
-            <div id="bottom" class="bottom hidden">
+        <div class="box2 front" onclick="change()">
+            <p id="content"></p>
+            <div class="btn2" id="mainpage" onclick="back()" style="position: absolute; bottom: 0; margin-bottom: 3vw;">
+                主页</div>
+            <div id="bottom" class="bottom hidden" style="position: absolute; bottom: 0; margin-bottom: 1vw;">
                 <div class="reject" id="mypage" onclick="back()">主页</div>
                 <div class="agree" id="send" onclick="send()">再寄一封</div>
             </div>
@@ -44,39 +43,22 @@
             var currentdate = year + "年" + month + "月" + strDate + "日";
             return (currentdate);
         }
-        let section = [userInfo.name + "同学：\n 你好！你于" + getNowFormatDate() +
+        // let section = [userInfo.name + "同学：\n 你好！你于" + getNowFormatDate() +
+        let section = ["gajon" + "同学：\n 你好！你于" + getNowFormatDate() +
             "光临我们的木棉邮局",
             "当再见成为你好之时，我们已经从遥远的旅途归来，捧着沉甸甸的未来向你问好，一纸情长，届时你是否已实现心中所愿？", "九月之初 乾坤未定 时光慢递 不负韶华"
-        ]
+        ];
 
-        initChangeHandle("content", () => {})
+        initChangeHandle("content", () => {
+            if (checkInfo.text && checkInfo.voice)
+                $("#mainpage").css("display", "block");
+            else {
+                $("#bottom").removeClass("hidden");
+                url = checkInfo.text ? "capsule.html#/voice" : "capsule.html#/text"
+            }
+
+        })
         change()
-
-        function checkCapsule() {
-            $.ajax({
-                url: prefix + "checkTimeCapsule",
-                type: "get",
-                success: function (res) {
-                    if ((res.check_text) && (res.check_voice)) {
-                        $("#mainpage").css("display", "block");
-                    } else if (res.check_text) {
-                        $("#bottom").removeClass("hidden");
-                        url = "capsule.html#/voice"
-                    } else if (res.check_voice) {
-                        $("#bottom").removeClass("hidden");
-                        url = "capsule.html#/letter"
-                    }
-                },
-                error: function (err) {
-                    if (err.errmsg == 401) {
-                        Bindwx();
-                    }
-                    if (err.errmsg == 406) {
-                        Subscribe();
-                    }
-                }
-            })
-        }
 
         function back() {
             window.location.href = "conclusion.html";
