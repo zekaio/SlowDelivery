@@ -287,7 +287,17 @@ const router = new VueRouter({
   routes
 });
 const app = new Vue({
-  router
+  router,
+  data: {
+    showChooseType: true
+  },
+  mounted() {
+    if (
+      ~this.$route.path.indexOf("voice") ||
+      ~this.$route.path.indexOf("letter")
+    )
+      this.showChooseType = false;
+  }
 }).$mount("#app");
 
 function getNowFormatDate() {
