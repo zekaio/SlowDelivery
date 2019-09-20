@@ -29,8 +29,15 @@ function Bindwx() {
 }
 //关注公众号
 function Subscribe() {
+  if(bbt_layer) {
+    bbt_layer.style.display = 'block';
+  } else {
+    location.href = shareLink;
+  }
+  /*
   alert("要先关注百步梯公众号哦~");
   location.href = bbtPublic + encodeURIComponent(location.href);
+  */
 }
 //分享到朋友圈
 $.ajax({
