@@ -16,11 +16,30 @@
         <img class="title" src="img/title1.png">
         <img class="logo" src="img/logo1.png">
         <div class="btn btn1" onclick="checkFlag()">flag清单</div>
+        <div class="btn btn1" style="bottom: 10vh; display: none;" id='letter' onclick="postLetter()">去寄信</div>
     </div>
     <script src="js/vue.js"></script>
     <script src="js/vue-router.js"></script>
     <script src="js/conf.js"></script>
     <script>
+        var type
+        if (checkInfo) {
+            if (checkInfo.text && checkInfo.voice)
+                type = null
+            else
+                type = checkInfo.text ? 'voice' : 'text'
+
+            if (type)
+                $('#letter')[0].style.display = "block"
+        }
+
+        function postLetter() {
+            if (!type)
+                return;
+            sessionStorage.setItem("type", type)
+            location.href = type == "voice" ? "capsule.html#/voice" : "capsule.html#/letter"
+        }
+
         function checkFlag() {
             $.ajax({
                 url: prefix + "checkFlag",
