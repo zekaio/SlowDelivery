@@ -75,8 +75,9 @@
     /* 每行最多17个字 17*4+6*2=80 */
     .box {
         position: absolute;
-        top: 172%;
-        left: 0;
+        /*top: 172%;*/
+        bottom: -92%;
+	left: 0;
         right: 0;
         margin: 0 auto;
         width: 80vw;
@@ -92,8 +93,9 @@
 
     .box2 {
         position: absolute;
-        top: 172%;
-        width: 74vw;
+        /*top: 172%;*/
+        bottom: -92%;
+	width: 74vw;
         margin: 0 auto;
         left: 0;
         right: 0;
