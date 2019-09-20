@@ -19,8 +19,11 @@ function change() {
   }
 
   dom.innerText = "";
+  var preChar = "";
   animTimer = setInterval(() => {
-    dom.innerText += section[0][0];
+    if (preChar === " ") dom.innerText += " " + section[0][0];
+    else dom.innerText += section[0][0];
+    preChar = section[0][0];
     section[0] = section[0].substr(1);
     if (section[0].length === 0) {
       section.shift();

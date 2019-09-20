@@ -18,7 +18,7 @@ function toGoalLink() {
           ),
           {}
         )["from"] || "intro.html";
-  window.location.href = goal;
+  window.location.replace(goal);
 }
 
 if (userInfo) toGoalLink();
@@ -112,7 +112,7 @@ function submit() {
                 break;
               case 409:
                 alert("已填写过信息");
-                window.location.href = "intro.html";
+                window.location.replace("intro.html");
                 break;
             }
           }
