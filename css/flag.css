@@ -129,7 +129,10 @@ body {
 
 .tips {
     width: 30vw;
-    position: relative;
+    /*position: relative;*/
+    position: absolute;
+    top: 5em;
+    left: 32px;
 }
 
 .free {
@@ -164,7 +167,7 @@ body {
 
 li {
     color: #b5a7c5;
-    margin-top: 4vw;
+    margin-top: 5vw;
 }
 
 .content {
@@ -182,7 +185,6 @@ li {
     width: 4vw;
     height: 4vw;
     margin-right: 10vw;
-    padding: 1vw;
 }
 
 .text {

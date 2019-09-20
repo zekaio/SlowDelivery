@@ -27,7 +27,8 @@ body,
 
 .box {
     position: absolute;
-    top: 72%;
+    /*top: 72%;*/
+    bottom:8%; 
     left: 0;
     right: 0;
     margin: 0 auto;
@@ -46,18 +47,21 @@ body,
     position: absolute;
     width: 60%;
     bottom: 21vh;
+    /*bottom:16vh;*/
     right: -7vw;
 }
 
 .box2 {
     position: absolute;
-    top: 72%;
+    /*top: 72%;*/    
+    bottom:8%; 
     left: 0;
     right: 0;
     margin: 0 auto;
     width: 80vw;
     line-height: 1.3em;
     height: 20vh;
+    /*height:13.5vh;*/
     background: #ffffff;
     color: #333333;
     font-size: 4vw;
