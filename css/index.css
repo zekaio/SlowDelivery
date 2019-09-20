@@ -1,128 +1,188 @@
-    *{
-        margin:0;
-        padding:0;
-        font-family:"SimHei"
+    * {
+        margin: 0;
+        padding: 0;
+        font-family: "SimHei"
     }
-    html, body, #app{ 
-        width: 100%; height: 100%; 
-        overflow:hidden;
+
+    html,
+    body,
+    #app {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
     }
+
     .swiper-container {
         width: 100%;
         height: 100%;
     }
-    .swiper-wrapper{
-        width:100%;
-        height:100%;
+
+    .swiper-wrapper {
+        width: 100%;
+        height: 100%;
     }
-    .bg{
-        width:100%;
-        height:100vh;
-        background-size:100vw 100vh;
+
+    .bg {
+        width: 100%;
+        height: 100vh;
+        background-size: 100vw 100vh;
     }
-    .title{
+
+    .title {
         position: absolute;
-        left:8vw; bottom:8%;
-        width:20vh; height:20vh;
-        animation:enter 2s;
-        animation-delay:0.5s;
-        animation-fill-mode:both;
+        left: 8vw;
+        bottom: 8%;
+        width: 20vh;
+        height: 20vh;
+        animation: enter 2s;
+        animation-delay: 0.5s;
+        animation-fill-mode: both;
     }
-    @keyframes enter{
-        0%{opacity:0;}
-        100%{opacity:1;}
+
+    @keyframes enter {
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
     }
-    .arrow1{
-        position:absolute;
-        width:10vw;
-        left:45vw;
-        bottom:1vh;
+
+    .arrow1 {
+        position: absolute;
+        width: 10vw;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        bottom: 1vh;
     }
-    .logo{
-        position:absolute;
-        width:25%;
-        bottom:1vh; right:1vh;
+
+    .logo {
+        position: absolute;
+        width: 25%;
+        bottom: 1vh;
+        right: 1vh;
     }
-    .npc{
-        position:absolute;
-        width:60%;
-        bottom:16vh;right:-7vw;
+
+    .npc {
+        position: absolute;
+        width: 60%;
+        bottom: 16vh;
+        right: -7vw;
     }
+
     /* 每行最多17个字 17*4+6*2=80 */
-    .box{
-        position:absolute;
-        top:172%; 
-        left:0; right:0;
-        margin:0 auto;
-        width:80vw; height:13.5vh;
-        background:#ffffff;
-        color:#333333;
-        font-size:4vw;
-        opacity:0.9;
-        border-radius:7.5px;
-        padding:3vh 6vw 1vh 6vw;
-    }
-    .box2{
+    .box {
         position: absolute;
-        top:172%; 
-        width:74vw;
-        margin:0 auto;
-        left:0; right:0;
-        height:13.5vh;
-        background:#ffffff;
-        color:#333333;
-        font-size:4vw;
-        opacity:0.9;
-        border-radius:7.5px;
-        padding:3vh 6vw 1vh 12vw;
+        top: 172%;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        width: 80vw;
+        /* height: 13.5vh; */
+        height: 6em;
+        background: #ffffff;
+        color: #333333;
+        font-size: 4vw;
+        opacity: 0.9;
+        border-radius: 7.5px;
+        padding: 3vh 6vw 1vh 6vw;
     }
-    .arrow2{
-        position:absolute;
-        right:10vw;bottom:2vh;
-        width:5vw;
+
+    .box2 {
+        position: absolute;
+        top: 172%;
+        width: 74vw;
+        margin: 0 auto;
+        left: 0;
+        right: 0;
+        /* height: 13.5vh; */
+        height: 6em;
+        background: #ffffff;
+        color: #333333;
+        font-size: 4vw;
+        opacity: 0.9;
+        border-radius: 7.5px;
+        padding: 3vh 6vw 1vh 12vw;
     }
-    .under{
-        z-index:1;
+
+    .arrow2 {
+        position: absolute;
+        right: 7vw;
+        bottom: 2vh;
+        width: 5vw;
+        animation: floating 2s linear infinite;
     }
-    .front{
-        z-index:2;
+
+    .under {
+        z-index: 1;
     }
-    p{
-        margin-bottom:2px;
+
+    .front {
+        z-index: 2;
     }
-    .word{
+
+    p {
+        margin-bottom: 2px;
+    }
+
+    .word {
         text-align: left;
         color: black;
-        width:100%;
-        white-space:nowrap;
-        overflow:hidden;
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
     }
-    .ty{
+
+    .ty {
         animation: type 2s steps(50, end) forwards;
-        animation-fill-mode:both;
+        animation-fill-mode: both;
     }
-    .ty2{
-        animation-delay:2s;
+
+    .ty2 {
+        animation-delay: 2s;
     }
-    .ty3{
-        animation-delay:4s;
+
+    .ty3 {
+        animation-delay: 4s;
     }
-    .ty4{
-        animation-delay:6s;
+
+    .ty4 {
+        animation-delay: 6s;
     }
-    @keyframes type{
-        from {width:0;}
+
+    @keyframes type {
+        from {
+            width: 0;
+        }
     }
-    .btn{
-        width:35vw; height:10vw;
-        background:#ffffff;
-        opacity:0.9;
-        color:#9475a5;
-        border-radius:3px;
-        font-size:5vw;
-        line-height:10vw;
-        text-align:center;
-        position:absolute;
-        bottom:20vh;
-        right:10vw;
+
+    @keyframes floating {
+        0% {}
+
+        30% {
+            transform: translateY(-20%)
+        }
+
+        70% {
+            transform: translateY(20%)
+        }
+
+        100% {}
+    }
+
+    .btn {
+        width: 35vw;
+        height: 10vw;
+        background: #ffffff;
+        opacity: 0.9;
+        color: #9475a5;
+        border-radius: 3px;
+        font-size: 5vw;
+        line-height: 10vw;
+        text-align: center;
+        position: absolute;
+        bottom: 20vh;
+        right: 10vw;
     }

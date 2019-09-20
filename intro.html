@@ -17,70 +17,23 @@
             <img class="npc" src="img/npc.png">
         </div>
         <div class="box front" onclick="change()">
-            <p id="w1"></p>
-            <p id="w2"></p>
-            <p id="w3"></p>
+            <p id="content"></p>
             <img class="arrow2" src="img/arrow2.png">
         </div>
     </div>
     <script src="js/conf.js"></script>
+    <script src="js/dialoguePrinter.js"></script>
     <script>
-        var tt = 0;
-        window.onload = function () {
-            $("#w1").html("奔波至此，你对前路的方向如何选择？在这");
-            $("#w2").html("份flag清单里面立下属于自己的flag，来预");
-            $("#w3").html("告你的大学时光吧！");
-            $("#w1").addClass("word ty");
-            $("#w2").addClass("word ty ty2");
-            $("#w3").addClass("word ty ty3");
-            clock = setInterval("count()", 1000);
-        }
-
-        function count() {
-            tt++;
-            console.log(tt);
-        }
-        var status = 0;
-        var flaged = false
-        var firstQueryFlag = true
-
-        function change() {
-            if ((status == 0) && (tt >= 2)) {
-                clearInterval(clock);
-                tt = 0;
-                clock = setInterval("count()", 1000);
-                $("#w1").removeClass("word ty");
-                $("#w2").removeClass("word ty ty2");
-                $("#w1").html("待到毕业之时回顾，看看有多少flag能被打");
-                $("#w2").html("破~");
-                $("#w3").html("");
-                setTimeout(function () {
-                    $("#w1").addClass("word ty");
-                    $("#w2").addClass("word ty ty2");
-                }, 1);
-                status = 1;
-            }
-            // judge weather 立 flag already
-            if (firstQueryFlag) {
-                firstQueryFlag = false
-                $.ajax({
-                    url: prefix + "checkFlag",
-                    type: "get",
-                    success: function (res) {
-                        if (res.check_flag)
-                            flaged = true
-                    }
-                })
-            }
-            if ((status == 1) && (tt >= 3)) {
-                clearInterval(clock);
-                tt = 0;
-                if (!flaged)
-                    window.location.href = "flag.html";
-                else
-                    window.location.href = "flaglist.html"
-            }
-        }
+        let section = [
+            "奔波至此，你对前路的方向有何选择？在 flag 清单里面立下属于自己的 flag，来预告你的大学时光吧！",
+            "待到毕业之时回顾，看看有多少 flag 能被打破~"
+        ];
+        initChangeHandle("content", () => {
+            let checkInfo = sessionStorage.getItem("checkInfo")
+            if (!checkInfo || !JSON.parse(checkInfo).flag) window.location.href = "flag.html"
+            else window.location.href = "flaglist.html"
+        })
+        change()
     </script>
 </body>
 

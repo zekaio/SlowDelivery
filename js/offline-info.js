@@ -1,11 +1,11 @@
 window.onload = function() {
-  if ($(window).height() <= 500) {
-    $("#box").css("height", 1.2 * $(window).height());
-  } else if ($(window).height() >= 800) {
-    $("#box").css("height", 0.9 * $(window).height());
-  } else {
-    $("#box").css("height", $(window).height());
-  }
+  // if ($(window).height() <= 500) {
+  //   $("#box").css("height", 1.2 * $(window).height());
+  // } else if ($(window).height() >= 800) {
+  //   $("#box").css("height", 0.9 * $(window).height());
+  // } else {
+  //   $("#box").css("height", $(window).height());
+  // }
   document.body.style.backgroundSize = "100vw " + $(window).height() + "px";
   fetch(prefix + "setSession", {
     method: "get"

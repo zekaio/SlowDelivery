@@ -17,21 +17,19 @@
             <img class="npc" src="img/npc.png">
         </div>
         <div class="box front" id="box" onclick="change()">
-            <p id="w1"></p>
-            <p id="w2"></p>
-            <p id="w3"></p>
+            <p id="content"></p>
             <div class="btn2" id="again" onclick="back()">再寄一封</div>
         </div>
     </div>
     <script src="js/conf.js"></script>
+    <script src="js/dialoguePrinter.js"></script>
     <script>
-        if ($(window).height() <= 500) {
-            $("#box").css("height", "17vh");
-        }
-        if ($(window).height() >= 800) {
-            $("#box").css("height", "9vh");
-        }
-        var tt = 0;
+        // if ($(window).height() <= 500) {
+        //     $("#box").css("height", "17vh");
+        // }
+        // if ($(window).height() >= 800) {
+        //     $("#box").css("height", "9vh");
+        // }
 
         function getNowFormatDate() {
             var date = new Date();
@@ -47,58 +45,13 @@
             var currentdate = year + "年" + month + "月" + strDate + "日";
             return (currentdate);
         }
-        window.onload = function () {
-            $("#w1").html(sessionStorage.getItem('name') + "同学：");
-            $("#w2").html("你好！你于" + getNowFormatDate() + "光临我们的木棉");
-            $("#w3").html("邮局");
-            $("#w1").addClass("word ty");
-            $("#w2").addClass("word ty ty1");
-            $("#w3").addClass("word ty ty33");
-            clock = setInterval("count()", 1000);
-        }
+        let section = [userInfo.name + "同学：\n 你好！你于" + getNowFormatDate() +
+            "光临我们的木棉邮局",
+            "当再见成为你好之时，我们已经从遥远的旅途归来，捧着沉甸甸的未来向你问好，一纸情长，届时你是否已实现心中所愿？", "九月之初 乾坤未定 时光慢递 不负韶华"
+        ]
 
-        function count() {
-            tt++;
-            console.log(tt);
-        }
-        var status = 0;
-
-        function change() {
-            if ((status == 0) && (tt >= 2)) {
-                clearInterval(clock);
-                tt = 0;
-                clock = setInterval("count()", 1000);
-                $("#w1").removeClass("word ty");
-                $("#w2").removeClass("word ty ty1");
-                $("#w3").removeClass("word ty ty33");
-                $("#w1").html("当再见成为你好时，我们已经从遥远的旅途");
-                $("#w2").html("归来，捧着沉甸甸的未来向你问好");
-                $("#w3").html("");
-                setTimeout(function () {
-                    $("#w1").addClass("word ty");
-                    $("#w2").addClass("word ty ty2");
-                }, 1);
-                status = 1;
-            }
-            if ((status == 1) && (tt >= 0.5)) {
-                clearInterval(clock);
-                tt = 0;
-                clock = setInterval("count()", 1000);
-                $("#w1").removeClass("word ty");
-                $("#w2").removeClass("word ty ty2");
-                $("#w1").html("九月之初 乾坤未定 时光慢递 不负韶华");
-                $("#w2").html("");
-                setTimeout(function () {
-                    $("#w1").addClass("word ty");
-                }, 1);
-                status = 2;
-            }
-            if ((status == 2) && (tt >= 0.5)) {
-                clearInterval(clock);
-                tt = 0;
-                $("#again").css("display", "block");
-            }
-        }
+        initChangeHandle("content", () => {})
+        change()
 
         function back() {
             window.location.href = "offline-info.html";

@@ -27,7 +27,7 @@
                 type: "get",
                 success: function (res) {
                     if (res.check_flag) {
-                        window.location.href = "flaglist.html"
+                        window.location.href = "flaglist.html?hide"
                     } else {
                         sessionStorage.setItem('err', 0);
                         window.location.href = "sorry.html";

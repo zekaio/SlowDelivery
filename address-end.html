@@ -1,0 +1,49 @@
+</html>
+<!DOCTYPE html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+  <link rel="stylesheet" href="css/intro.css">
+  <script src="https://cdn.jsdelivr.net/npm/axios@0.19.0/dist/axios.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <img class="bg" src="img/bg2.jpg">
+    <div class="box2 under">
+      <img class="npc2" src="img/npc.png">
+    </div>
+    <div class="box2 front" onclick="change()">
+      <p id="content"></p>
+      <img class="arrow2" src="img/arrow2.png">
+      <div id="bottom" class="bottom hidden" style="position: absolute;bottom: 1vw;">
+        <div class="agree" onclick="yes()">好的</div>
+      </div>
+    </div>
+  </div>
+  <script src="js/jquery.js"></script>
+  <script src="js/vue.js"></script>
+  <script src="js/vue-router.js"></script>
+  <script src="js/dialoguePrinter.js"></script>
+  </div>
+  <script>
+    let section = [
+      "我们将会在毕业之时，发短信提醒您在线上查收信件与 flag 清单，请不用担心忘记查收。"
+    ];
+
+    initChangeHandle("content", () => {
+      $(".arrow2")[0].style.display = "none";
+      $("#bottom").removeClass("hidden")
+    });
+    change();
+
+    function yes() {
+      location.replace("capsule-end.html")
+    }
+  </script>
+</body>
+
+</html>

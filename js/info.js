@@ -7,27 +7,51 @@ if ($(window).height() <= 500) {
   document.body.style.backgroundImage = "url('./img/bg3.png')";
 }
 
-axios
-  .get(prefix + "getInfo")
-  .then(function(res) {
-    if (res.data.record) {
-      window.location.href = "intro.html";
-    }
-  })
-  .catch(function(err) {
-    if (err.response) {
-      switch (err.response.status) {
-        case 401:
-          Bindwx();
-          break;
-        case 406:
-          Subscribe();
-          break;
+function toGoalLink() {
+  let goal = !~window.location.search.indexOf("?")
+    ? "intro.html"
+    : window.location.search
+        .match(/([^?=&]+)(=([^&]*))/g)
+        .reduce(
+          (a, v) => (
+            (a[v.slice(0, v.indexOf("="))] = v.slice(v.indexOf("=") + 1)), a
+          ),
+          {}
+        )["from"] || "intro.html";
+  window.location.href = goal;
+}
+
+if (userInfo) toGoalLink();
+else
+  axios
+    .get(prefix + "getInfo")
+    .then(function(res) {
+      if (res.data.record) {
+        userInfo = { name: res.data.name, tel: res.data.tel };
+        checkInfo = {
+          flag: res.data.check_flag,
+          text: res.data.check_text,
+          voice: res.data.check_voice
+        };
+        sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
+        sessionStorage.setItem("checkInfo", JSON.stringify(checkInfo));
+        toGoalLink();
       }
-    } else {
-      alert("请求发送失败，请稍后再试");
-    }
-  });
+    })
+    .catch(function(err) {
+      if (err.response) {
+        switch (err.response.status) {
+          case 401:
+            Bindwx();
+            break;
+          case 406:
+            Subscribe();
+            break;
+        }
+      } else {
+        alert("请求发送失败，请稍后再试");
+      }
+    });
 
 function judge(num) {
   if (!/^1(3|4|5|6|7|8|9)\d{9}$/.test(num)) {
@@ -66,8 +90,16 @@ function submit() {
           tel: phone
         })
         .then(function(res) {
-          sessionStorage.setItem("name", name);
-          window.location.href = "intro.html";
+          // sessionStorage.setItem("name", name);
+          sessionStorage.setItem(
+            "userInfo",
+            JSON.stringify({ name, tel: phone })
+          );
+          sessionStorage.setItem(
+            "checkInfo",
+            JSON.stringify({ text: false, flag: false, voice: false })
+          );
+          toGoalLink();
         })
         .catch(function(err) {
           if (err.response) {
@@ -79,12 +111,10 @@ function submit() {
                 Subscribe();
                 break;
               case 409:
-                console.log("已填写过信息");
+                alert("已填写过信息");
                 window.location.href = "intro.html";
                 break;
             }
-          } else {
-            alert("请求发送失败，请稍后再试");
           }
           clicked = false;
         });

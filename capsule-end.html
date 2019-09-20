@@ -13,74 +13,65 @@
 <body>
     <div id="app">
         <img class="bg" src="img/bg2.jpg">
-        <div class="box under">
+        <div class="box2 under">
             <img class="npc" src="img/npc.png">
         </div>
-        <div class="box front" onclick="change()">
-            <p id="w1"></p>
-            <p id="w2"></p>
-            <p id="w3"></p>
-            <div class="btn2" id="mainpage" onclick="back()">主页</div>
-            <div id="bottom" class="bottom hidden">
+        <div class="box2 front" onclick="change()">
+            <p id="content"></p>
+            <img class="arrow2" src="img/arrow2.png">
+            <div class="btn2" id="mainpage" onclick="back()"
+                style="position: absolute; bottom: 0; margin-bottom: 3vw; line-height: 10vw;">
+                主页</div>
+            <div id="bottom" class="bottom hidden" style="position: absolute; bottom: 0; margin-bottom: 1vw;">
                 <div class="reject" id="mypage" onclick="back()">主页</div>
                 <div class="agree" id="send" onclick="send()">再寄一封</div>
             </div>
         </div>
     </div>
     <script src="js/conf.js"></script>
+    <script src="js/dialoguePrinter.js"></script>
     <script>
-        var tt = 0;
-
-        function count() {
-            tt++;
-            console.log(tt);
-        }
-        window.onload = function () {
-            $("#w1").html("九月之初 乾坤未定 时光满递 不负韶华");
-            $("#w1").addClass("word ty");
-            clock = setInterval("count()", 1000);
-        }
-
-        function change() {
-            if (tt >= 1) {
-                clearInterval(clock);
-                tt = 0;
-                checkCapsule();
+        function getNowFormatDate() {
+            var date = new Date();
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var strDate = date.getDate();
+            if (month >= 1 && month <= 9) {
+                month = "0" + month;
             }
+            if (strDate >= 0 && strDate <= 9) {
+                strDate = "0" + strDate;
+            }
+            var currentdate = year + "年" + month + "月" + strDate + "日";
+            return (currentdate);
         }
-        var url = ""
+        let section = [userInfo.name + "同学：\n 你好！你于" + getNowFormatDate() +
+            "光临我们的木棉邮局",
+            "当再见成为你好之时，我们已经从遥远的旅途归来，捧着沉甸甸的未来向你问好，一纸情长，届时你是否已实现心中所愿？", "九月之初 乾坤未定 时光慢递 不负韶华"
+        ];
 
-        function checkCapsule() {
-            $.ajax({
-                url: prefix + "checkTimeCapsule",
-                type: "get",
-                success: function (res) {
-                    if ((res.check_text) && (res.check_voice)) {
-                        $("#mainpage").css("display", "block");
-                    } else if (res.check_text) {
-                        $("#bottom").removeClass("hidden");
-                        url = "capsule.html#/voice"
-                    } else if (res.check_voice) {
-                        $("#bottom").removeClass("hidden");
-                        url = "capsule.html#/letter"
-                    }
-                },
-                error: function (err) {
-                    if (err.errmsg == 401) {
-                        Bindwx();
-                    }
-                    if (err.errmsg == 406) {
-                        Subscribe();
-                    }
-                }
-            })
-        }
+        var type
+
+        initChangeHandle("content", () => {
+            $(".arrow2")[0].style.display = "none";
+
+            if (checkInfo.text && checkInfo.voice)
+                $("#mainpage").css("display", "block");
+            else {
+                $("#bottom").removeClass("hidden");
+                type = checkInfo.text ? "voice" : "text"
+                url = checkInfo.text ? "capsule.html#/voice" : "capsule.html#/letter"
+            }
+
+        })
+        change()
 
         function back() {
             window.location.href = "conclusion.html";
         }
 
         function send() {
+            sessionStorage.setItem("type", type)
             window.location.href = url;
         }
     </script>

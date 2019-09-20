@@ -17,59 +17,25 @@
             <img class="npc" src="img/npc.png">
         </div>
         <div class="box front" onclick="change()">
-            <p id="w1"></p>
-            <p id="w2"></p>
-            <p id="w3"></p>
-            <p id="w4"></p>
+            <p id="content"></p>
             <img class="arrow2" src="img/arrow2.png">
         </div>
     </div>
     <script src="js/conf.js"></script>
+    <script src="js/dialoguePrinter.js"></script>
     <script>
-        var tt = 0;
-        window.onload = function () {
-            $("#w1").html("大学的旅途会经历寒潮、风雷与霹雳，我们");
-            $("#w2").html("共享着雾霭、流岚与虹霓，唯有不变的是我");
-            $("#w3").html("们行囊中的理想与初心");
-            $("#w4").html("");
-            $("#w1").addClass("word ty");
-            $("#w2").addClass("word ty ty2");
-            $("#w3").addClass("word ty ty3");
-            clock = setInterval("count()", 1000);
-        }
-
-        function count() {
-            tt++;
-            console.log(tt);
-        }
-        var status = 0;
-
-        function change() {
-            if ((status == 0) && (tt >= 2)) {
-                clearInterval(clock);
-                tt = 0;
-                clock = setInterval("count()", 1000);
-                $("#w1").removeClass("word ty");
-                $("#w2").removeClass("word ty ty2");
-                $("#w3").removeClass("word ty ty3");
-                $("#w1").html("给毕业后的自己写一封信吧,与过去、现在");
-                $("#w2").html("和未来对话,更是与自己和世界对话。木棉");
-                $("#w3").html("邮局会将其珍藏起来,待到毕业之时发还给");
-                $("#w4").html("您");
-                setTimeout(function () {
-                    $("#w1").addClass("word ty");
-                    $("#w2").addClass("word ty ty2");
-                    $("#w3").addClass("word ty ty3");
-                    $("#w4").addClass("word ty ty4");
-                }, 1);
-                status = 1;
+        let section = [
+            "大学的旅途会经历寒潮、风雷与霹雳，我们共享着雾霭、流岚与虹霓，唯有不变的是我们行囊中的理想与初心。",
+            "给毕业后的自己写一封信吧~与过去、现在和未来对话，更是与自己和世界对话。木棉邮局会将其珍藏起来，待到毕业之时发还给您。"
+        ];
+        initChangeHandle("content", () => {
+            if (checkInfo) {
+                if (checkInfo.text && checkInfo.voice)
+                    window.location.href = "conclusion.html";
+                else window.location.href = "capsule.html"
             }
-            if ((status == 1) && (tt >= 2)) {
-                clearInterval(clock);
-                tt = 0;
-                window.location.href = "capsule.html";
-            }
-        }
+        })
+        change()
     </script>
 </body>
 

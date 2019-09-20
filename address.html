@@ -9,48 +9,30 @@
     <link rel="stylesheet" href="css/info.css">
     <script src="https://cdn.jsdelivr.net/npm/axios@0.19.0/dist/axios.min.js"></script>
 </head>
+
 <body>
-    <div id="box" class="box">
+    <div id="box" class="box" style="height: auto; overflow: hidden;">
         <img src="img/title5.png" class="title">
-        <div class="item1">
+        <div class="item1" style="margin-left: 15%;">
             <div class="tips">收信人地址
-                <img src="img/icon1.png" class="icon">
+                <img src="img/icon1.png" class="icon" style="margin-left: 0;">
             </div>
         </div>
-        <textarea id="addr" placeholder="如果地址和校区变动，届时会有工作人员与你联系更改地址"></textarea>
-        <div class="item2">
+        <textarea style="height: 30vw; left: 15%; width: 70%;" id="addr"
+            placeholder="如果地址和校区变动，届时会有工作人员与你联系更改地址"></textarea>
+        <div class="item2" style="margin-bottom: 20px;">
             <div class="err hidden" id="err1"></div>
         </div>
-        <div class="btn" id="btn" onclick="submit()">确定</div>
+        <div class="btn" id="btn" onclick="submit()" style="top: 0; margin-bottom: 10vw;">确定</div>
     </div>
     <script src="js/jquery.js"></script>
     <script src="js/conf.js"></script>
     <script>
         var winHeight = $(window).height();
-        document.getElementById("box").style.height = 0.7 * winHeight + "px";
         document.body.style.backgroundSize = "100vw " + winHeight + "px";
-        document.getElementById("btn").style.bottom = 0.4 * winHeight + "px";
-        function checkTimeCapsule() {
-            $.ajax({
-                url: prefix + "checkTimeCapsule",
-                type: "get",
-                success: function(res) {
-                 if (res.check_text==false){
-                     window.location.href="capsule.html";
-                 }
-                },
-                error: function(err) {
-                if (err.response.status == 401) {
-                    Bindwx();
-                }
-                if (err.response.status == 406) {
-                    Subscribe();
-                }
-                }
-            });
-        }
-        checkTimeCapsule();
+
         var clicked = false;
+
         function submit() {
             if (!clicked) {
                 let address = $("#addr").val();
@@ -68,7 +50,10 @@
                             address: address
                         })
                         .then(function (res) {
-                            window.location.href = "capsule-end.html";
+                            let checkInfo = JSON.parse(sessionStorage.getItem("checkInfo"));
+                            checkInfo.text = true;
+                            sessionStorage.setItem("checkInfo", JSON.stringify(checkInfo));
+                            window.location.replace("address-end.html");
                         })
                         .catch(function (err) {
                             if (err.response) {
@@ -83,7 +68,7 @@
                                         console.log("服务器上没有音频")
                                         break;
                                     case 405:
-                                        window.location.href = "info.html"
+                                        window.location.href = "info.html?from=address.html"
                                         break;
                                     case 406:
                                         Subscribe();

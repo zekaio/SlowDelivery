@@ -14,7 +14,7 @@
 
 <body>
     <img class="generate box2" id="generate" crossOrigin="anonymous">
-    <div class="big2 hidden" id="main2">
+    <div class="big2 hidden" id="main2" style="visibility:hidden">
         <div class="box2">
             <img src="img/title4.png" class="title">
 
@@ -48,7 +48,7 @@
             </div>
 
         </div>
-        <div class="btn" onclick="Continue()">继续</div>
+        <div class="btn" onclick="Continue()" style="display: none;">继续</div>
     </div>
     <script src="js/vue.js"></script>
     <script src="js/vue-router.js"></script>
@@ -90,6 +90,8 @@
             },
 
         })
+        if (!~window.location.href.indexOf("hide"))
+            $(".btn")[0].style.display = "block"
 
         axios.get(prefix + 'getFlag')
             .then(function (res) {
@@ -99,6 +101,7 @@
                 //图片？
                 setTimeout(() => {
                     var node = document.getElementById('main2');
+                    node.style.visibility = "visible"
                     html2canvas(node).then((canvas) => {
                         $("#generate")[0].src = canvas.toDataURL()
                     })

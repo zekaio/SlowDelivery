@@ -68,7 +68,7 @@
     }
 
     input {
-        font-size: 5vw;
+        font-size: 16px;
         box-sizing: border-box;
         border-radius: 3px;
         border: solid #b5a7c5 2px;
@@ -110,7 +110,7 @@
         border-radius: 3px;
         border: solid #b5a7c5 2px;
         box-sizing: border-box;
-        padding-left: 2px;
+        padding: 5px;
         resize: none;
     }
 
@@ -118,7 +118,7 @@
         position: relative;
         width: 50%;
         left: 25%;
-        margin-top:3vh;
+        margin-top: 3vh;
         margin-bottom: 4vh;
     }
 
