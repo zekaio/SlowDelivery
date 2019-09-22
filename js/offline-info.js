@@ -105,18 +105,18 @@ function submit() {
         window.location.href = "offline-end.html";
       },
       error: function(err) {
-        if (err.errmsg == 401) {
+        if (err.status == 401) {
           Bindwx();
         }
-        if (err.errcode == 404) {
+        if (err.status == 404) {
           $("#err6").html("取信码不存在");
           $("#err6").removeClass("hidden");
         }
-        if (err.errcode == 409) {
+        if (err.status == 409) {
           $("#err6").html("取信码已被使用");
           $("#err6").removeClass("hidden");
         }
-        if (err.errmsg == 406) {
+        if (err.status == 406) {
           Subscribe();
         }
       }
