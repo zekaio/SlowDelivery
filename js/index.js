@@ -20,6 +20,11 @@
 //       }
 //     }
 //   });
+const real_url=window.location.href.split('?')[0];
+
+function refresh() {
+  window.location.href = real_url+"?t="+new Date().getTime();
+}
 
 let section = [
   "欢迎光临木棉邮局，这里是毕业慢递专栏",
