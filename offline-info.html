@@ -7,6 +7,21 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
     <link rel="stylesheet" href="css/offline-info.css">
+    <style>
+        input {
+            box-sizing: border-box;
+            padding: 2px;
+            height: 9vw;
+            line-height: 9vw;
+            font-size: 0.9em;
+            padding-left: 4px;
+        }
+
+        .item1,
+        .item2 {
+            padding-left: 15%;
+        }
+    </style>
 </head>
 
 <body>
@@ -56,7 +71,8 @@
         <div class="item1">
             <div class="tips">收信人地址</div>
         </div>
-        <textarea rows="3" id="address" placeholder="如果地址有校区变动，届时会有工作人员与你联系更改地址"></textarea>
+        <textarea rows="3" id="address" placeholder="如果地址有校区变动，届时会有工作人员与你联系更改地址"
+            style="box-sizing: border-box;padding: 4px; font-size: 0.9em;left: 15%;"></textarea>
         <div class="item1">
             <div class="err hidden" id="err5"></div>
         </div>
@@ -65,7 +81,7 @@
             <div class="tips">信封后取信码</div>
         </div>
         <div class="item2">
-            <input type="text" id="code" placeholder="这是你的信独一无二的证明" />
+            <input type="text" id="code" placeholder="这是你的信独一无二的证明" style="padding-left: 4px;" />
         </div>
         <div class="item1">
             <div class="err hidden" id="err6"></div>
@@ -74,8 +90,9 @@
         <div class="item1">
             <div class="tips">收信时间</div>
         </div>
-        <div class="item1" style="margin-top: 5px;">
-            <select id="time" class="icon">
+        <div class="item1" style="margin-top: 5px; width: 70%;">
+            <select id="time" class="icon"
+                style=" line-height: 9vw; height: 9vw; padding-left: 2vw; font-size: 2vh; box-sizing: border-box; width: 100%;">
                 <option>2020</option>
                 <option>2021</option>
                 <option>2022</option>

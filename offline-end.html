@@ -18,7 +18,9 @@
         </div>
         <div class="box front" id="box" onclick="change()">
             <p id="content"></p>
-            <div class="btn2" id="again" onclick="back()">再寄一封</div>
+            <img class="arrow2" src="img/arrow2.png">
+            <div class="btn2" id="again" onclick="back()"
+                style="line-height: 10vw; transition: all .5s ease-in-out; opacity: 0;">再寄一封</div>
         </div>
     </div>
     <script src="js/conf.js"></script>
@@ -45,12 +47,18 @@
             var currentdate = year + "年" + month + "月" + strDate + "日";
             return (currentdate);
         }
-        let section = [userInfo.name + "同学：\n 你好！你于" + getNowFormatDate() +
+        let section = ["同学：\n 你好！你于" + getNowFormatDate() +
             "光临我们的木棉邮局",
             "当再见成为你好之时，我们已经从遥远的旅途归来，捧着沉甸甸的未来向你问好，一纸情长，届时你是否已实现心中所愿？", "九月之初 乾坤未定 时光慢递 不负韶华"
         ]
 
-        initChangeHandle("content", () => {})
+        initChangeHandle("content", () => {
+            $(".arrow2")[0].style.display = "none";
+            let bnt = $("#again")[0]
+            bnt.style.display = "block"
+            let height = bnt.offsetHeight
+            bnt.style.opacity = "1"
+        })
         change()
 
         function back() {
