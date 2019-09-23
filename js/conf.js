@@ -107,6 +107,11 @@ function updateInfo(callback) {
           if (window.location.href.match(/future-mail\/(index.html)?$/)) return;
           window.location.href = "info.html?from=" + window.location.href;
         }
+      },
+      error() {
+        if (err.errmsg == 401) {
+          Bindwx();
+        }
       }
     });
 }
