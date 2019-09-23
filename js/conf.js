@@ -29,8 +29,8 @@ function Bindwx() {
 }
 //关注公众号
 function Subscribe() {
-  if(bbt_layer) {
-    bbt_layer.style.display = 'block';
+  if (bbt_layer) {
+    bbt_layer.style.display = "block";
   } else {
     location.href = shareLink;
   }
@@ -111,9 +111,6 @@ function updateInfo(callback) {
     });
 }
 
-// 当且仅当不是首页或者个人信息页面， 才判断是否已经填写信息
-if (
-  !~window.location.href.indexOf("info.html") &&
-  !~window.location.href.indexOf("index.html")
-)
+// 当且仅当不是个人信息页面， 才判断是否已经填写信息
+if (!~window.location.href.indexOf("/info.html"))
   updateInfo((updateInfoCallback = null));
