@@ -53,10 +53,10 @@
                     }
                 },
                 error: function (err) {
-                    if (err.errmsg == 401) {
+                    if (err.status == 401) {
                         Bindwx();
                     }
-                    if (err.errmsg == 406) {
+                    if (err.status == 406) {
                         Subscribe();
                     }
                 }

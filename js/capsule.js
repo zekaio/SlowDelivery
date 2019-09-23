@@ -137,7 +137,7 @@ const Third = {
                 clicked = false;
               },
               error: function(err) {
-                switch (err.errmsg) {
+                switch (err.status) {
                   case 400:
                     console.log("没有获取到file_id或msg");
                   case 401:
@@ -192,17 +192,17 @@ const Third = {
           ]
         });
 
-	MUTEX = false;
+        MUTEX = false;
         wx.ready(() => {
           /////按住开始录音///////
           $("#talk").on("touchstart", event => {
-        
             //console.info("touchstart: MUTEX: "+MUTEX);
-            if(MUTEX) {
-		//alert("请勿点击过快！");
-	    	return //MUTEX = false;
-	    } MUTEX = true;
-	    event.preventDefault();
+            if (MUTEX) {
+              //alert("请勿点击过快！");
+              return; //MUTEX = false;
+            }
+            MUTEX = true;
+            event.preventDefault();
             $("#talk").html("松开 结束");
             START = new Date().getTime();
             wx.startRecord({
@@ -220,18 +220,18 @@ const Third = {
           /////松手结束录音////////////
           $("#talk").on("touchend", event => {
             //console.info("touchend: MUTEX: "+MUTEX);
-            if(!MUTEX) return;
-	    event.preventDefault();
+            if (!MUTEX) return;
+            event.preventDefault();
             $("#talk").html("按住 录音");
             END = new Date().getTime();
-	    //console.info("START: "+START+" , END: "+END);
+            //console.info("START: "+START+" , END: "+END);
             //console.info("DELTA: "+(END-START));
-	    if (END - START < 300) {
+            if (END - START < 300) {
               //小于300ms，不录音
               END = 0;
               START = 0;
-	      wx.stopRecord();
-	      clearInterval(timer);
+              wx.stopRecord();
+              clearInterval(timer);
             } else {
               wx.stopRecord({
                 success: res => {

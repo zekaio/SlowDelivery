@@ -109,7 +109,7 @@ function updateInfo(callback) {
         }
       },
       error() {
-        if (err.errmsg == 401) {
+        if (err.status == 401) {
           Bindwx();
         }
       }
