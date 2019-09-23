@@ -9,7 +9,11 @@ var mySwiper = new Swiper(".swiper-container", {
     loadPreNext: true,
     loadOnTransitionStart: true
   },
-  on: {}
+  on: {
+    transitionEnd: function() {
+      change();
+    }
+  }
 });
 initChangeHandle("content", () => {
   window.location.href = "offline-info.html";
