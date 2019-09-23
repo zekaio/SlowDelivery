@@ -108,7 +108,7 @@ function updateInfo(callback) {
           window.location.href = "info.html?from=" + window.location.href;
         }
       },
-      error() {
+      error(err) {
         if (err.status == 401) {
           Bindwx();
         }
