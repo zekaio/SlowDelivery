@@ -112,6 +112,8 @@ function updateInfo(callback) {
         if (err.status == 401) {
           Bindwx();
         }
+        if (err.status == 406 && ~location.href.indexOf("offline-index.html"))
+          Subscribe();
       }
     });
 }
