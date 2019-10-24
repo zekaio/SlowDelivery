@@ -35,26 +35,9 @@ def checkLogin():
 # 判断用户是否关注公众号
 def checkSubscribe(open_id):
     if "check_sub" not in session or not session['check_sub']:
-        headers = {
-            'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko)"
-                          " Chrome/76.0.3809.132 Safari/537.36"}
-        response = requests.get(
-            "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + cfg['APPID'] + "&secret=" +
-            cfg[
-                'AppSecret'], headers=headers).text
-        data = json.loads(response)
-        if "errcode" in data:
-            abort(401, message="APPID is invalid.")
-            return False
-        else:
-            assess_token = data['access_token']
-        userinfo = requests.get(
-            "https://api.weixin.qq.com/cgi-bin/user/info?access_token=" + assess_token + "&openid=" + open_id +
-            "&lang=zh_CN").text
-        user_json = json.loads(userinfo)
-        if "subscribe" in user_json:
-            subscribe = user_json['subscribe']
-            if subscribe:
+        response = requests.get('https://hemc.100steps.net/2017/wechat/Home/Index/getSubscribe?state=https://hemc.100steps.net/2017/wechat/Home/Index/getSubscribe').text
+        if "subscribe" in response:
+            if response['subscribe']:
                 session['check_sub'] = True
                 return True
             else:
