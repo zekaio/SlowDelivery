@@ -35,9 +35,10 @@ def checkLogin():
 # 判断用户是否关注公众号
 def checkSubscribe(open_id):
     if "check_sub" not in session or not session['check_sub']:
-        response = requests.get('https://hemc.100steps.net/2017/wechat/Home/Index/getSubscribe?state=https://hemc.100steps.net/2017/wechat/Home/Index/getSubscribe').text
-        if "subscribe" in response:
-            if response['subscribe']:
+        response = requests.get('https://hemc.100steps.net/2017/wechat/Home/Index/getSubscribe?state=https://hemc.100steps.net/2017/wechat/Home/Index/getSubscribe')
+        res = json.loads(response)
+        if "subscribe" in res:
+            if res['subscribe']:
                 session['check_sub'] = True
                 return True
             else:
