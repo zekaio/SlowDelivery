@@ -10,7 +10,7 @@ class updateInfo(Resource):
     def post(self):
         checkTime()
         openId = checkLogin()
-        checkSubscribe(openId)
+        # checkSubscribe(openId)
         obj = database()
         info = obj.getInfo(openId)
         if info:

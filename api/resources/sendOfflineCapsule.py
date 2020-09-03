@@ -10,7 +10,7 @@ class sendOfflineCapsule(Resource):
     def post(self):
         checkTime()
         openId = checkLogin()
-        checkSubscribe(openId)
+        # checkSubscribe(openId)
         data = request.get_json(force=True)
         if checkTel(data['sender_tel']) and checkTel(data['receiver_tel']):
             obj = database()

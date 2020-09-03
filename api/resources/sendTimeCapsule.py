@@ -13,7 +13,7 @@ class sendTimeCapsule(Resource):
     def post(self):
         checkTime()
         openId = checkLogin()
-        checkSubscribe(openId)
+        # checkSubscribe(openId)
         obj = database()
         data = request.get_json(force=True)
         if not obj.getInfo(openId):

@@ -10,7 +10,7 @@ class getFlag(Resource):
     def get(self):
         checkTime()
         openId = checkLogin()
-        checkSubscribe(openId)
+        # checkSubscribe(openId)
         obj = database()
         flag = obj.getFlag(openId)
         name = obj.getInfo(openId)['name']

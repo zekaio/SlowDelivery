@@ -12,7 +12,7 @@ from resources.sendFlag import sendFlag
 from resources.updateInfo import updateInfo
 from resources.checkTimeCapsule import checkTimeCapsule
 from resources.checkFlag import checkFlag
-from werkzeug.middleware.proxy_fix import ProxyFix
+# from werkzeug.middleware.proxy_fix import ProxyFix
 
 app = flask.Flask(__name__)
 CORS(app, resources=r'/*', supports_credentials=True)
@@ -31,5 +31,5 @@ api.add_resource(checkTimeCapsule, '/checkTimeCapsule')
 api.add_resource(checkFlag, '/checkFlag')
 
 if __name__ == '__main__':
-    app.wsgi_app = ProxyFix(app.wsgi_app)
+    # app.wsgi_app = ProxyFix(app.wsgi_app)
     app.run(port=8765)

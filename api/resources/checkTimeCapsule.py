@@ -9,7 +9,7 @@ class checkTimeCapsule(Resource):
     def get(self):
         checkTime()
         openId = checkLogin()
-        checkSubscribe(openId)
+        # checkSubscribe(openId)
         obj = database()
         if not obj.getInfo(openId):
             abort(404, message="请先填写信息")

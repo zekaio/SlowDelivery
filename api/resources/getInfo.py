@@ -9,7 +9,7 @@ class getInfo(Resource):
     def get(self):
         checkTime()
         openId = checkLogin()
-        checkSubscribe(openId)
+        # checkSubscribe(openId)
         obj = database()
         info = obj.getInfo(openId)
         if info:

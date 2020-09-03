@@ -38,7 +38,7 @@ class Flags(Base):
     }
 
 class TimeCapsule(Base):
-    __tablename__ = 'timeCapsule'
+    __tablename__ = 'timecapsule'
     id = Column(Integer, primary_key=True, autoincrement=True)
     open_id = Column(Text, nullable=False)
     type = Column(String(8), nullable=False)
@@ -53,7 +53,7 @@ class TimeCapsule(Base):
     }
 
 class OfflineCapsule(Base):
-    __tablename__ = 'offlineCapsule'
+    __tablename__ = 'offlinecapsule'
     id = Column(Integer, primary_key=True, autoincrement=True)
     sender_name = Column(Text, nullable=True)
     sender_tel = Column(String(11), nullable=True)
@@ -67,7 +67,7 @@ class OfflineCapsule(Base):
     }
 
 class DefaultFlag(Base):
-    __tablename__ = 'defaultFlag'
+    __tablename__ = 'defaultflag'
     id = Column(Integer, primary_key=True, autoincrement=True)
     flag = Column(Text, nullable=False)
     __table_args__ = {

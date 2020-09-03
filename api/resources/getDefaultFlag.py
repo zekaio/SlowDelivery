@@ -9,7 +9,7 @@ class getDefaultFlag(Resource):
     def get(self):
         checkTime()
         openId = checkLogin()
-        checkSubscribe(openId)
+        # checkSubscribe(openId)
         obj = database()
         arr = obj.getDefaultFlag(openId)
         return jsonify({
